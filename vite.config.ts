@@ -1,11 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import viteSocketIo from "vite-plugin-socket-io";
-import { socketEvents } from "./server/server";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), viteSocketIo({ socketEvents })],
+  plugins: [react()],
   server: {
     open: "/", // auto open browser
     // proxy: {
