@@ -21,7 +21,7 @@ function App() {
             <Route path="/about" element={<About />} />
           </Route>
           <Route path="/lobby" element={<Lobby />} />
-          <Route path="/game/:id" element={<Game />} />
+          <Route path="/game" element={<Game />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </SocketProvider>
