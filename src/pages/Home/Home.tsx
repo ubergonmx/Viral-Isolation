@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import House from "../../House";
+import House from "../Game/House";
 
 // create a type called House
 type House = {

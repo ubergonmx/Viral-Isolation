@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSocket } from "./context/SocketContext";
+import { useSocket } from "../../context/SocketContext";
 
 function House({ id, itemCapacity }: { id: number; itemCapacity: number }) {
   const [itemsRemaining, setItemsRemaining] = useState(itemCapacity);
