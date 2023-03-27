@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import House from "../Game/House";
+import { GeneralEvent, SurvivorEvent, ViralEvent } from "../Game/RandomEvent";
 
 // create a type called House
 type House = {
@@ -40,6 +41,12 @@ function Home() {
           <House key={house.id} id={house.id} itemCapacity={house.itemSlots} />
         ))}
       </div>
+
+      <GeneralEvent />
+
+      <ViralEvent />
+
+      <SurvivorEvent />
     </div>
   );
 }
