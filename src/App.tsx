@@ -18,11 +18,6 @@ const rollbarConfig = {
   environment: "testenv",
 };
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
-
 function App() {
   return (
     <Provider config={rollbarConfig}>
@@ -40,7 +35,6 @@ function App() {
             </Routes>
           </SocketProvider>
         </div>
-        <TestError />
       </ErrorBoundary>
     </Provider>
   );
