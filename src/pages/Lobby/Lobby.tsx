@@ -1,10 +1,32 @@
-import { useParams } from "react-router-dom";
+import "./Lobby.css";
 
 function Lobby() {
-  const { id } = useParams();
+  function addPlayer() {
+    console.log("add player");
+  }
+
   return (
-    <div>
+    <div className="game-setup">
       <h1>Lobby</h1>
+      <div className="flex">
+        <div className="viral-player">
+          <h2>Viral Player</h2>
+        </div>
+
+        <div className="survivor-player">
+          <h2>Survivor Player</h2>
+        </div>
+
+        <div className="survivor-player">
+          <h2>Survivor Player</h2>
+        </div>
+
+        <button onClick={addPlayer}>+</button>
+      </div>
+
+      <div>
+        <button>Start Game</button>
+      </div>
     </div>
   );
 }

@@ -20,7 +20,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
           </Route>
-          <Route path="/lobby/:id" element={<Lobby />} />
+          <Route path="/lobby" element={<Lobby />} />
           <Route path="/game/:id" element={<Game />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

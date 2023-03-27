@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import House from "../../House";
 
 // create a type called House
@@ -33,6 +34,7 @@ function Home() {
       <p>Click on a house to use an item.</p>
       <p>Click on the About link to learn more.</p>
       <h2>Item Slots</h2>
+      <Link to="/lobby">Start Game</Link>
       <div className="houses">
         {houses.map((house) => (
           <House key={house.id} id={house.id} itemCapacity={house.itemSlots} />
