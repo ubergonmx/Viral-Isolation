@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import io, { Socket } from "socket.io-client";
 
-const socket = io("https://viral-isolation-socketio.fly.dev/", { transports: ["websocket"] });
+const socket = io(import.meta.env.VITE_SERVER_URI, { transports: ["websocket"] });
 // const socket = io();
 socket.on("connect", () => {
   console.log("Connected to server");

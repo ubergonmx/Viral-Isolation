@@ -18,7 +18,7 @@ export type GameResult = {
   gameTime: number;
 };
 
-function Results({ results }: { results: GameResult }) {
+function Result({ results }: { results: GameResult }) {
   return (
     <>
       <h1>Results</h1>
@@ -51,4 +51,4 @@ function Results({ results }: { results: GameResult }) {
   );
 }
 
-export default Results;
+export default Result;

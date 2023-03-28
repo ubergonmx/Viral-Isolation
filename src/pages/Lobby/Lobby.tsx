@@ -1,8 +1,33 @@
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSocket } from "../../context/SocketContext";
 import "./Lobby.css";
 import Player from "./PlayerCard/Player";
-import { useState, useEffect } from "react";
 
 function Lobby() {
+  const { code } = useParams();
+  const navigate = useNavigate();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket.emit("join", { code: code });
+
+    socket.on("error", (data) => {
+      if(data.action === "goHome")
+        navigate("/", { state: { error: data.message }});
+    });
+    return () => {
+      socket.off("error")
+    }
+  }, []);
+
+  function deleteGame() {
+    console.log("delete game");
+    socket.emit("delete", { code });
+    navigate("/");
+  }
+
+
   const players = [
     // temporary
     {
@@ -51,6 +76,7 @@ function Lobby() {
 
       <div>
         <button>Start Game</button>
+        <button onClick={deleteGame}>Cancel</button>
       </div>
     </div>
   );

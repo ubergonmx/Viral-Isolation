@@ -4,13 +4,15 @@ import { SocketProvider } from "./context/SocketContext";
 import viralIsolationLogo from "./assets/viral-isolation.svg";
 import "./App.css";
 
-//use lazy instead
+//Use React.lazy to lazy load components
 const Home = lazy(() => import("./pages/Home/Home"));
 const About = lazy(() => import("./pages/About/About"));
 const Lobby = lazy(() => import("./pages/Lobby/Lobby"));
 const Game = lazy(() => import("./pages/Game/Game"));
+const Result = lazy(() => import("./pages/Result/Result"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
 
+// Rollbar
 import { Provider, ErrorBoundary } from "@rollbar/react";
 
 const rollbarConfig = {
@@ -29,14 +31,40 @@ function App() {
                 <Route index element={<Home />} />
                 <Route path="/about" element={<About />} />
               </Route>
-              <Route path="/lobby" element={<Lobby />} />
-              <Route path="/game" element={<Game />} />
+              <Route path="/lobby/:code" element={<LobbyWithFallback />} />
+              <Route path="/game/:code" element={<GameWithFallback />} />
+              <Route path="/results/:code" element={<ResultWithFallback />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </SocketProvider>
         </div>
       </ErrorBoundary>
     </Provider>
+  );
+}
+
+function LobbyWithFallback() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Lobby />
+    </Suspense>
+  );
+}
+
+function GameWithFallback() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Game />
+    </Suspense>
+  );
+}
+
+function ResultWithFallback() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {/* <Result /> */}
+      <h1>Currently in development...</h1>
+    </Suspense>
   );
 }
 
