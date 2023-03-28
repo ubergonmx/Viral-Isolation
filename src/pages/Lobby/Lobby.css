@@ -10,6 +10,7 @@
 .flex {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 10px;
 }
@@ -28,6 +29,14 @@
   border-radius: 50%;
 }
 
+.player-role {
+  font-size: 25px;
+}
+
+.player-name {
+  font-size: 15px;
+}
+
 .player-avatar {
   width: 100px;
   height: 100px;
@@ -35,7 +44,6 @@
   margin: auto;
   margin-top: 25px;
   margin-bottom: 25px;
-  border-radius: 50%;
 }
 
 .remove-player {
@@ -47,4 +55,9 @@
   position: absolute;
   right: 5px;
   top: 5px;
+}
+
+.start-game, .cancel-game {
+  margin: 20px;
+  width: 150px;
 }
