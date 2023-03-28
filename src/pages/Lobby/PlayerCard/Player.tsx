@@ -1,11 +1,9 @@
-function Player({ name, image, code }: { name: string; image: string; code: number }) {
+function Player({ playerRole, image, playerName }: { playerRole: string; image: string; playerName: string }) {
   return (
     <>
-      <h2 className="player-name">{name}</h2>
+      <h2 className="player-role">{playerRole}</h2>
       <img src={image} className="player-avatar"></img>
-      <p>
-        Player Code: <br /> {code}
-      </p>
+      <p className="player-name">{playerName}</p>
     </>
   );
 }

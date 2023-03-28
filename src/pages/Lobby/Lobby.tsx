@@ -13,12 +13,11 @@ function Lobby() {
     socket.emit("join", { code: code });
 
     socket.on("error", (data) => {
-      if(data.action === "goHome")
-        navigate("/", { state: { error: data.message }});
+      if (data.action === "goHome") navigate("/", { state: { error: data.message } });
     });
     return () => {
-      socket.off("error")
-    }
+      socket.off("error");
+    };
   }, []);
 
   function deleteGame() {
@@ -27,42 +26,41 @@ function Lobby() {
     navigate("/");
   }
 
-
-  const [playerCount, setPlayerCount] = useState(3);
-
-  const players = [
+  let players = [
     {
-      name: "Viral Player 1",
-      image: "/src/assets/viral-temporary-pic.jpg",
-      code: 123456,
+      playerRole: "Viral",
+      image: "/pieces/viral-1.png",
+      playerName: "Aaron",
     },
     {
-      name: "Survivor Player 1",
-      image: "/src/assets/survivor-temporary-pic.png",
-      code: 123457,
+      playerRole: "Survivor",
+      image: "/pieces/player-1.png",
+      playerName: "Marc",
     },
     {
-      name: "Survivor Player 2",
-      image: "/src/assets/survivor-temporary-pic.png",
-      code: 123458,
+      playerRole: "Survivor",
+      image: "/pieces/player-2.png",
+      playerName: "John",
     },
     {
-      name: "Survivor Player 3",
-      image: "/src/assets/survivor-temporary-pic.png",
-      code: 123459,
+      playerRole: "Survivor",
+      image: "/pieces/player-3.png",
+      playerName: "Jasper",
     },
     {
-      name: "Survivor Player 4",
-      image: "/src/assets/survivor-temporary-pic.png",
-      code: 123460,
+      playerRole: "Survivor",
+      image: "/pieces/player-4.png",
+      playerName: "Jaime",
     },
   ];
+
+  const [playerCount, setPlayerCount] = useState(3);
 
   function addPlayer() {
     setPlayerCount(playerCount + 1);
   }
 
-  function removePlayer() {
+  function removePlayer(index: number) {
     setPlayerCount(playerCount - 1);
   }
 
@@ -70,14 +68,14 @@ function Lobby() {
     <div className="game-setup">
       <h1>Lobby</h1>
       <div className="flex">
-        {players.slice(0, playerCount).map((player, index) => (
+        {players.splice(0, playerCount).map((player, index) => (
           <div className="player">
             {index > 2 ? (
-              <button className="remove-player" onClick={removePlayer}>
+              <button className="remove-player" onClick={() => removePlayer(index)}>
                 <p className="button-text">&#10006;</p>
               </button>
             ) : null}
-            <Player key={player.code} name={player.name} image={player.image} code={player.code} />
+            <Player key={index} playerRole={player.playerRole} image={player.image} playerName={player.playerName} />
           </div>
         ))}
 
@@ -89,8 +87,10 @@ function Lobby() {
       </div>
 
       <div>
-        <button>Start Game</button>
-        <button onClick={deleteGame}>Cancel</button>
+        <button className="start-game">Start Game</button>
+        <button className="cancel-game" onClick={deleteGame}>
+          Cancel
+        </button>
       </div>
     </div>
   );
