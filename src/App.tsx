@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import { SocketProvider } from "./context/SocketContext";
-import viralIsolationLogo from "./assets/viral-isolation.svg";
 import "./App.css";
 
 //Use React.lazy to lazy load components
@@ -71,26 +70,26 @@ function ResultWithFallback() {
 function NavWrapper() {
   return (
     <>
-      <div>
-        <img src={viralIsolationLogo} className="logo" alt="Viral Isolation logo" />
-      </div>
-
-      <nav className="flex justify-center">
-        <ul className="flex">
-          <li className="mx-4">
-            <Link to="/" className="text-white hover:text-gray-300">
-              Home
-            </Link>
-          </li>
-          <li className="mx-4">
-            <Link to="/about" className="text-white hover:text-gray-300">
-              About
-            </Link>
-          </li>
-        </ul>
-      </nav>
-
       <Suspense fallback={<div>Loading...</div>}>
+        <div>
+          <img src="/viral-isolation.svg" className="logo" alt="Viral Isolation logo" />
+        </div>
+
+        <nav className="flex justify-center">
+          <ul className="flex">
+            <li className="mx-4">
+              <Link to="/" className="text-white hover:text-gray-300">
+                Home
+              </Link>
+            </li>
+            <li className="mx-4">
+              <Link to="/about" className="text-white hover:text-gray-300">
+                About
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
         <Outlet />
       </Suspense>
     </>

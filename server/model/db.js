@@ -20,10 +20,8 @@ const db = {
         console.error.bind(console, "connection error: ");
       });
       db.once("open", () => {
-        rollbar.info("Database connected successfully");
         console.log("Database connected successfully");
       });
-      rollbar.info("Connected to: " + uri);
       console.log("Connected to: " + uri);
     } catch (error) {
       rollbar.error(error);
