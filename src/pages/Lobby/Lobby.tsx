@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Lobby.css";
@@ -28,8 +28,9 @@ function Lobby() {
   }
 
 
+  const [playerCount, setPlayerCount] = useState(3);
+
   const players = [
-    // temporary
     {
       name: "Viral Player 1",
       image: "/src/assets/viral-temporary-pic.jpg",
@@ -58,20 +59,33 @@ function Lobby() {
   ];
 
   function addPlayer() {
-    console.log("Hello");
+    setPlayerCount(playerCount + 1);
+  }
+
+  function removePlayer() {
+    setPlayerCount(playerCount - 1);
   }
 
   return (
     <div className="game-setup">
       <h1>Lobby</h1>
       <div className="flex">
-        {players.map((player) => (
-          <Player key={player.code} name={player.name} image={player.image} code={player.code} />
+        {players.slice(0, playerCount).map((player, index) => (
+          <div className="player">
+            {index > 2 ? (
+              <button className="remove-player" onClick={removePlayer}>
+                <p className="button-text">&#10006;</p>
+              </button>
+            ) : null}
+            <Player key={player.code} name={player.name} image={player.image} code={player.code} />
+          </div>
         ))}
 
-        <button className="add-button" onClick={addPlayer}>
-          &#x2b;
-        </button>
+        {playerCount < 5 ? (
+          <button className="add-player" onClick={addPlayer}>
+            &#x2b;
+          </button>
+        ) : null}
       </div>
 
       <div>
