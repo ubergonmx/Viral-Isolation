@@ -1,27 +1,52 @@
 import "./Lobby.css";
+import Player from "./PlayerCard/Player";
+import { useState, useEffect } from "react";
 
 function Lobby() {
+  const players = [
+    // temporary
+    {
+      name: "Viral Player 1",
+      image: "/src/assets/viral-temporary-pic.jpg",
+      code: 123456,
+    },
+    {
+      name: "Survivor Player 1",
+      image: "/src/assets/survivor-temporary-pic.png",
+      code: 123457,
+    },
+    {
+      name: "Survivor Player 2",
+      image: "/src/assets/survivor-temporary-pic.png",
+      code: 123458,
+    },
+    {
+      name: "Survivor Player 3",
+      image: "/src/assets/survivor-temporary-pic.png",
+      code: 123459,
+    },
+    {
+      name: "Survivor Player 4",
+      image: "/src/assets/survivor-temporary-pic.png",
+      code: 123460,
+    },
+  ];
+
   function addPlayer() {
-    console.log("add player");
+    console.log("Hello");
   }
 
   return (
     <div className="game-setup">
       <h1>Lobby</h1>
       <div className="flex">
-        <div className="viral-player">
-          <h2>Viral Player</h2>
-        </div>
+        {players.map((player) => (
+          <Player key={player.code} name={player.name} image={player.image} code={player.code} />
+        ))}
 
-        <div className="survivor-player">
-          <h2>Survivor Player</h2>
-        </div>
-
-        <div className="survivor-player">
-          <h2>Survivor Player</h2>
-        </div>
-
-        <button onClick={addPlayer}>+</button>
+        <button className="add-button" onClick={addPlayer}>
+          &#x2b;
+        </button>
       </div>
 
       <div>
