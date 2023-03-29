@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
-import { IGame, IHouse } from "./GameInterface";
+import { IGame, IHouse, ISurvivor } from "./GameInterface";
 import House from "./House";
 
 function Game() {
@@ -13,6 +13,7 @@ function Game() {
   const [roundCount, setRoundCount] = useState(0);
   const [turnCount, setTurnCount] = useState(0);
   const [playerTurn, setPlayerTurn] = useState("");
+  const [currentSurvivor, setCurrentSurvivor] = useState<ISurvivor>();
 
   useEffect(() => {
     socket.emit("join", { code: code });
@@ -33,10 +34,14 @@ function Game() {
   }, []);
 
   function initializeGame(data: IGame) {
-    setGameConfig(data);
-    setRoundCount(data.round);
-    setTurnCount(data.turn);
-    setPlayerTurn(data.turnOrder[data.turn]);
+    setGameConfig(() => {
+      setRoundCount(data.round);
+      setTurnCount(data.turn);
+      let newPlayerTurn = data.turnOrder[data.turn];
+      setPlayerTurn(newPlayerTurn);
+      setCurrentSurvivor(data.survivors.find((survivor) => survivor.name === newPlayerTurn));
+      return data;
+    });
   }
 
   function deleteGame() {
@@ -45,17 +50,30 @@ function Game() {
     navigate("/");
   }
 
-  function currentSurvivor() {
-    return gameConfig?.survivors.find((survivor) => survivor.name === playerTurn);
+  function getCurrentSurvivor(newPlayerTurn: string = playerTurn) {
+    return gameConfig?.survivors.find((survivor) => survivor.name === newPlayerTurn);
   }
 
   function endTurn() {
-    if (turnCount === gameConfig!.turnOrder.length - 1) {
-      setTurnCount(0);
-      setRoundCount(roundCount + 1);
-    } else setTurnCount(turnCount + 1);
-    setPlayerTurn(gameConfig!.turnOrder[turnCount]);
-    socket.emit("next-turn", { code: code, turn: turnCount, round: roundCount });
+    console.log("end turn");
+    console.log(turnCount);
+    setTurnCount((prevTurnCount) => {
+      let newTurnCount = prevTurnCount + 1;
+      console.log(newTurnCount);
+      let newRoundCount = roundCount;
+      let newPlayerTurn = playerTurn;
+      if (newTurnCount === gameConfig!.turnOrder.length) {
+        setRoundCount((prevRoundCount) => prevRoundCount + 1);
+        newTurnCount = 0;
+        newPlayerTurn = gameConfig!.turnOrder[0];
+      } else {
+        newPlayerTurn = gameConfig!.turnOrder[newTurnCount];
+      }
+      setPlayerTurn(newPlayerTurn);
+      setCurrentSurvivor(gameConfig!.survivors.find((survivor) => survivor.name === newPlayerTurn));
+      socket.emit("next-turn", { code: code, turn: newTurnCount, round: newRoundCount });
+      return newTurnCount;
+    });
   }
 
   return (
@@ -64,9 +82,9 @@ function Game() {
       {gameConfig && <h1>{playerTurn}'s turn</h1>}
       <h2>Item Slots</h2>
       <div className="houses">
-        {gameConfig &&
-          gameConfig.houses?.map((house: IHouse) => (
-            <House key={house.id} id={house.id} itemCapacity={house.itemCapacity} survivor={undefined} />
+        {currentSurvivor?.name === playerTurn &&
+          gameConfig!.houses?.map((house: IHouse) => (
+            <House key={`${house.id}`} id={house.id} itemCapacity={house.itemCapacity} survivor={currentSurvivor} />
           ))}
       </div>
 

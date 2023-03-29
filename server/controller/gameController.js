@@ -32,18 +32,7 @@ const game = {
   },
   getSurvivorItem: function (socket, data) {
     const { code, survivor, houseId } = data;
-    //decrease numOfItems in house
-    Game.findOneAndUpdate({ code: code, "houses.id": houseId }, { $inc: { "houses.$.numOfItems": -1 } })
-      .then((doc) => {
-        if (doc) {
-          console.log(`[U-${socket.id}] ${survivor.name} got an item from H${houseId}`);
-        }
-      })
-      .catch((err) => {
-        rollbar.error(err);
-        console.log(err);
-      });
-
+    //add houseId to survivor's housesEntered
     Game.findOneAndUpdate(
       { code: code, "survivors.name": survivor.name },
       { $push: { "survivors.$.housesEntered": houseId } },
@@ -51,6 +40,17 @@ const game = {
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${survivor.name} entered to H${houseId}`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+    //decrease numOfItems in house
+    Game.findOneAndUpdate({ code: code, "houses.id": houseId }, { $inc: { "houses.$.numOfItems": -1 } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${survivor.name} got an item from H${houseId}`);
         }
       })
       .catch((err) => {

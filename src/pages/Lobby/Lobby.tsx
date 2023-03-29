@@ -68,18 +68,18 @@ function Lobby() {
     console.log(code);
     const gameConfig = {
       code: code,
-      turnOrder: ["Marc", "John", "Jasper", "Jaime", "Daniel"], // TODO: randomize
+      turnOrder: ["Carlo", "Ysa", "Jasper", "Jaime", "Daniel"], // TODO: randomize
       viral: {
         name: "Daniel",
         image: "/pieces/viral-1.png",
       },
       survivors: [
         {
-          name: "Marc",
+          name: "Carlo",
           image: "/pieces/player-1.png",
         },
         {
-          name: "John",
+          name: "Ysa",
           image: "/pieces/player-2.png",
         },
         {
