@@ -11,6 +11,7 @@ const { instrument } = require("@socket.io/admin-ui");
 
 // Socket.io controllers
 const connection = require("./controller/connectionController");
+const game = require("./controller/gameController");
 const items = require("./items"); // obsolete
 
 const db = require("./model/db");
@@ -43,12 +44,18 @@ io.on("connection", (socket) => {
   socket.on("create", (data) => connection.create(socket, data));
   socket.on("join", (data) => connection.join(socket, io, data));
   socket.on("delete", (data) => connection.delete(socket, data));
-  socket.on("start", (data) => connection.start(socket, io, data));
 
-  //Get lobbies, games, and results - io.emit
+  // Get lobbies, games, and results - io.emit
   socket.on("get-lobbies", () => connection.getLobbies(io));
   socket.on("get-games", () => connection.getGames(io));
   socket.on("get-results", () => connection.getResults(io));
+
+  // Game events
+  socket.on("start", (data) => game.start(socket, io, data));
+  socket.on("get-survivor-item", (data) => game.getSurvivorItem(socket, data));
+  // socket.on("get-viral-item", (data) => game.getViralItem(socket, data));
+  socket.on("end-turn", (data) => game.endTurn(socket, data));
+  socket.on("next-turn", (data) => game.endTurn(socket, data));
 
   // obsolete
   socket.on("getItem", (data) => {
@@ -72,7 +79,7 @@ app.get(["/", "/:name"], (req, res) => {
 db.connectDB();
 
 server.listen(port, () => {
-  console.log("Server is running on port " + port);
+  console.log(`Server is running on port ${port}(${process.env.PORT})`);
 });
 
 instrument(io, { auth: false });

@@ -5,6 +5,9 @@ const gameSchema = new mongoose.Schema({
   code: { type: String, required: true, unique: true, index: true, minLength: 4, maxLength: 4 },
   connectedUser: { type: String },
   status: { type: String, enum: ["waiting", "ongoing", "end"] },
+  round: { type: Number, default: 1 },
+  turn: { type: Number, default: 0 },
+  turnOrder: [String],
   logs: [
     {
       type: { type: String, enum: ["action", "event"] },
