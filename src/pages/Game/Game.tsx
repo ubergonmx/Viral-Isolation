@@ -1,4 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSocket } from "../../context/SocketContext";
 import Result, { Viral, Survivor, GameResult } from "../Result/Result";
 import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
 
@@ -57,13 +59,33 @@ const results: GameResult = {
 };
 
 function Game() {
-  const { id } = useParams();
+  const { code } = useParams();
+  const navigate = useNavigate();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket.emit("join", { code: code });
+    socket.on("error", (data) => {
+      if (data.action === "goHome") navigate("/", { state: { error: data.message } });
+    });
+    return () => {
+      socket.off("error");
+    };
+  }, []);
+
+  function deleteGame() {
+    console.log("delete game");
+    socket.emit("delete", { code: code });
+    navigate("/");
+  }
+
   return (
     <div>
       <h1>Game</h1>
       <Result results={results} />
+      {/* <button onClick={() => navigate("/game/lobby")}>Back to Lobby</button> */}
+      <button onClick={deleteGame}>Delete Game</button>
 
-      
       {/*
       <h2>Item Slots</h2>
       <div className="houses">
@@ -72,7 +94,6 @@ function Game() {
         ))}
       </div> */}
 
-      
       <GeneralEvent />
       <ViralEvent />
       <SurvivorEvent />

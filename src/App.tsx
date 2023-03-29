@@ -71,7 +71,7 @@ function NavWrapper() {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <div>
+        <div className="flex justify-center">
           <img src="/viral-isolation.svg" className="logo" alt="Viral Isolation logo" />
         </div>
 

@@ -17,7 +17,7 @@ function Home() {
   const { state } = useLocation();
 
   const [lobbies, setLobbies] = useState([]);
-
+  const [games, setGames] = useState([]);
 
   //get lobbies
   useEffect(() => {
@@ -27,44 +27,51 @@ function Home() {
       setLobbies(rooms);
     });
 
-    // socket.emit("get-games");
-    // socket.on("games", (rooms: any) => {
-    //   console.log(rooms);
-    //   setGames(rooms);
-    // });
-    
-
-
+    socket.emit("get-games");
+    socket.on("games", (rooms: any) => {
+      console.log(rooms);
+      setGames(rooms);
+    });
     return () => {
       socket.off("lobbies");
-    }
+    };
   }, []);
 
   //create game
-  function createGame () {
+  function createGame() {
     socket.emit("create", { code: generateCode() });
     socket.on("created", (room: any) => {
-      console.log(room);
+      console.log("lobby created");
       navigate("/lobby/" + room.code);
     });
   }
 
   return (
-    <div className="home">
-      {state?.error && <p>{state.error}</p>}
+    <div className="flex flex-col gap-2">
       <h1>Viral Isolation</h1>
-      <p>Click on a house to use an item.</p>
-      <p>Click on the About link to learn more.</p>
-
       <button onClick={createGame}>Create a new game</button>
+      {state?.error && <p className="text-red-500">{state.error}</p>}
       <br />
-      <h2>Rooms</h2>
-      <div className="lobbies">
-        {lobbies.length > 0 && lobbies.map((room : any) => (
-          <button key={room} onClick={() => navigate("/lobby/" + room)}>{room}</button>
-        ))}
+      <div className="grid grid-cols-2 px-4 divide-x">
+        <div className="flex flex-col px-2">
+          <h2>Open Lobbies</h2>
+          {lobbies.length > 0 &&
+            lobbies.map((lobby: any) => (
+              <button key={lobby} onClick={() => navigate("/lobby/" + lobby)}>
+                {lobby}
+              </button>
+            ))}
+        </div>
+        <div className="flex flex-col px-2">
+          <h2>Open Games</h2>
+          {games.length > 0 &&
+            games.map((game: any) => (
+              <button key={game} onClick={() => navigate("/game/" + game)}>
+                {game}
+              </button>
+            ))}
+        </div>
       </div>
-
     </div>
   );
 }
