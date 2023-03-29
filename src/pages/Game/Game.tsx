@@ -9,6 +9,7 @@ function Game() {
   const { code } = useParams();
   const navigate = useNavigate();
   const socket = useSocket();
+  // TODO: refactor
   const [gameConfig, setGameConfig] = useState<IGame | null>(null);
   const [roundCount, setRoundCount] = useState(0);
   const [turnCount, setTurnCount] = useState(0);
@@ -70,7 +71,7 @@ function Game() {
         newPlayerTurn = gameConfig!.turnOrder[newTurnCount];
       }
       setPlayerTurn(newPlayerTurn);
-      setCurrentSurvivor(gameConfig!.survivors.find((survivor) => survivor.name === newPlayerTurn));
+      setCurrentSurvivor(getCurrentSurvivor(newPlayerTurn));
       socket.emit("next-turn", { code: code, turn: newTurnCount, round: newRoundCount });
       return newTurnCount;
     });

@@ -36,7 +36,7 @@ function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined
     return () => {
       console.log("unmounting");
     };
-  }, []);
+  }, [survivor]);
 
   function closeModal() {
     setIsOpen(false);
