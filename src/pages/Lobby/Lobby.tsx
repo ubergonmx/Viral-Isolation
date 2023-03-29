@@ -107,50 +107,70 @@ function Lobby() {
     navigate("/");
   }
 
-  let players = [
+  // List of viral icons
+  const viralImages = ["/pieces/viral-1.png", "/pieces/viral-2.png"];
+
+  // List of survivor icons
+  const survivorImages = [
+    "/pieces/player-1.png",
+    "/pieces/player-2.png",
+    "/pieces/player-3.png",
+    "/pieces/player-4.png",
+    "/pieces/player-5.png",
+    "/pieces/player-6.png",
+    "/pieces/player-7.png",
+    "/pieces/player-8.png",
+  ];
+
+  // Default three players
+  const players = [
     {
       playerRole: "Viral",
       image: "/pieces/viral-1.png",
-      playerName: "Daniel",
+      playerName: "Player",
     },
     {
       playerRole: "Survivor",
       image: "/pieces/player-1.png",
-      playerName: "Marc",
+      playerName: "Player",
     },
     {
       playerRole: "Survivor",
       image: "/pieces/player-2.png",
-      playerName: "John",
-    },
-    {
-      playerRole: "Survivor",
-      image: "/pieces/player-3.png",
-      playerName: "Jasper",
-    },
-    {
-      playerRole: "Survivor",
-      image: "/pieces/player-4.png",
-      playerName: "Jaime",
+      playerName: "Player",
     },
   ];
 
-  const [playerCount, setPlayerCount] = useState(3);
+  const [playerList, setPlayerList] = useState(players); // Stores the information of the current players
 
   function addPlayer() {
-    setPlayerCount(playerCount + 1);
+    let newList = [...playerList];
+    let usedImages = newList.map((player) => player.image); // survivor icons that are already used by other players
+    const availableImages = survivorImages.filter((image) => !usedImages.includes(image)); // survivor icons not yet used
+
+    if (playerList.length <= 5) {
+      // Only 5 total players are allowed (1 - Viral, 4 - Survivors)
+      newList.push({
+        playerRole: "Survivor",
+        image: availableImages[Math.floor(Math.random() * availableImages.length)], // Set a random image not yet used by other survivors
+        playerName: "Player",
+      });
+    }
+    setPlayerList(newList); // updates the playerList
   }
 
   function removePlayer(index: number) {
-    setPlayerCount(playerCount - 1);
+    let newList = [...playerList];
+    newList.splice(index, 1); // Remove the player from the playerList
+    setPlayerList(newList);
   }
 
   return (
     <div className="game-setup">
       <h1>Lobby</h1>
       <div className="flex">
-        {players.splice(0, playerCount).map((player, index) => (
-          <div key={index} className="player">
+        {playerList.map((player, index) => (
+          <div className="player" key={index}>
             {index > 2 ? (
               <button className="remove-player" onClick={() => removePlayer(index)}>
                 <p className="button-text">&#10006;</p>
@@ -167,15 +187,14 @@ function Lobby() {
               </button>
             </div>
             <input
-              className="player-name"
-              type="text"
-              defaultValue={player.playerName}
-              onChange={(e) => (player.playerName = e.target.value)}
-            />
+                className="player-name"
+                type="text"
+                defaultValue={player.playerName}
+                onChange={(e) => (player.playerName = e.target.value)}
+              />
           </div>
         ))}
-
-        {playerCount < 5 ? (
+        {playerList.length < 5 ? (
           <button className="add-player" onClick={addPlayer}>
             &#x2b;
           </button>
