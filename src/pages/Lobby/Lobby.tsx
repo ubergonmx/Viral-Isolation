@@ -3,6 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Lobby.css";
 
+interface Player {
+  playerRole: string;
+  image: string;
+  playerName: string;
+}
+
 function Lobby() {
   const { code } = useParams();
   const navigate = useNavigate();
@@ -98,7 +104,7 @@ function Lobby() {
   function addPlayer() {
     let newList = [...playerList];
     let usedImages = newList.map((player) => player.image); // survivor icons that are already used by other players
-    const availableImages = survivorImages.filter((image) => !usedImages.includes(image)); // survivor icons not yet used
+    let availableImages = survivorImages.filter((image) => !usedImages.includes(image)); // survivor icons not yet used
 
     if (playerList.length <= 5) {
       // Only 5 total players are allowed (1 - Viral, 4 - Survivors)
@@ -117,6 +123,38 @@ function Lobby() {
     setPlayerList(newList);
   }
 
+  const [availableImages, setAvailableImages] = useState(survivorImages);
+
+  function changeViralImage() {
+    let newList = [...playerList];
+    newList[0].image == viralImages[0] ? (newList[0].image = viralImages[1]) : (newList[0].image = viralImages[0]);
+    setPlayerList(newList);
+  }
+
+  function moveImageLeft(index: number) {
+    let newList = [...playerList];
+    if (index == 0) {
+      changeViralImage();
+    } else {
+      survivorImages.indexOf(newList[index].image) - 1 >= 0
+        ? (newList[index].image = survivorImages[survivorImages.indexOf(newList[index].image) - 1])
+        : null;
+      setPlayerList(newList);
+    }
+  }
+
+  function moveImageRight(index: number) {
+    let newList = [...playerList];
+    if (index == 0) {
+      changeViralImage();
+    } else {
+      survivorImages.indexOf(newList[index].image) + 1 < 8
+        ? (newList[index].image = survivorImages[survivorImages.indexOf(newList[index].image) + 1])
+        : null;
+      setPlayerList(newList);
+    }
+  }
+
   return (
     <div className="game-setup">
       <h1>Lobby</h1>
@@ -130,20 +168,20 @@ function Lobby() {
             ) : null}
             <h2 className="player-role">{player.playerRole}</h2>
             <div className="image-container">
-              <button className="change-image" onClick={() => console.log("move left")}>
+              <button className="change-image" onClick={() => moveImageLeft(index)}>
                 &#8249;
               </button>
               <img src={player.image} className="player-avatar"></img>
-              <button className="change-image" onClick={() => console.log("move right")}>
+              <button className="change-image" onClick={() => moveImageRight(index)}>
                 &#8250;
               </button>
             </div>
             <input
-                className="player-name"
-                type="text"
-                defaultValue={player.playerName}
-                onChange={(e) => (player.playerName = e.target.value)}
-              />
+              className="player-name"
+              type="text"
+              defaultValue={player.playerName}
+              onChange={(e) => (player.playerName = e.target.value)}
+            />
           </div>
         ))}
         {playerList.length < 5 ? (
