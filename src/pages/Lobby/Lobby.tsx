@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Lobby.css";
-import Player from "./PlayerCard/Player";
 
 function Lobby() {
   const { code } = useParams();
@@ -129,12 +128,22 @@ function Lobby() {
                 <p className="button-text">&#10006;</p>
               </button>
             ) : null}
-            <Player
-              key={index}
-              playerRole={player.playerRole}
-              image={player.image}
-              playerName={player.playerName + " " + (index + 1).toString()}
-            />
+            <h2 className="player-role">{player.playerRole}</h2>
+            <div className="image-container">
+              <button className="change-image" onClick={() => console.log("move left")}>
+                &#8249;
+              </button>
+              <img src={player.image} className="player-avatar"></img>
+              <button className="change-image" onClick={() => console.log("move right")}>
+                &#8250;
+              </button>
+            </div>
+            <input
+                className="player-name"
+                type="text"
+                defaultValue={player.playerName}
+                onChange={(e) => (player.playerName = e.target.value)}
+              />
           </div>
         ))}
         {playerList.length < 5 ? (
