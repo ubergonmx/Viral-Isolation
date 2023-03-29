@@ -17,7 +17,7 @@
 
 .player {
   position: relative;
-  padding: 30px;
+  padding: 20px;
   width: 200px;
   height: 300px;
   background-color: #000;
@@ -26,6 +26,7 @@
 
 .add-player {
   height: 50px;
+  width: 50px;
   border-radius: 50%;
 }
 
@@ -35,6 +36,7 @@
 
 .player-name {
   font-size: 15px;
+  overflow: hidden;
 }
 
 .player-avatar {
@@ -46,18 +48,39 @@
   margin-bottom: 25px;
 }
 
-.remove-player {
+.remove-player, .edit-name, .change-image {
   border-radius: 50%;
   font-size: smaller;
   height: 30px;
   width: 30px;
   padding: 0px;
+  
+}
+
+.remove-player {
   position: absolute;
   right: 5px;
   top: 5px;
 }
 
 .start-game, .cancel-game {
-  margin: 20px;
+  margin: 10px 20px;
   width: 150px;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+}
+
+.change-image {
+  background-color: transparent;
+  font-size: large;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px){
+  .flex {
+    flex-direction: column;
+  }
 }
