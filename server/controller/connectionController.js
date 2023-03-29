@@ -74,9 +74,9 @@ const connection = {
               if (roomType === "lobby") connection.getLobbies(io);
               else {
                 connection.getGames(io);
-                Game.find({ code: data.code })
+                Game.findOne({ code: data.code })
                   .then((gameConfig) => {
-                    socket.to(data.code).emit("game-config", gameConfig);
+                    socket.emit("game-config", gameConfig);
                   })
                   .catch((err) => {
                     rollbar.error(err);
@@ -89,9 +89,9 @@ const connection = {
               if (roomType === "lobby") connection.getLobbies(io);
               else {
                 connection.getGames(io);
-                Game.find({ code: data.code })
+                Game.findOne({ code: data.code })
                   .then((gameConfig) => {
-                    socket.to(data.code).emit("game-config", gameConfig);
+                    socket.emit("game-config", gameConfig);
                   })
                   .catch((err) => {
                     rollbar.error(err);
@@ -122,25 +122,9 @@ const connection = {
       console.log(err);
     });
     socket.leave(data.code);
-    console.log(`User ${socket.id} deleted the lobby with game code ${data.code}`);
+    console.log(`User ${socket.id} deleted the lobby/game with game code ${data.code}`);
   },
-  start: function (socket, io, data) {
-    const { code, viral, survivors } = data;
-    Game.findOneAndUpdate(
-      { code: data.code },
-      { $set: { "viral.name": viral.name, "viral.image": viral.image, survivors: survivors, status: "ongoing" } },
-    )
-      .then((doc) => {
-        if (doc) {
-          console.log(`User ${socket.id} started the game with game code ${data.code}`);
-          io.to(data.code).emit("started", { ...data, code: data.code });
-        }
-      })
-      .catch((err) => {
-        rollbar.error(err);
-        console.log(err);
-      });
-  },
+
   getLobbies: function (io) {
     Game.find({ connectedUser: null, status: "waiting" }, "code")
       .then((doc) => {

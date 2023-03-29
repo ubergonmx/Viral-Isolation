@@ -1,12 +1,43 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
+import { IHouse } from "../Game/GameInterface";
 import "./Lobby.css";
 
-interface Player {
-  playerRole: string;
-  image: string;
-  playerName: string;
+const config = {
+  numOfHouses: 17,
+  numOfSurvivors: 4,
+  totalItemCapacity: 44,
+};
+
+function getRandomCapacityNum(pool: any) {
+  let randomNum = Math.floor(Math.random() * pool.numOfSurvivors) + 1;
+  const capacity = Math.min(randomNum, pool.totalItemCapacity);
+  pool.totalItemCapacity -= capacity;
+  return capacity;
+}
+
+function generateHouses(config: any): IHouse[] {
+  const houses = [];
+  for (let i = 0; i < config.numOfHouses; i++) {
+    let num = getRandomCapacityNum(config);
+    houses.push({
+      id: i + 1,
+      itemCapacity: num,
+      numOfItems: num,
+    });
+  }
+
+  while (config.totalItemCapacity > 0) {
+    const randomHouse = Math.floor(Math.random() * houses.length);
+    if (houses[randomHouse].itemCapacity < 4) {
+      houses[randomHouse].itemCapacity += 1;
+      houses[randomHouse].numOfItems += 1;
+      config.totalItemCapacity -= 1;
+    }
+  }
+
+  return houses;
 }
 
 function Lobby() {
@@ -19,8 +50,16 @@ function Lobby() {
     socket.on("error", (data) => {
       if (data.action === "goHome") navigate("/", { state: { error: data.message } });
     });
+    socket.on("end", (data) => {
+      if (data.hasGameEnded) navigate(`/results/${data.code}`);
+    });
+    socket.on("game-config", (data) => {
+      console.log(data); // TODO: update player list
+    });
     return () => {
       socket.off("error");
+      socket.off("end");
+      socket.off("game-config");
     };
   }, []);
 
@@ -29,6 +68,7 @@ function Lobby() {
     console.log(code);
     const gameConfig = {
       code: code,
+      turnOrder: ["Marc", "John", "Jasper", "Jaime", "Daniel"], // TODO: randomize
       viral: {
         name: "Daniel",
         image: "/pieces/viral-1.png",
@@ -51,7 +91,9 @@ function Lobby() {
           image: "/pieces/player-4.png",
         },
       ],
+      houses: generateHouses(config),
     };
+
     socket.emit("start", gameConfig);
     socket.on("started", (game: any) => {
       console.log("game started");
