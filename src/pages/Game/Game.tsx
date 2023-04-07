@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
-import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
 import { IGame, IHouse, ISurvivor } from "./GameInterface";
 import House from "./House";
+import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
 
 function Game() {
   const { code } = useParams();
@@ -81,6 +81,10 @@ function Game() {
     <div>
       <h1>Game {roundCount && <>- R{roundCount}</>}</h1>
       {gameConfig && <h1>{playerTurn}'s turn</h1>}
+      <div className="flex gap-4">
+        <button onClick={() => console.log("infect")}>Infect</button>
+        <button onClick={() => console.log("heal")}>Heal</button>
+      </div>
       <h2>Item Slots</h2>
       <div className="houses">
         {currentSurvivor?.name === playerTurn &&

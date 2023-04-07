@@ -8,24 +8,23 @@ type event = {
 
 // create a list of events with their percentages
 const generalEvents: event = [
-  { name: "Meteor Shower", percent: 0.1 },
-  { name: "Earthquake", percent: 0.1 },
+  { name: "Earthquake", percent: 0.2 },
   { name: "Rainy Day", percent: 0.2 },
   { name: "Fallen Tree", percent: 0.3 },
   { name: "Fallen Boulder", percent: 0.3 },
 ];
 
 const viralEvents: event = [
-  { name: "Acid Reflux", percent: 0.4 },
-  { name: "Feeling Hungry", percent: 0.3 },
-  { name: "Found a Rat", percent: 0.3 },
+  { name: "Rat Snack", percent: 0.5 },
+  { name: "Random distraction", percent: 0.2 },
+  { name: "Nothing Happens", percent: 0.3 },
 ];
 
 const survivorEvents: event = [
   { name: "Muscle Cramps", percent: 0.2 },
-  { name: "Lucky Day", percent: 0.1 },
+  { name: "Lucky Day", percent: 0.2 },
   { name: "Ominous noises", percent: 0.2 },
-  { name: "Nothing Happens", percent: 0.5 },
+  { name: "Nothing Happens", percent: 0.4 },
 ];
 
 function showRandomEvent() {
@@ -133,7 +132,7 @@ export function GeneralEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-white text-center">{eventName}</p>
+                    <p className="text-center text-lg text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">
@@ -211,7 +210,7 @@ export function ViralEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-white text-center">{eventName}</p>
+                    <p className="text-center text-lg text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">
@@ -289,7 +288,7 @@ export function SurvivorEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-white text-center">{eventName}</p>
+                    <p className="text-center text-lg text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">

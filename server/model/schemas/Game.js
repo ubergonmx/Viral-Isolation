@@ -36,6 +36,7 @@ const gameSchema = new mongoose.Schema({
     {
       name: String,
       image: String,
+      keycardHouse: Number,
       hp: { type: Number, default: 5 },
       hasEscaped: { type: Boolean, default: false },
       isDead: { type: Boolean, default: false },

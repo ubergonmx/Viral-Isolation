@@ -1,6 +1,7 @@
 export interface ISurvivor {
   name: string;
   image: string;
+  keycardHouse: number;
   hp: number;
   hasEscaped: boolean;
   isDead: boolean;

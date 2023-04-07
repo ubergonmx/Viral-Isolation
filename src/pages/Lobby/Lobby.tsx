@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { IHouse } from "../Game/GameInterface";
 import "./Lobby.css";
@@ -7,8 +7,12 @@ import "./Lobby.css";
 const config = {
   numOfHouses: 17,
   numOfSurvivors: 4,
-  totalItemCapacity: 44,
+  totalItemCapacity: 50,
 };
+
+function generateRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 function getRandomCapacityNum(pool: any) {
   let randomNum = Math.floor(Math.random() * pool.numOfSurvivors) + 1;
@@ -68,27 +72,31 @@ function Lobby() {
     console.log(code);
     const gameConfig = {
       code: code,
-      turnOrder: ["Carlo", "Ysa", "Jasper", "Jaime", "Daniel"], // TODO: randomize
+      turnOrder: ["Carlo", "Jaime", "Jasper", "Daniel", "Sean"], // TODO: randomize
       viral: {
-        name: "Daniel",
+        name: "Sean",
         image: "/pieces/viral-1.png",
       },
       survivors: [
         {
           name: "Carlo",
           image: "/pieces/player-1.png",
+          keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
         {
-          name: "Ysa",
+          name: "Jaime",
           image: "/pieces/player-2.png",
+          keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
         {
           name: "Jasper",
           image: "/pieces/player-3.png",
+          keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
         {
-          name: "Jaime",
+          name: "Daniel",
           image: "/pieces/player-4.png",
+          keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
       ],
       houses: generateHouses(config),

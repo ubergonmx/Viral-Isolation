@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { ISurvivor } from "./GameInterface";
-import { useParams } from "react-router-dom";
 
 function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined; id: number; itemCapacity: number }) {
   const [itemsRemaining, setItemsRemaining] = useState(itemCapacity);
@@ -45,7 +45,7 @@ function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined
   function getItem() {
     if (!entered) {
       if (itemsRemaining > 0) {
-        setDisplay("Draw an item card");
+        setDisplay(survivor?.keycardHouse === id ? "Draw a keycard item" : "Draw an item card");
         setItemsRemaining((prevItemsRemaining) => prevItemsRemaining - 1);
         survivor?.housesEntered.push(id); // TODO: double check this
         setEntered(true);
@@ -96,7 +96,7 @@ function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined
                     {houseName}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-lg text-white text-center">{display}</p>
+                    <p className="text-center text-lg text-white">{display}</p>
                   </div>
 
                   <div className="mt-4">
