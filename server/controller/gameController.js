@@ -2,21 +2,69 @@ const Rollbar = require("rollbar");
 const rollbar = new Rollbar("1be8fa92af464d6abf8f2a1160fb0577");
 const Game = require("../model/schemas/Game");
 
+const config = {
+  numOfHouses: 17,
+  numOfSurvivors: 4,
+  totalItemCapacity: 50,
+};
+
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function getRandomCapacityNum(pool) {
+  let randomNum = Math.floor(Math.random() * pool.numOfSurvivors) + 1;
+  const capacity = Math.min(randomNum, pool.totalItemCapacity);
+  pool.totalItemCapacity -= capacity;
+  return capacity;
+}
+
+function generateHouses(config) {
+  const houses = [];
+  for (let i = 0; i < config.numOfHouses; i++) {
+    let num = getRandomCapacityNum(config);
+    houses.push({
+      id: i + 1,
+      itemCapacity: num,
+      numOfItems: num,
+    });
+  }
+
+  while (config.totalItemCapacity > 0) {
+    const randomHouse = Math.floor(Math.random() * houses.length);
+    if (houses[randomHouse].itemCapacity < 4) {
+      houses[randomHouse].itemCapacity += 1;
+      houses[randomHouse].numOfItems += 1;
+      config.totalItemCapacity -= 1;
+    }
+  }
+
+  return houses;
+}
+
 const game = {
   start: function (socket, io, data) {
-    console.log(data);
-    const { code, turnOrder, viral, survivors, houses } = data;
+    // console.log(data);
+    const { code, turnOrder, viral, survivors } = data;
+    const gameConfig = {
+      "viral.name": viral.name,
+      "viral.image": viral.image,
+      survivors: survivors.map((survivor) => {
+        return {
+          name: survivor.name,
+          image: survivor.image,
+          keycardHouse: generateRandomNumber(1, config.numOfHouses),
+        };
+      }),
+      houses: generateHouses(config),
+      turnOrder: turnOrder,
+      status: "ongoing",
+    };
+    console.log(gameConfig);
     Game.findOneAndUpdate(
       { code: code },
       {
-        $set: {
-          "viral.name": viral.name,
-          "viral.image": viral.image,
-          survivors: survivors,
-          houses: houses,
-          turnOrder: turnOrder,
-          status: "ongoing",
-        },
+        $set: gameConfig,
       },
     )
       .then((doc) => {

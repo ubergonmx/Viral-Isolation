@@ -1,3 +1,9 @@
+export interface IPlayer {
+  name: string;
+  image: string;
+  role: "Viral" | "Survivor";
+}
+
 export interface ISurvivor {
   name: string;
   image: string;

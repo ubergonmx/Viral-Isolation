@@ -1,47 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
-import { IHouse } from "../Game/GameInterface";
+import { IPlayer } from "../Game/GameInterface";
 import "./Lobby.css";
 
-const config = {
-  numOfHouses: 17,
-  numOfSurvivors: 4,
-  totalItemCapacity: 50,
-};
-
-function generateRandomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function getRandomCapacityNum(pool: any) {
-  let randomNum = Math.floor(Math.random() * pool.numOfSurvivors) + 1;
-  const capacity = Math.min(randomNum, pool.totalItemCapacity);
-  pool.totalItemCapacity -= capacity;
-  return capacity;
-}
-
-function generateHouses(config: any): IHouse[] {
-  const houses = [];
-  for (let i = 0; i < config.numOfHouses; i++) {
-    let num = getRandomCapacityNum(config);
-    houses.push({
-      id: i + 1,
-      itemCapacity: num,
-      numOfItems: num,
-    });
+function shuffle(array: any[]) {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
-
-  while (config.totalItemCapacity > 0) {
-    const randomHouse = Math.floor(Math.random() * houses.length);
-    if (houses[randomHouse].itemCapacity < 4) {
-      houses[randomHouse].itemCapacity += 1;
-      houses[randomHouse].numOfItems += 1;
-      config.totalItemCapacity -= 1;
-    }
-  }
-
-  return houses;
+  return array;
 }
 
 function Lobby() {
@@ -66,36 +40,17 @@ function Lobby() {
   function startGame() {
     console.log("start game");
     console.log(code);
+    const viral = playerList.find((player) => player.role === "Viral");
+    const survivors = playerList.filter((player) => player.role === "Survivor");
+    const turnOrder = [...shuffle(survivors.map((survivor) => survivor.name)), viral?.name];
     const gameConfig = {
       code: code,
-      turnOrder: ["Carlo", "Marc", "Jasper", "John", "Sean"], // TODO: randomize
+      turnOrder: turnOrder,
       viral: {
-        name: "Sean",
-        image: "/pieces/viral-2.png",
+        name: viral?.name,
+        image: viral?.image,
       },
-      survivors: [
-        {
-          name: "Carlo",
-          image: "/pieces/player-1.png",
-          keycardHouse: generateRandomNumber(1, config.numOfHouses),
-        },
-        {
-          name: "Marc",
-          image: "/pieces/player-2.png",
-          keycardHouse: generateRandomNumber(1, config.numOfHouses),
-        },
-        {
-          name: "Jasper",
-          image: "/pieces/player-3.png",
-          keycardHouse: generateRandomNumber(1, config.numOfHouses),
-        },
-        {
-          name: "John",
-          image: "/pieces/player-4.png",
-          keycardHouse: generateRandomNumber(1, config.numOfHouses),
-        },
-      ],
-      houses: generateHouses(config),
+      survivors: survivors,
     };
 
     socket.emit("start", gameConfig);
@@ -126,26 +81,23 @@ function Lobby() {
     "/pieces/player-8.png",
   ];
 
-  // Default three players
-  const players = [
+  const [playerList, setPlayerList] = useState<IPlayer[]>([
     {
-      playerRole: "Viral",
+      role: "Viral",
       image: "/pieces/viral-1.png",
-      playerName: "Player",
+      name: "Viral",
     },
     {
-      playerRole: "Survivor",
+      role: "Survivor",
       image: "/pieces/player-1.png",
-      playerName: "Player",
+      name: "Survivor 1",
     },
     {
-      playerRole: "Survivor",
+      role: "Survivor",
       image: "/pieces/player-2.png",
-      playerName: "Player",
+      name: "Survivor 2",
     },
-  ];
-
-  const [playerList, setPlayerList] = useState(players); // Stores the information of the current players
+  ]); // Stores the information of the current players
 
   function addPlayer() {
     let newList = [...playerList];
@@ -155,9 +107,9 @@ function Lobby() {
     if (playerList.length <= 5) {
       // Only 5 total players are allowed (1 - Viral, 4 - Survivors)
       newList.push({
-        playerRole: "Survivor",
+        role: "Survivor",
         image: availableImages[Math.floor(Math.random() * availableImages.length)], // Set a random image not yet used by other survivors
-        playerName: "Player",
+        name: `Survivor ${playerList.length}`,
       });
     }
     setPlayerList(newList); // updates the playerList
@@ -203,7 +155,9 @@ function Lobby() {
 
   return (
     <div className="game-setup">
-      <h1>Lobby</h1>
+      <h1>
+        Lobby - <span className="">{code}</span>
+      </h1>
       <div className="flex">
         {playerList.map((player, index) => (
           <div className="player" key={index}>
@@ -212,7 +166,7 @@ function Lobby() {
                 <p className="button-text">&#10006;</p>
               </button>
             ) : null}
-            <h2 className="player-role">{player.playerRole}</h2>
+            <h2 className="player-role">{player.role}</h2>
             <div className="image-container">
               <button className="change-image" onClick={() => moveImageLeft(index)}>
                 &#8249;
@@ -225,8 +179,8 @@ function Lobby() {
             <input
               className="player-name"
               type="text"
-              defaultValue={player.playerName}
-              onChange={(e) => (player.playerName = e.target.value)}
+              defaultValue={player.name}
+              onChange={(e) => (player.name = e.target.value)}
             />
           </div>
         ))}
