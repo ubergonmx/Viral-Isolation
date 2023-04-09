@@ -22,54 +22,9 @@ function Lobby() {
   const { code } = useParams();
   const navigate = useNavigate();
   const socket = useSocket();
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    socket.emit("join", { code: code });
-    socket.on("error", (data) => {
-      if (data.action === "goHome") navigate("/", { state: { error: data.message } });
-    });
-    socket.on("end", (data) => {
-      if (data.hasGameEnded) navigate(`/results/${data.code}`);
-    });
-    return () => {
-      socket.off("error");
-      socket.off("end");
-    };
-  }, []);
-
-  function startGame() {
-    console.log("start game");
-    console.log(code);
-    const viral = playerList.find((player) => player.role === "Viral");
-    const survivors = playerList.filter((player) => player.role === "Survivor");
-    const turnOrder = [...shuffle(survivors.map((survivor) => survivor.name)), viral?.name];
-    const gameConfig = {
-      code: code,
-      turnOrder: turnOrder,
-      viral: {
-        name: viral?.name,
-        image: viral?.image,
-      },
-      survivors: survivors,
-    };
-
-    socket.emit("start", gameConfig);
-    socket.on("started", (game: any) => {
-      console.log("game started");
-      navigate("/game/" + game.code);
-    });
-  }
-
-  function deleteGame() {
-    console.log("delete game");
-    socket.emit("delete", { code: code });
-    navigate("/");
-  }
-
-  // List of viral icons
   const viralImages = ["/pieces/viral-1.png", "/pieces/viral-2.png"];
-
-  // List of survivor icons
   const survivorImages = [
     "/pieces/player-1.png",
     "/pieces/player-2.png",
@@ -80,7 +35,6 @@ function Lobby() {
     "/pieces/player-7.png",
     "/pieces/player-8.png",
   ];
-
   const [playerList, setPlayerList] = useState<IPlayer[]>([
     {
       role: "Viral",
@@ -97,7 +51,21 @@ function Lobby() {
       image: "/pieces/player-2.png",
       name: "Survivor 2",
     },
-  ]); // Stores the information of the current players
+  ]);
+
+  useEffect(() => {
+    socket.emit("join", { code: code });
+    socket.on("error", (data) => {
+      if (data.action === "goHome") navigate("/", { state: { error: data.message } });
+    });
+    socket.on("end", (data) => {
+      if (data.hasGameEnded) navigate(`/results/${data.code}`);
+    });
+    return () => {
+      socket.off("error");
+      socket.off("end");
+    };
+  }, []);
 
   function addPlayer() {
     let newList = [...playerList];
@@ -120,8 +88,6 @@ function Lobby() {
     newList.splice(index, 1); // Remove the player from the playerList
     setPlayerList(newList);
   }
-
-  const [availableImages, setAvailableImages] = useState(survivorImages);
 
   function changeViralImage() {
     let newList = [...playerList];
@@ -153,8 +119,50 @@ function Lobby() {
     }
   }
 
+  function startGame() {
+    const viral = playerList.find((player) => player.role === "Viral");
+    const survivors = playerList.filter((player) => player.role === "Survivor");
+
+    // survivors must have unique names and images
+    const survivorNames = survivors.map((survivor) => survivor.name);
+    const survivorImages = survivors.map((survivor) => survivor.image);
+    if (new Set(survivorNames).size !== survivorNames.length) {
+      setError("Survivor names must be unique");
+      return;
+    }
+    if (new Set(survivorImages).size !== survivorImages.length) {
+      setError("Survivor images must be unique");
+      return;
+    }
+
+    const turnOrder = [...shuffle(survivors.map((survivor) => survivor.name)), viral?.name];
+    const gameConfig = {
+      code: code,
+      turnOrder: turnOrder,
+      viral: {
+        name: viral?.name,
+        image: viral?.image,
+      },
+      survivors: survivors,
+    };
+
+    console.log("start game");
+    console.log(code);
+    socket.emit("start", gameConfig);
+    socket.on("started", (game: any) => {
+      console.log("game started");
+      navigate("/game/" + game.code);
+    });
+  }
+
+  function deleteGame() {
+    console.log("delete game");
+    socket.emit("delete", { code: code });
+    navigate("/");
+  }
+
   return (
-    <div className="game-setup">
+    <div className="grid gap-10">
       <h1>
         Lobby - <span className="">{code}</span>
       </h1>
@@ -190,14 +198,17 @@ function Lobby() {
           </button>
         ) : null}
       </div>
-
       <div>
-        <button className="start-game" onClick={startGame}>
-          Start Game
-        </button>
-        <button className="cancel-game" onClick={deleteGame}>
-          Cancel
-        </button>
+        {/* show error with tailwind design*/}
+        {error ? <p className="text-red-500">{error}</p> : null}
+        <div>
+          <button className="start-game" onClick={startGame}>
+            Start Game
+          </button>
+          <button className="cancel-game" onClick={deleteGame}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

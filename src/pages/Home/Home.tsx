@@ -34,6 +34,7 @@ function Home() {
     });
     return () => {
       socket.off("lobbies");
+      socket.off("games");
     };
   }, []);
 

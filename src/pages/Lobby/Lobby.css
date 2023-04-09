@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities; */
 
-.game-setup {
-  display: grid;
-  gap: 50px;
-}
-
 .flex {
   display: flex;
   flex-wrap: wrap;
@@ -36,7 +31,7 @@
 
 .player-name {
   font-size: 15px;
-  text-align:center;
+  text-align: center;
   width: 100%;
   overflow: hidden;
 }
@@ -50,13 +45,14 @@
   margin-bottom: 25px;
 }
 
-.remove-player, .edit-name, .change-image {
+.remove-player,
+.edit-name,
+.change-image {
   border-radius: 50%;
   font-size: smaller;
   height: 30px;
   width: 30px;
   padding: 0px;
-  
 }
 
 .remove-player {
@@ -65,7 +61,8 @@
   top: 5px;
 }
 
-.start-game, .cancel-game {
+.start-game,
+.cancel-game {
   margin: 10px 20px;
   width: 150px;
 }
@@ -81,7 +78,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
   .flex {
     flex-direction: column;
   }
