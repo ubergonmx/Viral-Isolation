@@ -23,7 +23,7 @@ const viralEvents: event = [
 const survivorEvents: event = [
   { name: "Muscle Cramps", percent: 0.2 },
   { name: "Lucky Day", percent: 0.2 },
-  { name: "Ominous noises", percent: 0.2 },
+  { name: "Panic attack", percent: 0.2 },
   { name: "Nothing Happens", percent: 0.4 },
 ];
 

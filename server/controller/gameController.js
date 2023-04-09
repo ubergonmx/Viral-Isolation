@@ -58,7 +58,38 @@ const game = {
         console.log(err);
       });
   },
-  // TODO: fix this function - apply -1 hp if infected
+  infectSurvivor: function (socket, data) {
+    const { code, survivor } = data;
+    Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.isInfected": true } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${survivor.name} is infected`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
+  cureSurvivor: function (socket, data) {
+    const { code, survivor } = data;
+    Game.findOneAndUpdate(
+      { code: code, "survivors.name": survivor.name },
+      { $set: { "survivors.$.isInfected": false } },
+    )
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${survivor.name} is cured`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
+  // TODO:
+  // [ ] increase roundsAlive for survivor
+  // [ ] if survivor is not infected, increment numOfRoundsUninfected
   endTurn: function (socket, data) {
     const { code, turn, round } = data;
     Game.findOneAndUpdate({ code: code }, { $set: { turn: turn, round: round } })
@@ -72,6 +103,7 @@ const game = {
         console.log(err);
       });
   },
+  // TODO: add a check if the survivor is already dead
   nextTurn: function (socket, data) {
     const { code, turn, round } = data;
     Game.findOneAndUpdate({ code: code }, { $set: { turn: turn, round: round } })
@@ -85,6 +117,7 @@ const game = {
         console.log(err);
       });
   },
+  getResults: function (socket, data) {},
 };
 
 module.exports = game;

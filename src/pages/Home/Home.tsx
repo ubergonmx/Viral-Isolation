@@ -1,6 +1,6 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
-import { useState, useEffect } from "react";
 
 function generateCode() {
   let code = "";
@@ -48,11 +48,11 @@ function Home() {
 
   return (
     <div className="flex flex-col gap-2">
-      <h1>Viral Isolation</h1>
+      <h1 className="font-title">Viral Isolation</h1>
       <button onClick={createGame}>Create a new game</button>
       {state?.error && <p className="text-red-500">{state.error}</p>}
       <br />
-      <div className="grid grid-cols-2 px-4 divide-x">
+      <div className="grid grid-cols-2 divide-x px-4">
         <div className="flex flex-col px-2">
           <h2>Open Lobbies</h2>
           {lobbies.length > 0 &&

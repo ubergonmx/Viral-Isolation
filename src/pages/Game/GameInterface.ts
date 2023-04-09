@@ -2,7 +2,6 @@ export interface ISurvivor {
   name: string;
   image: string;
   keycardHouse: number;
-  hp: number;
   hasEscaped: boolean;
   isDead: boolean;
   isInfected: boolean;
@@ -10,7 +9,6 @@ export interface ISurvivor {
   numOfEvents: number;
   roundsAlive: number;
   numOfRoundsUninfected: number;
-  straightRoundsUninfected: number;
   housesEntered: number[];
 }
 export interface IViral {

@@ -56,6 +56,11 @@ io.on("connection", (socket) => {
   // socket.on("get-viral-item", (data) => game.getViralItem(socket, data));
   socket.on("end-turn", (data) => game.endTurn(socket, data));
   socket.on("next-turn", (data) => game.nextTurn(socket, data));
+  socket.on("infectSurvivor", (data) => game.infectSurvivor(socket, data));
+  socket.on("cureSurvivor", (data) => game.cureSurvivor(socket, data));
+
+  // Results events
+  socket.on("get-results", () => game.getResults(io));
 
   // obsolete
   socket.on("getItem", (data) => {

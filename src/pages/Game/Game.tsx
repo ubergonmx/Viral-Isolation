@@ -52,7 +52,9 @@ function Game() {
   }
 
   function getCurrentSurvivor(newPlayerTurn: string = playerTurn) {
-    return gameConfig?.survivors.find((survivor) => survivor.name === newPlayerTurn);
+    const survivor = gameConfig?.survivors.find((survivor) => survivor.name === newPlayerTurn);
+    console.log(survivor);
+    return survivor;
   }
 
   function endTurn() {
@@ -77,28 +79,92 @@ function Game() {
     });
   }
 
+  function handleInfect() {
+    socket.emit("infectSurvivor", { code: code, survivor: currentSurvivor });
+    setGameConfig({
+      ...gameConfig!,
+      survivors: gameConfig!.survivors.map((survivor) => {
+        if (survivor.name === currentSurvivor?.name) survivor.isInfected = true;
+        return survivor;
+      }),
+    });
+  }
+
+  function handleInfectByViral(survivorName: string) {
+    const survivor = gameConfig?.survivors.find((survivor) => survivor.name === survivorName);
+    console.log(survivorName);
+    if (!survivor) return;
+    socket.emit("infectSurvivor", { code: code, survivor: survivor });
+    setGameConfig({
+      ...gameConfig!,
+      survivors: gameConfig!.survivors.map((survivor) => {
+        if (survivor.name === survivor?.name) survivor.isInfected = true;
+        return survivor;
+      }),
+    });
+  }
+
+  function handleCure() {
+    socket.emit("cureSurvivor", { code: code, survivor: currentSurvivor });
+    setGameConfig((prevGameConfig) => {
+      let newGameConfig = { ...prevGameConfig! };
+      newGameConfig.survivors = newGameConfig.survivors.map((survivor) => {
+        if (survivor.name === currentSurvivor?.name) {
+          survivor.isInfected = false;
+        }
+        return survivor;
+      });
+      return newGameConfig;
+    });
+  }
+
   return (
     <div>
       <h1>Game {roundCount && <>- R{roundCount}</>}</h1>
       {gameConfig && <h1>{playerTurn}'s turn</h1>}
-      <div className="flex gap-4">
-        <button onClick={() => console.log("infect")}>Infect</button>
-        <button onClick={() => console.log("heal")}>Heal</button>
-      </div>
-      <h2>Item Slots</h2>
-      <div className="houses">
-        {currentSurvivor?.name === playerTurn &&
-          gameConfig!.houses?.map((house: IHouse) => (
-            <House key={`${house.id}`} id={house.id} itemCapacity={house.itemCapacity} survivor={currentSurvivor} />
-          ))}
-      </div>
-
+      {currentSurvivor !== undefined && (
+        <>
+          <div className="flex gap-4">
+            {currentSurvivor?.isInfected && <h2>Infected</h2>}
+            <button onClick={handleInfect} disabled={currentSurvivor?.isInfected}>
+              Infect
+            </button>
+            <button onClick={handleCure} disabled={!currentSurvivor?.isInfected}>
+              Heal
+            </button>
+          </div>
+          <h2>Item Slots</h2>
+          <div className="houses">
+            {currentSurvivor !== undefined &&
+              gameConfig!.houses?.map((house: IHouse) => (
+                <House key={`${house.id}`} id={house.id} itemCapacity={house.itemCapacity} survivor={currentSurvivor} />
+              ))}
+          </div>
+          <SurvivorEvent />
+        </>
+      )}
+      {currentSurvivor === undefined && (
+        <>
+          <div className="p-4">
+            <h2>Infect Players</h2>
+            <div className="flex gap-2">
+              {gameConfig?.survivors.map((survivor) =>
+                !survivor.isInfected ? (
+                  <div key={survivor.name}>
+                    <button>{survivor.name}</button>
+                  </div>
+                ) : null,
+              )}
+            </div>
+          </div>
+          <ViralEvent />
+        </>
+      )}
       <GeneralEvent />
-      <ViralEvent />
-      <SurvivorEvent />
-
-      <button onClick={endTurn}>End Turn</button>
-      <button onClick={deleteGame}>Delete Game</button>
+      <div className="flex gap-40 pt-4">
+        <button onClick={endTurn}>End Turn</button>
+        <button onClick={deleteGame}>Delete Game</button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,15 @@
+@font-face {
+  font-family: "HouseOfTerror";
+  src: url("./fonts/HouseOfTerror.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "BurbankBigCondensed";
+  src: url("./fonts/BurbankBigCondensed.otf") format("opentype");
+}
+
 :root {
-  @apply leading-normal font-normal text-[rgba(255,255,255,0.87)] bg-[#242424];
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  @apply bg-[#242424] font-normal leading-normal text-[rgba(255,255,255,0.87)];
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,13 +22,13 @@ a {
   text-decoration: inherit;
 }
 body {
-  @apply flex place-items-center min-w-[320px] min-h-screen m-0;
+  @apply m-0 flex min-h-screen min-w-[320px] place-items-center;
 }
 h1 {
   @apply text-[3.2em] leading-[1.1];
 }
 button {
-  @apply border text-[1em] font-medium bg-[#1a1a1a] cursor-pointer transition-[border-color] duration-[0.25s] px-[1.2em] py-[0.6em] rounded-lg border-solid border-transparent hover:border-[#646cff];
+  @apply cursor-pointer rounded-lg border border-solid border-transparent bg-[#1a1a1a] px-[1.2em] py-[0.6em] text-[1em] font-medium transition-[border-color] duration-[0.25s] hover:border-[#646cff];
   font-family: inherit;
 }
 button:focus,
@@ -28,7 +37,7 @@ button:focus-visible {
 }
 @media (prefers-color-scheme: light) {
   :root {
-    @apply text-[#213547] bg-white;
+    @apply bg-white text-[#213547];
   }
   a:hover {
     @apply text-[#747bff];

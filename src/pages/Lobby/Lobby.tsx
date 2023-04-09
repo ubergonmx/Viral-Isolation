@@ -57,13 +57,9 @@ function Lobby() {
     socket.on("end", (data) => {
       if (data.hasGameEnded) navigate(`/results/${data.code}`);
     });
-    socket.on("game-config", (data) => {
-      console.log(data); // TODO: update player list
-    });
     return () => {
       socket.off("error");
       socket.off("end");
-      socket.off("game-config");
     };
   }, []);
 
@@ -72,10 +68,10 @@ function Lobby() {
     console.log(code);
     const gameConfig = {
       code: code,
-      turnOrder: ["Carlo", "Jaime", "Jasper", "Daniel", "Sean"], // TODO: randomize
+      turnOrder: ["Carlo", "Marc", "Jasper", "John", "Sean"], // TODO: randomize
       viral: {
         name: "Sean",
-        image: "/pieces/viral-1.png",
+        image: "/pieces/viral-2.png",
       },
       survivors: [
         {
@@ -84,7 +80,7 @@ function Lobby() {
           keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
         {
-          name: "Jaime",
+          name: "Marc",
           image: "/pieces/player-2.png",
           keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
@@ -94,7 +90,7 @@ function Lobby() {
           keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
         {
-          name: "Daniel",
+          name: "John",
           image: "/pieces/player-4.png",
           keycardHouse: generateRandomNumber(1, config.numOfHouses),
         },
