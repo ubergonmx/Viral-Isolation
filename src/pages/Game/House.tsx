@@ -2,32 +2,20 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
-import { ISurvivor } from "./GameInterface";
+import { IHouse, ISurvivor } from "./GameInterface";
 
-function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined; id: number; itemCapacity: number }) {
+function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHouse; dispatch: any }) {
+  const { id, itemCapacity } = house;
+
+  const socket = useSocket();
+  const { code } = useParams();
+
   const [itemsRemaining, setItemsRemaining] = useState(itemCapacity);
   const [display, setDisplay] = useState("");
   const [entered, setEntered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const socket = useSocket();
-  const { code } = useParams();
+
   const houseName = "House " + id;
-
-  // useEffect(() => {
-  //   function receiveItem(receivedId: number, item: string) {
-  //     if (receivedId === id) {
-  //       console.log("Received item: " + item);
-  //       setItem(true);
-  //       setItemsRemaining((prevItemsRemaining) => prevItemsRemaining - 1);
-  //     }
-  //   }
-
-  //   socket.on("receive-survivor-item", receiveItem);
-
-  //   return () => {
-  //     socket.off("receive-survivor-item", receiveItem);
-  //   };
-  // }, [socket, id]);
 
   useEffect(() => {
     console.log("survivor: " + survivor?.name);
@@ -47,9 +35,12 @@ function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined
       if (itemsRemaining > 0) {
         setDisplay(survivor?.keycardHouse === id ? "Draw a keycard item" : "Draw an item card");
         setItemsRemaining((prevItemsRemaining) => prevItemsRemaining - 1);
-        survivor?.housesEntered.push(id); // TODO: double check this
+        const updateHouse = { ...house, itemCapacity: itemsRemaining - 1 };
+        dispatch({ type: "GET_ITEM", payload: updateHouse });
         setEntered(true);
         socket.emit("get-survivor-item", { code: code, survivor: survivor, houseId: id });
+        const updateSurvivor = { ...survivor, housesEntered: [...survivor.housesEntered, id] };
+        dispatch({ type: "SET_SURVIVOR", payload: updateSurvivor });
       } else {
         // TODO: add socket emit to enter house
         setDisplay("No more items in this house");
@@ -61,11 +52,13 @@ function House({ survivor, id, itemCapacity }: { survivor: ISurvivor | undefined
 
   return (
     <>
-      <div>
+      <div className="flex place-content-center">
         <button onClick={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50">
-          House {id}
+          {houseName}
         </button>
+        {/* <LongPressButton text={houseName} callback={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50" /> */}
       </div>
+
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child

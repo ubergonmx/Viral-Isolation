@@ -84,7 +84,7 @@ app.get(["/", "/:name"], (req, res) => {
 db.connectDB();
 
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}(${process.env.PORT})`);
+  console.log(`Server is running on port ${port} (${process.env.PORT})`);
 });
 
 instrument(io, { auth: false });

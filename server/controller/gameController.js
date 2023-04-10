@@ -2,10 +2,12 @@ const Rollbar = require("rollbar");
 const rollbar = new Rollbar("1be8fa92af464d6abf8f2a1160fb0577");
 const Game = require("../model/schemas/Game");
 
-const config = {
-  numOfHouses: 17,
-  numOfSurvivors: 4,
-  totalItemCapacity: 50,
+const getConfig = () => {
+  return {
+    numOfHouses: 17,
+    numOfSurvivors: 4,
+    totalItemCapacity: 50,
+  };
 };
 
 function generateRandomNumber(min, max) {
@@ -44,8 +46,9 @@ function generateHouses(config) {
 
 const game = {
   start: function (socket, io, data) {
-    // console.log(data);
+    const config = getConfig();
     const { code, turnOrder, viral, survivors } = data;
+    const houses = generateHouses(config);
     const gameConfig = {
       "viral.name": viral.name,
       "viral.image": viral.image,
@@ -56,11 +59,12 @@ const game = {
           keycardHouse: generateRandomNumber(1, config.numOfHouses),
         };
       }),
-      houses: generateHouses(config),
+      houses: houses,
       turnOrder: turnOrder,
       status: "ongoing",
     };
     console.log(gameConfig);
+
     Game.findOneAndUpdate(
       { code: code },
       {

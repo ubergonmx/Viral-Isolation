@@ -22,12 +22,12 @@ export interface IViral {
   image: string;
   skillPoints: number;
   skill: {
-    power: boolean;
-    ranged: boolean;
-    toxic: boolean;
+    acidReflux: boolean;
     agility: boolean;
     tank: boolean;
+    mindsEye: boolean;
     leaping: boolean;
+    onslaught: boolean;
     apex: boolean;
   };
   numOfInfections: number;

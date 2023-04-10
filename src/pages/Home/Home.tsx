@@ -32,19 +32,21 @@ function Home() {
       console.log(rooms);
       setGames(rooms);
     });
+
+    socket.on("created", (room: any) => {
+      console.log("lobby created");
+      navigate("/lobby/" + room.code);
+    });
     return () => {
       socket.off("lobbies");
       socket.off("games");
+      socket.off("created");
     };
   }, []);
 
   //create game
   function createGame() {
     socket.emit("create", { code: generateCode() });
-    socket.on("created", (room: any) => {
-      console.log("lobby created");
-      navigate("/lobby/" + room.code);
-    });
   }
 
   return (

@@ -61,9 +61,15 @@ function Lobby() {
     socket.on("end", (data) => {
       if (data.hasGameEnded) navigate(`/results/${data.code}`);
     });
+
+    socket.on("started", (game: any) => {
+      console.log("game started");
+      navigate("/game/" + game.code);
+    });
     return () => {
       socket.off("error");
       socket.off("end");
+      socket.off("started");
     };
   }, []);
 
@@ -149,10 +155,6 @@ function Lobby() {
     console.log("start game");
     console.log(code);
     socket.emit("start", gameConfig);
-    socket.on("started", (game: any) => {
-      console.log("game started");
-      navigate("/game/" + game.code);
-    });
   }
 
   function deleteGame() {

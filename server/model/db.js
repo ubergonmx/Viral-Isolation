@@ -22,7 +22,7 @@ const db = {
       db.once("open", () => {
         console.log("Database connected successfully");
       });
-      console.log("Connected to: " + uri);
+      console.log("Connected to: " + (new String(uri).includes("mongodb+srv") ? "MongoDB Atlas server" : uri));
     } catch (error) {
       rollbar.error(error);
       console.log(error);
