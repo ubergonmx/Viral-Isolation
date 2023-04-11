@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { GameConfigActionType } from "./gameConfigReducer";
-import { IHouse, ISurvivor } from "./GameInterface";
+import { IHouse, ISurvivor } from "./gameInterface";
 import LongPressButton from "./LongPressButton";
 
 function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHouse; dispatch: any }) {
@@ -91,13 +91,13 @@ function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHou
                     {houseName}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-center text-lg text-white">{display}</p>
+                    <p className="text-center text-2xl text-white">{display}</p>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="text-m inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       OK

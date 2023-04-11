@@ -2,8 +2,9 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
-import { GameConfigActionType, gameConfigReducer, INITIAL_GAME_CONFIG } from "./gameConfigReducer";
-import { IHouse, ISurvivor, IViral } from "./GameInterface";
+import { INITIAL_GAME_CONFIG } from "./gameConfig";
+import { GameConfigActionType, gameConfigReducer } from "./gameConfigReducer";
+import { IHouse, ISurvivor, IViral } from "./gameInterface";
 import House from "./House";
 import LongPressButton from "./LongPressButton";
 import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
@@ -37,7 +38,7 @@ function Game() {
     };
   }, []);
 
-  // if its round 10, announce keycards
+  // if its round 10, announce keycard locations
   useEffect(() => {
     if (gameConfig.round === 10) {
       let announcement = "Attention!!! Keycard locations of the following survivors: ";
@@ -53,6 +54,8 @@ function Game() {
     }
   }, [gameConfig.round]);
 
+  // TODO: useEffect next-turn or logGameConfig when gameConfig.turn changes
+
   function deleteGame() {
     console.log("delete game");
     socket.emit("delete", { code: code });
@@ -65,18 +68,6 @@ function Game() {
     dispatch({ type: GameConfigActionType.END_TURN });
     socket.emit("end-turn", { code: code, turn: gameConfig.turn, round: gameConfig.round });
   }
-
-  // function handleInfect() {
-  //   socket.emit("infectSurvivor", { code: code, survivor: currentSurvivor });
-  //   setGameConfig({
-  //     ...gameConfig!,
-  //     survivors: gameConfig!.survivors.map((survivor) => {
-  //       if (survivor.name === currentSurvivor?.name) survivor.isInfected = true;
-  //       return survivor;
-  //     }),
-  //   });
-  // }
-
   // function handleInfectByViral(survivorName: string) {
   //   const survivor = gameConfig?.survivors.find((survivor) => survivor.name === survivorName);
   //   console.log(survivorName);
@@ -90,23 +81,20 @@ function Game() {
   //     }),
   //   });
   // }
+  function survivorInfect() {
+    dispatch({ type: GameConfigActionType.SURVIVOR_INFECT, payload: getCurrentPlayer() as ISurvivor });
+  }
 
-  // function handleCure() {
-  //   socket.emit("cureSurvivor", { code: code, survivor: currentSurvivor });
-  //   setGameConfig((prevGameConfig) => {
-  //     let newGameConfig = { ...prevGameConfig! };
-  //     newGameConfig.survivors = newGameConfig.survivors.map((survivor) => {
-  //       if (survivor.name === currentSurvivor?.name) {
-  //         survivor.isInfected = false;
-  //       }
-  //       return survivor;
-  //     });
-  //     return newGameConfig;
-  //   });
-  // }
+  function survivorCure() {
+    dispatch({ type: GameConfigActionType.SURVIVOR_CURE, payload: getCurrentPlayer() as ISurvivor });
+  }
 
   function survivorEscape() {
     dispatch({ type: GameConfigActionType.SURVIVOR_ESCAPE, payload: getCurrentPlayer() as ISurvivor });
+  }
+
+  function survivorDie() {
+    dispatch({ type: GameConfigActionType.SURVIVOR_DIE, payload: getCurrentPlayer() as ISurvivor });
   }
 
   function isSurvivorInfected(survivorName: string) {

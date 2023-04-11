@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
-import { IPlayer } from "../Game/GameInterface";
+import { IPlayer } from "../Game/gameInterface";
 import "./Lobby.css";
 import player1 from "/pieces/player-1.png";
 import player2 from "/pieces/player-2.png";

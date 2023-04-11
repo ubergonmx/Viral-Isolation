@@ -27,12 +27,6 @@ const survivorEvents: event = [
   { name: "Nothing Happens", percent: 0.4 },
 ];
 
-function showRandomEvent() {
-  // show Headless UI modal
-  // show the name of the random event
-  // show the description of the random event
-}
-
 // create a function to randomly select an event
 function getRandomEvent(event: event) {
   // create a random number between 0 and 1
@@ -51,30 +45,6 @@ function getRandomEvent(event: event) {
   }
   return "error";
 }
-
-// function RandomEvent() {
-//   // return <button onClick={() => showRandomEvent()}>Random Event</button>;
-//   let [isOpen, setIsOpen] = useState(true)
-
-//   return (
-//     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-//       <Dialog.Panel>
-//         <Dialog.Title>Deactivate account</Dialog.Title>
-//         <Dialog.Description>
-//           This will permanently deactivate your account
-//         </Dialog.Description>
-
-//         <p>
-//           Are you sure you want to deactivate your account? All of your data
-//           will be permanently removed. This action cannot be undone.
-//         </p>
-
-//         <button onClick={() => setIsOpen(false)}>Deactivate</button>
-//         <button onClick={() => setIsOpen(false)}>Cancel</button>
-//       </Dialog.Panel>
-//     </Dialog>
-//   )
-// }
 
 export function GeneralEvent() {
   let [isOpen, setIsOpen] = useState(false);
@@ -96,7 +66,7 @@ export function GeneralEvent() {
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           {eventType}
         </button>
@@ -132,13 +102,13 @@ export function GeneralEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-center text-lg text-white">{eventName}</p>
+                    <p className="text-center text-2xl text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       OK
@@ -174,7 +144,7 @@ export function ViralEvent() {
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           {eventType}
         </button>
@@ -210,13 +180,13 @@ export function ViralEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-center text-lg text-white">{eventName}</p>
+                    <p className="text-center text-2xl text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       OK
@@ -252,7 +222,7 @@ export function SurvivorEvent() {
         <button
           type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           {eventType}
         </button>
@@ -288,13 +258,13 @@ export function SurvivorEvent() {
                     {eventType}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-center text-lg text-white">{eventName}</p>
+                    <p className="text-center text-2xl text-white">{eventName}</p>
                   </div>
 
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-slate-700 px-4 py-2 font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={closeModal}
                     >
                       OK

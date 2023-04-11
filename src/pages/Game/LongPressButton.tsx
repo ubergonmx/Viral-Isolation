@@ -29,10 +29,13 @@ function LongPressButton({ text, callback, disabled, className }: LongPressButto
     <button
       {...longPressBind()}
       disabled={disabled}
-      className={className + " relative top-0 flex place-content-center items-center justify-center overflow-hidden"}
+      className={
+        (className ? `${className} ` : "") +
+        "relative top-0 flex select-none place-content-center items-center justify-center overflow-hidden text-lg"
+      }
     >
       {text}
-      {showRipple && <span className="ripple absolute h-full w-full rounded-full  bg-slate-400/75">&nbsp;</span>}
+      {showRipple && <span className="ripple absolute h-full w-full rounded-full bg-slate-200">&nbsp;</span>}
     </button>
   );
 }

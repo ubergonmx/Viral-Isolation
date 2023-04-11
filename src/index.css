@@ -35,6 +35,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+/* TODO: remove light theme */
 @media (prefers-color-scheme: light) {
   :root {
     @apply bg-white text-[#213547];
@@ -46,7 +47,7 @@ button:focus-visible {
     @apply bg-[#f9f9f9];
   }
 }
-
+/* TODO: cleanup */
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

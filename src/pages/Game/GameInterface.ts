@@ -3,7 +3,6 @@ export interface IPlayer {
   image: string;
   role: "Viral" | "Survivor";
 }
-
 export interface ISurvivor {
   name: string;
   image: string;

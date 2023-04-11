@@ -1,16 +1,16 @@
 span.ripple {
   width: 40px;
   height: 40px;
-  animation: ripple 900ms linear;
+  animation: ripple 710ms linear;
 }
 
 @keyframes ripple {
   0% {
     transform: scale(0);
-    opacity: 1;
+    opacity: 0.1;
   }
-  50% {
-    opacity: 0.5;
+  80% {
+    opacity: 0.2;
   }
   100% {
     transform: scale(5);
