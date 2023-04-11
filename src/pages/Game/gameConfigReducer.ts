@@ -6,14 +6,30 @@ export const INITIAL_GAME_CONFIG: IGame = {
   turn: 0,
   turnOrder: [],
   logs: [],
-  viral: {} as IViral,
+  viral: {
+    name: "",
+    image: "",
+    skillPoints: 0,
+    skill: {
+      acidReflux: false,
+      agility: false,
+      tank: false,
+      mindsEye: false,
+      leaping: false,
+      onslaught: false,
+      apex: false,
+    },
+    numOfInfections: 0,
+    numOfKillings: 0,
+    numOfEvents: 0,
+  },
   survivors: [] as ISurvivor[],
   houses: [] as IHouse[],
 };
 
 interface GameConfigAction {
   type: GameConfigActionType;
-  payload?: IGame | IHouse | ISurvivor | IViral;
+  payload?: IGame;
 }
 
 export enum GameConfigActionType {
@@ -23,10 +39,10 @@ export enum GameConfigActionType {
   END_TURN = "END_TURN",
 }
 
-export const gameConfigReducer = (state: IGame, action: GameConfigAction) => {
+export const gameConfigReducer = (state: IGame, action: GameConfigAction):IGame => {
   switch (action.type) {
     case GameConfigActionType.SET_GAME_CONFIG:
-      return { ...action.payload };
+      return action.payload!;
     case GameConfigActionType.SET_SURVIVOR:
       const { survivors } = state;
       const {
@@ -41,7 +57,7 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction) => {
         roundsAlive,
         numOfRoundsUninfected,
         housesEntered,
-      } = action.payload as ISurvivor;
+      } = action.payload as unknown as ISurvivor;
       const survivorIndex = survivors.findIndex((survivor) => survivor.name === name);
       survivors[survivorIndex] = {
         name,
@@ -56,10 +72,10 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction) => {
         numOfRoundsUninfected,
         housesEntered,
       };
-      return { ...state, survivors };
+      return { ...state, survivors } as IGame;
     case GameConfigActionType.GET_ITEM:
       const { houses } = state;
-      const { id, itemCapacity, numOfItems } = action.payload as IHouse;
+      const { id, itemCapacity, numOfItems } = action.payload as unknown as IHouse;
       const houseIndex = houses.findIndex((house) => house.id === id);
       houses[houseIndex] = { id, itemCapacity, numOfItems };
       return { ...state, houses };
