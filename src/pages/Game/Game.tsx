@@ -37,6 +37,22 @@ function Game() {
     };
   }, []);
 
+  // if its round 10, announce keycards
+  useEffect(() => {
+    if (gameConfig.round === 10) {
+      let announcement = "Attention!!! Keycard locations of the following survivors: ";
+      // for each survivor, announce their keycard with <name> - <keycardHouse>
+      gameConfig.survivors.forEach((survivor) => {
+        announcement += `${survivor.name} - House ${survivor.keycardHouse}, `;
+      });
+      const synth = new SpeechSynthesisUtterance(announcement);
+      synth.voice = speechSynthesis.getVoices()[0];
+      synth.pitch = 2;
+      synth.rate = 1.4;
+      window.speechSynthesis.speak(synth);
+    }
+  }, [gameConfig.round]);
+
   function deleteGame() {
     console.log("delete game");
     socket.emit("delete", { code: code });
