@@ -3,6 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { IPlayer } from "../Game/GameInterface";
 import "./Lobby.css";
+import player1 from "/pieces/player-1.png";
+import player2 from "/pieces/player-2.png";
+import player3 from "/pieces/player-3.png";
+import player4 from "/pieces/player-4.png";
+import player5 from "/pieces/player-5.png";
+import player6 from "/pieces/player-6.png";
+import player7 from "/pieces/player-7.png";
+import player8 from "/pieces/player-8.png";
+import viral1 from "/pieces/viral-1.png";
+import viral2 from "/pieces/viral-2.png";
 
 function shuffle(array: any[]) {
   let currentIndex = array.length,
@@ -24,17 +34,9 @@ function Lobby() {
   const socket = useSocket();
   const [error, setError] = useState("");
 
-  const viralImages = ["/pieces/viral-1.png", "/pieces/viral-2.png"];
-  const survivorImages = [
-    "/pieces/player-1.png",
-    "/pieces/player-2.png",
-    "/pieces/player-3.png",
-    "/pieces/player-4.png",
-    "/pieces/player-5.png",
-    "/pieces/player-6.png",
-    "/pieces/player-7.png",
-    "/pieces/player-8.png",
-  ];
+  const viralImages = [viral1, viral2];
+  const survivorImages = [player1, player2, player3, player4, player5, player6, player7, player8];
+
   const [playerList, setPlayerList] = useState<IPlayer[]>([
     {
       role: "Viral",

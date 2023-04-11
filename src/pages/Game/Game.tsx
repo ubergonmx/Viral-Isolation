@@ -126,17 +126,19 @@ function Game() {
   logGameConfig();
   return (
     <div className="">
-      <h1>
-        Game {code} {gameConfig && <>- R{gameConfig.round}</>}
-      </h1>
-      {gameConfig && (
-        <div className="flex items-center justify-center gap-3">
-          <img src={getCurrentPlayer()!.image} alt="Player image" className="w-14" />
-          <h1>{getCurrentPlayer()!.name}'s turn</h1>
-        </div>
-      )}
+      <div>
+        <h1>
+          Game {code} {gameConfig && <>- R{gameConfig.round}</>}
+        </h1>
+        {gameConfig && (
+          <div className="flex items-center justify-center gap-3">
+            <img src={getCurrentPlayer()!.image} alt="Player image" className="w-14" />
+            <h1>{getCurrentPlayer()!.name}'s turn</h1>
+          </div>
+        )}
+      </div>
       {isCurrentPlayerSurvivor() && (
-        <>
+        <div className="flex flex-col items-center justify-center">
           <div className="flex gap-4">
             {/* {currentSurvivor?.isInfected && <h2>Infected</h2>}
             <button onClick={handleInfect} disabled={currentSurvivor?.isInfected}>
@@ -153,9 +155,8 @@ function Game() {
             ))}
           </div>
           <SurvivorEvent />
-          {/* <LongPressButton text="Escape" callback={survivorEscape} /> */}
-          <button onClick={survivorEscape}>Escape</button>
-        </>
+          <LongPressButton text="Escape" callback={survivorEscape} />
+        </div>
       )}
       {!isCurrentPlayerSurvivor() && (
         <>
