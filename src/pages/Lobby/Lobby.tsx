@@ -203,7 +203,6 @@ function Lobby() {
         ) : null}
       </div>
       <div>
-        {/* show error with tailwind design*/}
         {error ? <p className="text-red-500">{error}</p> : null}
         <div>
           <button className="start-game" onClick={startGame}>
