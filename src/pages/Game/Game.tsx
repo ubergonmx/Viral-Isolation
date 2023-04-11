@@ -152,14 +152,14 @@ function Game() {
               Heal
             </button> */}
           </div>
-          <h2>Item Slots</h2>
+          <h2>Get Item from Houses</h2>
           <div className="houses">
             {gameConfig.houses.map((house: IHouse) => (
               <House key={`${house.id}`} house={house} survivor={getCurrentPlayer() as ISurvivor} dispatch={dispatch} />
             ))}
           </div>
-          <SurvivorEvent />
           <LongPressButton text="Escape" callback={survivorEscape} />
+          <SurvivorEvent />
         </div>
       )}
       {!isCurrentPlayerSurvivor() && (

@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 #root {
-  @apply max-w-screen-xl text-center mx-auto my-0 p-8;
+  @apply mx-auto my-0 max-w-screen-xl p-8 text-center;
 }
 .logo {
-  @apply h-[6em] will-change-[filter] transition-[filter] duration-300 p-[1.5em];
+  @apply h-[6em] p-[1.5em] transition-[filter] duration-300 will-change-[filter];
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -32,13 +32,7 @@
 .read-the-docs {
   @apply text-[#888];
 }
-.houses {
-  @apply flex flex-wrap gap-[15px] justify-evenly;
-}
-.houses > div {
-  @apply flex-[1_0_16%];
-  outline: solid rgba(100, 100, 100, 0.5);
-}
+
 nav {
   @apply flex justify-center;
 }

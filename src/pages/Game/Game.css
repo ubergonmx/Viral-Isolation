@@ -17,3 +17,11 @@ span.ripple {
     opacity: 1;
   }
 }
+
+.houses {
+  @apply flex flex-wrap justify-evenly gap-[15px];
+}
+.houses > div {
+  @apply flex-[1_0_16%];
+  outline: solid rgba(100, 100, 100, 0.5);
+}
