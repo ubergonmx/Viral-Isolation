@@ -30,6 +30,8 @@ function Game() {
       if (data.hasGameEnded) navigate(`/results/${data.code}`);
     });
     socket.on("game-config", (data) => {
+      // console.log("socket on game-config");
+      // console.log(data);
       dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
     });
     return () => {
@@ -137,6 +139,12 @@ function Game() {
     if (turnOrder[turn] === viral.name) return viral;
     return survivors.find((survivor: ISurvivor) => survivor.name === turnOrder[turn]);
   }
+
+  // function logGameConfig() {
+  //   console.log("log game config");
+  //   console.log(gameConfig);
+  //   return <></>;
+  // }
 
   return (
     <div>

@@ -23,13 +23,13 @@ function Home() {
   useEffect(() => {
     socket.emit("get-lobbies");
     socket.on("lobbies", (rooms: any) => {
-      console.log(rooms);
+      // console.log(rooms);
       setLobbies(rooms);
     });
 
     socket.emit("get-games");
     socket.on("games", (rooms: any) => {
-      console.log(rooms);
+      // console.log(rooms);
       setGames(rooms);
     });
 

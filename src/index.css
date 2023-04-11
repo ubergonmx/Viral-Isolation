@@ -1,11 +1,11 @@
 @font-face {
   font-family: "HouseOfTerror";
-  src: url("./fonts/HouseOfTerror.otf") format("opentype");
+  src: url("/fonts/HouseOfTerror.otf") format("opentype");
 }
 
 @font-face {
   font-family: "BurbankBigCondensed";
-  src: url("./fonts/BurbankBigCondensed.otf") format("opentype");
+  src: url("/fonts/BurbankBigCondensed.otf") format("opentype");
 }
 
 :root {
