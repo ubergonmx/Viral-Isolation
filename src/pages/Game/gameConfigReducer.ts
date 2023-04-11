@@ -1,4 +1,4 @@
-import { IGame, IHouse, ISurvivor } from "./GameInterface";
+import { IGame, IHouse } from "./GameInterface";
 
 export const INITIAL_GAME_CONFIG: IGame = {
   status: "ongoing",
@@ -67,38 +67,37 @@ interface GameConfigAction {
 
 export enum GameConfigActionType {
   SET_GAME_CONFIG = "SET_GAME_CONFIG",
-  GET_ITEM = "GET_ITEM",
+  SURVIVOR_GET_ITEM = "GET_ITEM",
+  SURVIVOR_ESCAPE = "SURVIVOR_ESCAPE",
   END_TURN = "END_TURN",
 }
 
 export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame => {
-  switch (action.type) {
-    case GameConfigActionType.SET_GAME_CONFIG:
-      return action.payload!;
-  
-    case GameConfigActionType.GET_ITEM: 
-      const { survivors, houses } = state;
-
-      const { id, numOfItems } = action.payload.house as unknown as IHouse;
-      const houseIndex = houses.findIndex((house) => house.id === id);
-      houses[houseIndex] = { ...houses[houseIndex], numOfItems: (numOfItems > 0) ? numOfItems - 1 : numOfItems};
-
-      const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.survivor.name);
-      survivors[survivorIndex].housesEntered.push(id);
-
-      return { ...state, houses, survivors };
-
-    case GameConfigActionType.END_TURN:
-      const { turn, round } = state;
-      let newTurn = turn + 1;
-      let newRound = round;
-      if (newTurn === state.turnOrder.length) {
-        newTurn = 0;
-        newRound = round + 1;
-      }
-      return { ...state, turn: newTurn, round: newRound };
-  
-    default:
-      return state;
+  if (action.type === GameConfigActionType.SET_GAME_CONFIG) {
+    return action.payload!;
+  } else if (action.type === GameConfigActionType.SURVIVOR_GET_ITEM) {
+    const { survivors, houses } = state;
+    const { id, numOfItems } = action.payload.house as unknown as IHouse;
+    const houseIndex = houses.findIndex((house) => house.id === id);
+    houses[houseIndex] = { ...houses[houseIndex], numOfItems: numOfItems > 0 ? numOfItems - 1 : numOfItems };
+    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.survivor.name);
+    survivors[survivorIndex].housesEntered.push(id);
+    return { ...state, houses, survivors };
+  } else if (action.type === GameConfigActionType.SURVIVOR_ESCAPE) {
+    const { survivors, turn } = state;
+    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.name);
+    survivors[survivorIndex] = { ...survivors[survivorIndex], hasEscaped: true };
+    return { ...state, survivors, turn: turn + 1 };
+  } else if (action.type === GameConfigActionType.END_TURN) {
+    const { turnOrder, turn, round } = state;
+    let newTurn = turn + 1;
+    let newRound = round;
+    if (newTurn === turnOrder.length) {
+      newTurn = 0;
+      newRound = round + 1;
+    }
+    return { ...state, turn: newTurn, round: newRound };
+  } else {
+    return state;
   }
 };

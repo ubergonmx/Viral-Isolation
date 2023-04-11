@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { LongPressDetectEvents, LongPressOptions, useLongPress } from "use-long-press";
 
 type LongPressButtonProps = {
@@ -10,10 +10,10 @@ type LongPressButtonProps = {
 
 function LongPressButton({ text, callback, disabled, className }: LongPressButtonProps) {
   const [showRipple, setShowRipple] = useState(false);
-  const invokeCallback = useCallback(() => {
+  const invokeCallback = /*useCallback(*/ () => {
     callback();
     setShowRipple(false);
-  }, []);
+  }; //, []);
   const LongPressOptions: LongPressOptions = {
     onStart: (e) => setShowRipple(true),
     onFinish: (e) => setShowRipple(false),

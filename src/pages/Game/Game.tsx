@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
 import { GameConfigActionType, gameConfigReducer, INITIAL_GAME_CONFIG } from "./gameConfigReducer";
-import { IGame, IHouse, ISurvivor, IViral } from "./GameInterface";
+import { IHouse, ISurvivor, IViral } from "./GameInterface";
 import House from "./House";
 import LongPressButton from "./LongPressButton";
 import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
@@ -42,17 +42,6 @@ function Game() {
     };
   }, []);
 
-  function initializeGame(data: IGame) {
-    // setGameConfig(() => {
-    //   setRoundCount(data.round);
-    //   setTurnCount(data.turn);
-    //   let newPlayerTurn = data.turnOrder[data.turn];
-    //   setPlayerTurn(newPlayerTurn);
-    //   setCurrentSurvivor(data.survivors.find((survivor) => survivor.name === newPlayerTurn));
-    //   return data;
-    // });
-  }
-
   function deleteGame() {
     console.log("delete game");
     socket.emit("delete", { code: code });
@@ -68,24 +57,8 @@ function Game() {
   function endTurn() {
     console.log("end turn");
     console.log(gameConfig);
-    // setTurnCount((prevTurnCount) => {
-    //   let newTurnCount = prevTurnCount + 1;
-    //   console.log(newTurnCount);
-    //   let newRoundCount = roundCount;
-    //   let newPlayerTurn = playerTurn;
-    //   if (newTurnCount === gameConfig!.turnOrder.length) {
-    //     setRoundCount((prevRoundCount) => prevRoundCount + 1);
-    //     newTurnCount = 0;
-    //     newPlayerTurn = gameConfig!.turnOrder[0];
-    //   } else {
-    //     newPlayerTurn = gameConfig!.turnOrder[newTurnCount];
-    //   }
-    //   setPlayerTurn(newPlayerTurn);
-    //   setCurrentSurvivor(getCurrentSurvivor(newPlayerTurn));
-    //   socket.emit("next-turn", { code: code, turn: newTurnCount, round: newRoundCount });
-    //   return newTurnCount;
-    // });
     dispatch({ type: GameConfigActionType.END_TURN });
+    socket.emit("end-turn", { code: code, turn: gameConfig.turn, round: gameConfig.round });
   }
 
   // function handleInfect() {
@@ -127,6 +100,10 @@ function Game() {
   //   });
   // }
 
+  function survivorEscape() {
+    dispatch({ type: GameConfigActionType.SURVIVOR_ESCAPE, payload: getCurrentPlayer() as ISurvivor });
+  }
+
   function isSurvivorInfected(survivorName: string) {
     return gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)?.isInfected;
   }
@@ -144,14 +121,22 @@ function Game() {
   function logGameConfig() {
     console.log("log game config");
     console.log(gameConfig);
-    return <></>;
+    // check if game has ended by checking each survivor hasEscaped or isDead then redirect to results page
+    if (gameConfig.survivors.every((survivor: ISurvivor) => survivor.hasEscaped || survivor.isDead)) {
+      // socket.emit("end", { code: code });
+      // navigate(`/results/${code}`);
+      console.log("game has ended");
+    }
+    let survivor = getCurrentPlayer() as ISurvivor;
+    if (survivor.hasEscaped || survivor.isDead) dispatch({ type: GameConfigActionType.END_TURN });
+    socket.emit("next-turn", { code: code, turn: gameConfig.turn, round: gameConfig.round });
   }
 
   if (isLoading) return <>Loading game config...</>;
 
+  logGameConfig();
   return (
     <div>
-      {logGameConfig()}
       <h1>
         Game {code} {gameConfig && <>- R{gameConfig.round}</>}
       </h1>
@@ -179,6 +164,8 @@ function Game() {
             ))}
           </div>
           <SurvivorEvent />
+          {/* <LongPressButton text="Escape" callback={survivorEscape} /> */}
+          <button onClick={survivorEscape}>Escape</button>
         </>
       )}
       {!isCurrentPlayerSurvivor() && (

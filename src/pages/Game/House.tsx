@@ -2,11 +2,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
+import { GameConfigActionType } from "./gameConfigReducer";
 import { IHouse, ISurvivor } from "./GameInterface";
 import LongPressButton from "./LongPressButton";
 
 function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHouse; dispatch: any }) {
-  const { id, numOfItems} = house;
+  const { id, numOfItems } = house;
 
   const socket = useSocket();
   const { code } = useParams();
@@ -33,13 +34,15 @@ function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHou
   function getItem() {
     if (!entered) {
       setEntered(true);
-      setDisplay(numOfItems > 0 ? 
-        survivor?.keycardHouse === id ? 
-          "Draw a keycard item" : "Draw an item card"
-          :
-          "No more items in this house");
+      setDisplay(
+        numOfItems > 0
+          ? survivor?.keycardHouse === id
+            ? "Draw a keycard item"
+            : "Draw an item card"
+          : "No more items in this house",
+      );
       setIsOpenModal(true);
-      dispatch({ type: "GET_ITEM", payload: { code, survivor, house } });      
+      dispatch({ type: GameConfigActionType.SURVIVOR_GET_ITEM, payload: { code, survivor, house } });
       socket.emit("get-survivor-item", { code, survivor, houseId: id });
     }
   }
@@ -50,7 +53,12 @@ function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHou
         {/* <button onClick={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50">
           {houseName}
         </button> */}
-        <LongPressButton text={houseName} callback={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50" />
+        <LongPressButton
+          text={houseName}
+          callback={getItem}
+          disabled={entered}
+          className="disabled:bg-gray-700 disabled:text-gray-50"
+        />
       </div>
 
       <Transition appear show={isOpenModal} as={Fragment}>
