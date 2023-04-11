@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
@@ -18,7 +18,7 @@ function Game() {
   // const [turnCount, setTurnCount] = useState(0);
   // const [playerTurn, setPlayerTurn] = useState("");
   // const [currentSurvivor, setCurrentSurvivor] = useState<ISurvivor>();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [gameConfig, dispatch] = useReducer(gameConfigReducer, INITIAL_GAME_CONFIG);
 
   useEffect(() => {
@@ -30,9 +30,10 @@ function Game() {
       if (data.hasGameEnded) navigate(`/results/${data.code}`);
     });
     socket.on("game-config", (data) => {
-      // console.log("socket on game-config");
-      // console.log(data);
+      console.log("socket on game-config");
+      console.log(data);
       dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
+      setIsLoading(false);
     });
     return () => {
       socket.off("error");
@@ -140,14 +141,17 @@ function Game() {
     return survivors.find((survivor: ISurvivor) => survivor.name === turnOrder[turn]);
   }
 
-  // function logGameConfig() {
-  //   console.log("log game config");
-  //   console.log(gameConfig);
-  //   return <></>;
-  // }
+  function logGameConfig() {
+    console.log("log game config");
+    console.log(gameConfig);
+    return <></>;
+  }
+
+  if (isLoading) return <>Loading game config...</>;
 
   return (
     <div>
+      {logGameConfig()}
       <h1>
         Game {code} {gameConfig && <>- R{gameConfig.round}</>}
       </h1>
