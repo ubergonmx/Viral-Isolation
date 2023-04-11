@@ -3,17 +3,17 @@ import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { IHouse, ISurvivor } from "./GameInterface";
+import LongPressButton from "./LongPressButton";
 
 function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHouse; dispatch: any }) {
-  const { id, itemCapacity } = house;
+  const { id, numOfItems} = house;
 
   const socket = useSocket();
   const { code } = useParams();
 
-  const [itemsRemaining, setItemsRemaining] = useState(itemCapacity);
   const [display, setDisplay] = useState("");
   const [entered, setEntered] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const houseName = "House " + id;
 
@@ -27,39 +27,33 @@ function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHou
   }, [survivor]);
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpenModal(false);
   }
 
   function getItem() {
     if (!entered) {
-      if (itemsRemaining > 0) {
-        setDisplay(survivor?.keycardHouse === id ? "Draw a keycard item" : "Draw an item card");
-        setItemsRemaining((prevItemsRemaining) => prevItemsRemaining - 1);
-        const updateHouse = { ...house, itemCapacity: itemsRemaining - 1 };
-        dispatch({ type: "GET_ITEM", payload: updateHouse });
-        setEntered(true);
-        socket.emit("get-survivor-item", { code: code, survivor: survivor, houseId: id });
-        const updateSurvivor = { ...survivor, housesEntered: [...survivor.housesEntered, id] };
-        dispatch({ type: "SET_SURVIVOR", payload: updateSurvivor });
-      } else {
-        // TODO: add socket emit to enter house
-        setDisplay("No more items in this house");
-        console.log("No more items in this house");
-      }
-      setIsOpen(true);
+      setEntered(true);
+      setDisplay(numOfItems > 0 ? 
+        survivor?.keycardHouse === id ? 
+          "Draw a keycard item" : "Draw an item card"
+          :
+          "No more items in this house");
+      setIsOpenModal(true);
+      dispatch({ type: "GET_ITEM", payload: { code, survivor, house } });      
+      socket.emit("get-survivor-item", { code, survivor, houseId: id });
     }
   }
 
   return (
     <>
       <div className="flex place-content-center">
-        <button onClick={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50">
+        {/* <button onClick={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50">
           {houseName}
-        </button>
-        {/* <LongPressButton text={houseName} callback={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50" /> */}
+        </button> */}
+        <LongPressButton text={houseName} callback={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50" />
       </div>
 
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isOpenModal} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}

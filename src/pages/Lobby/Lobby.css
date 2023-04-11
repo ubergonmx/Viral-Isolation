@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities; */
 
+/* TODO: fix flex , use tailwind instead */
 .flex {
   display: flex;
   flex-wrap: wrap;

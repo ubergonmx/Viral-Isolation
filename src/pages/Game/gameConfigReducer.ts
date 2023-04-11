@@ -62,12 +62,11 @@ export const INITIAL_GAME_CONFIG: IGame = {
 
 interface GameConfigAction {
   type: GameConfigActionType;
-  payload?: IGame;
+  payload?: any;
 }
 
 export enum GameConfigActionType {
   SET_GAME_CONFIG = "SET_GAME_CONFIG",
-  SET_SURVIVOR = "SET_SURVIVOR",
   GET_ITEM = "GET_ITEM",
   END_TURN = "END_TURN",
 }
@@ -76,42 +75,19 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
   switch (action.type) {
     case GameConfigActionType.SET_GAME_CONFIG:
       return action.payload!;
-    case GameConfigActionType.SET_SURVIVOR:
-      const { survivors } = state;
-      const {
-        name,
-        image,
-        keycardHouse,
-        hasEscaped,
-        isDead,
-        isInfected,
-        numOfCures,
-        numOfEvents,
-        roundsAlive,
-        numOfRoundsUninfected,
-        housesEntered,
-      } = action.payload as unknown as ISurvivor;
-      const survivorIndex = survivors.findIndex((survivor) => survivor.name === name);
-      survivors[survivorIndex] = {
-        name,
-        image,
-        keycardHouse,
-        hasEscaped,
-        isDead,
-        isInfected,
-        numOfCures,
-        numOfEvents,
-        roundsAlive,
-        numOfRoundsUninfected,
-        housesEntered,
-      };
-      return { ...state, survivors } as IGame;
-    case GameConfigActionType.GET_ITEM:
-      const { houses } = state;
-      const { id, itemCapacity, numOfItems } = action.payload as unknown as IHouse;
+  
+    case GameConfigActionType.GET_ITEM: 
+      const { survivors, houses } = state;
+
+      const { id, numOfItems } = action.payload.house as unknown as IHouse;
       const houseIndex = houses.findIndex((house) => house.id === id);
-      houses[houseIndex] = { id, itemCapacity, numOfItems };
-      return { ...state, houses };
+      houses[houseIndex] = { ...houses[houseIndex], numOfItems: (numOfItems > 0) ? numOfItems - 1 : numOfItems};
+
+      const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.survivor.name);
+      survivors[survivorIndex].housesEntered.push(id);
+
+      return { ...state, houses, survivors };
+
     case GameConfigActionType.END_TURN:
       const { turn, round } = state;
       let newTurn = turn + 1;
@@ -121,6 +97,7 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
         newRound = round + 1;
       }
       return { ...state, turn: newTurn, round: newRound };
+  
     default:
       return state;
   }
