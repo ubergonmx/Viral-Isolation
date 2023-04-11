@@ -168,7 +168,7 @@ function Lobby() {
       <h1>
         Lobby - <span className="">{code}</span>
       </h1>
-      <div className="flex">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {playerList.map((player, index) => (
           <div className="player" key={index}>
             {index > 2 ? (

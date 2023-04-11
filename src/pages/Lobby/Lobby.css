@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities; */
 
-/* TODO: fix flex , use tailwind instead */
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
 .player {
   background-color: black;
   position: relative;
@@ -87,7 +78,7 @@
 
 @media (prefers-color-scheme: light) {
   .player {
-    background-color:#f9f9f9;
+    background-color: #f9f9f9;
     color: #213547;
     border: 2px solid black;
   }

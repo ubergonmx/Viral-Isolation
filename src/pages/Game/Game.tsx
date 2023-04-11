@@ -12,12 +12,7 @@ function Game() {
   const { code } = useParams();
   const navigate = useNavigate();
   const socket = useSocket();
-  // TODO: refactor
-  // const [gameConfig, setGameConfig] = useState<IGame | null>(null);
-  // const [roundCount, setRoundCount] = useState(0);
-  // const [turnCount, setTurnCount] = useState(0);
-  // const [playerTurn, setPlayerTurn] = useState("");
-  // const [currentSurvivor, setCurrentSurvivor] = useState<ISurvivor>();
+
   const [isLoading, setIsLoading] = useState(true);
   const [gameConfig, dispatch] = useReducer(gameConfigReducer, INITIAL_GAME_CONFIG);
 
@@ -47,12 +42,6 @@ function Game() {
     socket.emit("delete", { code: code });
     navigate("/");
   }
-
-  // function getCurrentSurvivor(newPlayerTurn: string = playerTurn) {
-  //   const survivor = gameConfig?.survivors.find((survivor) => survivor.name === newPlayerTurn);
-  //   console.log(survivor);
-  //   return survivor;
-  // }
 
   function endTurn() {
     console.log("end turn");
@@ -136,7 +125,7 @@ function Game() {
 
   logGameConfig();
   return (
-    <div>
+    <div className="">
       <h1>
         Game {code} {gameConfig && <>- R{gameConfig.round}</>}
       </h1>
@@ -172,7 +161,7 @@ function Game() {
         <>
           <div className="p-4">
             <h2>Infect Players</h2>
-            <div className="flex gap-2">
+            <div className="flex items-center justify-center gap-2">
               {gameConfig.survivors.map((survivor: ISurvivor) =>
                 !survivor.isInfected ? (
                   <div key={survivor.name}>
@@ -186,7 +175,7 @@ function Game() {
         </>
       )}
       <GeneralEvent />
-      <div className="flex gap-40 pt-4">
+      <div className="flex items-center justify-center gap-40 pt-4">
         <LongPressButton text="End Turn" callback={endTurn} />
         <LongPressButton text="Delete Game" callback={deleteGame} />
       </div>
