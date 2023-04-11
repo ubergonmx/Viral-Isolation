@@ -1,5 +1,5 @@
 import { ViralConfig } from "./gameConfig";
-import { IGame, IHouse } from "./gameInterface";
+import { IGame, IHouse, ISurvivor } from "./gameInterface";
 
 interface GameConfigAction {
   type: GameConfigActionType;
@@ -22,29 +22,29 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
   } else if (action.type === GameConfigActionType.SURVIVOR_GET_ITEM) {
     const { survivors, houses } = state;
     const { id, numOfItems } = action.payload.house as unknown as IHouse;
-    const houseIndex = houses.findIndex((house) => house.id === id);
+    const houseIndex = houses.findIndex((house : IHouse) => house.id === id);
     houses[houseIndex] = { ...houses[houseIndex], numOfItems: numOfItems > 0 ? numOfItems - 1 : numOfItems };
-    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.survivor.name);
+    const survivorIndex = survivors.findIndex((survivor : ISurvivor) => survivor.name === action.payload.survivor.name);
     survivors[survivorIndex].housesEntered.push(id);
     return { ...state, houses, survivors };
   } else if (action.type === GameConfigActionType.SURVIVOR_INFECT) {
     const { survivors, viral } = state;
-    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.name);
+    const survivorIndex = survivors.findIndex((survivor : ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], isInfected: true };
     return { ...state, survivors, viral: { ...viral, skillPoints: viral.skillPoints + ViralConfig.INFECT_SKILLPOINT } };
   } else if (action.type === GameConfigActionType.SURVIVOR_CURE) {
     const { survivors } = state;
-    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.name);
+    const survivorIndex = survivors.findIndex((survivor : ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], isInfected: false };
     return { ...state, survivors };
   } else if (action.type === GameConfigActionType.SURVIVOR_ESCAPE) {
     const { survivors, turn } = state;
-    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.name);
+    const survivorIndex = survivors.findIndex((survivor : ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], hasEscaped: true };
     return { ...state, survivors, turn: turn + 1 };
   } else if (action.type === GameConfigActionType.SURVIVOR_DIE) {
     const { survivors, turn } = state;
-    const survivorIndex = survivors.findIndex((survivor) => survivor.name === action.payload.name);
+    const survivorIndex = survivors.findIndex((survivor : ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], isDead: true };
     return { ...state, survivors, turn: turn + 1 };
   } else if (action.type === GameConfigActionType.END_TURN) {
