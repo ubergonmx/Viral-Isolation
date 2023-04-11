@@ -53,12 +53,7 @@ function House({ survivor, house, dispatch }: { survivor: ISurvivor; house: IHou
         {/* <button onClick={getItem} disabled={entered} className="disabled:bg-gray-700 disabled:text-gray-50">
           {houseName}
         </button> */}
-        <LongPressButton
-          text={houseName}
-          callback={getItem}
-          disabled={entered}
-          className="disabled:bg-gray-700 disabled:text-gray-50"
-        />
+        <LongPressButton text={houseName} callback={getItem} disabled={entered} />
       </div>
 
       <Transition appear show={isOpenModal} as={Fragment}>

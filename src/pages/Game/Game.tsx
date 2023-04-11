@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
-import { INITIAL_GAME_CONFIG } from "./gameConfig";
+import { INITIAL_GAME_CONFIG, ViralConfig } from "./gameConfig";
 import { GameConfigActionType, gameConfigReducer } from "./gameConfigReducer";
 import { IHouse, ISurvivor, IViral } from "./gameInterface";
 import House from "./House";
@@ -68,25 +68,19 @@ function Game() {
     dispatch({ type: GameConfigActionType.END_TURN });
     socket.emit("end-turn", { code: code, turn: gameConfig.turn, round: gameConfig.round });
   }
-  // function handleInfectByViral(survivorName: string) {
-  //   const survivor = gameConfig?.survivors.find((survivor) => survivor.name === survivorName);
-  //   console.log(survivorName);
-  //   if (!survivor) return;
-  //   socket.emit("infectSurvivor", { code: code, survivor: survivor });
-  //   setGameConfig({
-  //     ...gameConfig!,
-  //     survivors: gameConfig!.survivors.map((survivor) => {
-  //       if (survivor.name === survivor?.name) survivor.isInfected = true;
-  //       return survivor;
-  //     }),
-  //   });
-  // }
-  function survivorInfect() {
-    dispatch({ type: GameConfigActionType.SURVIVOR_INFECT, payload: getCurrentPlayer() as ISurvivor });
+
+  function survivorInfect(survivorName?: string) {
+    const data = survivorName
+      ? gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)
+      : (getCurrentPlayer() as ISurvivor);
+    dispatch({ type: GameConfigActionType.SURVIVOR_INFECT, payload: data });
   }
 
-  function survivorCure() {
-    dispatch({ type: GameConfigActionType.SURVIVOR_CURE, payload: getCurrentPlayer() as ISurvivor });
+  function survivorCure(survivorName: string) {
+    dispatch({
+      type: GameConfigActionType.SURVIVOR_CURE,
+      payload: { survivorCurer: getCurrentPlayer() as ISurvivor, survivorCured: survivorName },
+    });
   }
 
   function survivorEscape() {
@@ -105,17 +99,27 @@ function Game() {
     return gameConfig.turnOrder[gameConfig.turn] !== gameConfig.viral.name;
   }
 
+  function getCurrentSurvivorImage() {
+    const survivor = getCurrentPlayer() as ISurvivor;
+    const imageSplit = survivor.image.split("/");
+    imageSplit[2] = "infected-" + imageSplit[2];
+    const infectedImage = imageSplit.join("/");
+    return survivor.isInfected ? infectedImage : survivor.image;
+  }
+
   function getCurrentPlayer(): ISurvivor | IViral | undefined {
     const { turn, turnOrder, viral, survivors } = gameConfig;
     if (turnOrder[turn] === viral.name) return viral;
     return survivors.find((survivor: ISurvivor) => survivor.name === turnOrder[turn]);
   }
 
-  function logGameConfig() {
+  function manageGame() {
     console.log("log game config");
     console.log(gameConfig);
     // check if game has ended by checking each survivor hasEscaped or isDead then redirect to results page
-    if (gameConfig.survivors.every((survivor: ISurvivor) => survivor.hasEscaped || survivor.isDead)) {
+    if (
+      gameConfig.survivors.every((survivor: ISurvivor) => survivor.hasEscaped || survivor.isDead || survivor.isInfected)
+    ) {
       // socket.emit("end", { code: code });
       // navigate(`/results/${code}`);
       console.log("game has ended");
@@ -127,7 +131,7 @@ function Game() {
 
   if (isLoading) return <>Loading game config...</>;
 
-  logGameConfig();
+  manageGame();
   return (
     <div className="">
       <div>
@@ -136,24 +140,39 @@ function Game() {
         </h1>
         {gameConfig && (
           <div className="flex items-center justify-center gap-3">
-            <img src={getCurrentPlayer()!.image} alt="Player image" className="w-14" />
+            <img
+              src={isCurrentPlayerSurvivor() ? getCurrentSurvivorImage() : getCurrentPlayer()!.image}
+              alt="Player image"
+              className="w-14"
+            />
             <h1>{getCurrentPlayer()!.name}'s turn</h1>
           </div>
         )}
       </div>
       {isCurrentPlayerSurvivor() && (
         <div className="flex flex-col items-center justify-center">
-          <div className="flex gap-4">
-            {/* {currentSurvivor?.isInfected && <h2>Infected</h2>}
-            <button onClick={handleInfect} disabled={currentSurvivor?.isInfected}>
-              Infect
-            </button>
-            <button onClick={handleCure} disabled={!currentSurvivor?.isInfected}>
-              Heal
-            </button> */}
+          <div className="flex gap-4 pb-5">
+            <LongPressButton
+              text="Infect"
+              callback={survivorInfect}
+              disabled={(getCurrentPlayer() as ISurvivor).isInfected}
+            />
+            <div className="flex flex-col gap-2">
+              {!(getCurrentPlayer() as ISurvivor).isInfected &&
+                gameConfig.survivors
+                  .filter((survivor: ISurvivor) => survivor.name !== (getCurrentPlayer() as ISurvivor).name)
+                  .map((survivor: ISurvivor) => (
+                    <LongPressButton
+                      key={survivor.name}
+                      text={`Cure ${survivor.name}`}
+                      callback={() => survivorCure(survivor.name)}
+                      disabled={!survivor.isInfected && !survivor.isDead}
+                    />
+                  ))}
+            </div>
           </div>
           <h2>Get Item from Houses</h2>
-          <div className="houses">
+          <div className="houses pb-5">
             {gameConfig.houses.map((house: IHouse) => (
               <House key={`${house.id}`} house={house} survivor={getCurrentPlayer() as ISurvivor} dispatch={dispatch} />
             ))}
@@ -165,15 +184,89 @@ function Game() {
       {!isCurrentPlayerSurvivor() && (
         <>
           <div className="p-4">
-            <h2>Infect Players</h2>
+            {!gameConfig.viral.skill.apex ? (
+              <>
+                <h2>Infect Survivors</h2>
+                <div className="flex items-center justify-center gap-2 pb-5">
+                  {gameConfig.survivors.map((survivor: ISurvivor) =>
+                    !survivor.isInfected ? (
+                      <LongPressButton
+                        key={survivor.name}
+                        text={survivor.name}
+                        callback={() => survivorInfect(survivor.name)}
+                      />
+                    ) : null,
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>Kill Survivors</h2>
+                <div className="flex items-center justify-center gap-2 pb-5">
+                  {gameConfig.survivors.map((survivor: ISurvivor) =>
+                    !survivor.isDead ? (
+                      <LongPressButton key={survivor.name} text={survivor.name} callback={() => survivorDie()} />
+                    ) : null,
+                  )}
+                </div>
+              </>
+            )}
+            <h2>Skill points: {gameConfig.viral.skillPoints}</h2>
+            <div className="grid grid-cols-2 divide-x px-4">
+              {/* TODO: refactor this monstrosity */}
+              <div className="grid items-center justify-center gap-2">
+                <LongPressButton
+                  text={gameConfig.viral.skill.acidReflux ? "Acid Reflux ✓" : "Acid Reflux"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ACIDREFLUX })}
+                  disabled={gameConfig.viral.skillPoints < ViralConfig.ACIDREFLUX_COST}
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.agility ? "Agility ✓" : "Agility"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_AGILITY })}
+                  disabled={
+                    !gameConfig.viral.skill.acidReflux || gameConfig.viral.skillPoints < ViralConfig.AGILITY_COST
+                  }
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.tank ? "Tank ✓" : "Tank"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_TANK })}
+                  disabled={!gameConfig.viral.skill.agility || gameConfig.viral.skillPoints < ViralConfig.TANK_COST}
+                />
+              </div>
+              <div className="grid items-center justify-center gap-2">
+                <LongPressButton
+                  text={gameConfig.viral.skill.mindsEye ? "Mind's Eye ✓" : "Mind's Eye"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_MINDSEYE })}
+                  disabled={gameConfig.viral.skillPoints < ViralConfig.MINDSEYE_COST}
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.leaping ? "Leaping ✓" : "Leaping"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_LEAPING })}
+                  disabled={!gameConfig.viral.skill.mindsEye || gameConfig.viral.skillPoints < ViralConfig.LEAPING_COST}
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.onslaught ? "Onslaught ✓" : "Onslaught"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ONSLAUGHT })}
+                  disabled={
+                    !gameConfig.viral.skill.leaping || gameConfig.viral.skillPoints < ViralConfig.ONSLAUGHT_COST
+                  }
+                />
+              </div>
+            </div>
             <div className="flex items-center justify-center gap-2">
-              {gameConfig.survivors.map((survivor: ISurvivor) =>
-                !survivor.isInfected ? (
-                  <div key={survivor.name}>
-                    <button>{survivor.name}</button>
-                  </div>
-                ) : null,
-              )}
+              <LongPressButton
+                text={gameConfig.viral.skill.apex ? "Apex ✓" : "Apex"}
+                callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_APEX })}
+                disabled={
+                  !gameConfig.viral.skill.acidReflux ||
+                  !gameConfig.viral.skill.agility ||
+                  !gameConfig.viral.skill.tank ||
+                  !gameConfig.viral.skill.mindsEye ||
+                  !gameConfig.viral.skill.leaping ||
+                  !gameConfig.viral.skill.onslaught ||
+                  gameConfig.viral.skillPoints < ViralConfig.APEX_COST
+                }
+              />
             </div>
           </div>
           <ViralEvent />

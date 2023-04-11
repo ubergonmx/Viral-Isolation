@@ -7,6 +7,13 @@ export enum EventConfig {
 export enum ViralConfig {
   INFECT_SKILLPOINT = 2,
   TURN_SKILLPOINT = 1,
+  ACIDREFLUX_COST = 3,
+  AGILITY_COST = 3,
+  TANK_COST = 3,
+  MINDSEYE_COST = 3,
+  LEAPING_COST = 3,
+  ONSLAUGHT_COST = 3,
+  APEX_COST = 3,
 }
 
 export const INITIAL_GAME_CONFIG: IGame = {

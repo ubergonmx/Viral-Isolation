@@ -56,20 +56,20 @@ function Home() {
       {state?.error && <p className="text-red-500">{state.error}</p>}
       <br />
       <div className="grid grid-cols-2 divide-x px-4">
-        <div className="flex flex-col px-2">
+        <div className="grid px-2 gap-2 content-start">
           <h2>Open Lobbies</h2>
           {lobbies.length > 0 &&
             lobbies.map((lobby: any) => (
-              <button key={lobby} onClick={() => navigate("/lobby/" + lobby)}>
+              <button key={lobby} className="h-10" onClick={() => navigate("/lobby/" + lobby)}>
                 {lobby}
               </button>
             ))}
         </div>
-        <div className="flex flex-col px-2">
+        <div className="grid px-2 gap-2 content-start">
           <h2>Open Games</h2>
           {games.length > 0 &&
             games.map((game: any) => (
-              <button key={game} onClick={() => navigate("/game/" + game)}>
+              <button key={game} className="h-10" onClick={() => navigate("/game/" + game)}>
                 {game}
               </button>
             ))}

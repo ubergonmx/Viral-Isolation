@@ -31,7 +31,7 @@ function LongPressButton({ text, callback, disabled, className }: LongPressButto
       disabled={disabled}
       className={
         (className ? `${className} ` : "") +
-        "relative top-0 flex select-none place-content-center items-center justify-center overflow-hidden text-lg"
+        "relative top-0 flex select-none place-content-center items-center justify-center overflow-hidden text-lg disabled:bg-gray-700 disabled:text-gray-50"
       }
     >
       {text}
