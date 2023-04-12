@@ -114,9 +114,9 @@ function Game() {
     socket.emit("survivor-die", { code: code, survivorName: data });
   }
 
-  // function isSurvivorInfected(survivorName: string) {
-  //   return gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)?.isInfected;
-  // }
+  function isSurvivorInfected() {
+    return (getCurrentPlayer() as ISurvivor).isInfected;
+  }
 
   function isCurrentPlayerSurvivor() {
     return gameConfig.turnOrder[gameConfig.turn] !== gameConfig.viral.name;
@@ -175,32 +175,39 @@ function Game() {
       {isCurrentPlayerSurvivor() && (
         <div className="flex flex-col items-center justify-center">
           <div className="flex gap-4 pb-5">
-            <LongPressButton
-              text="Infect"
-              callback={survivorInfect}
-              disabled={(getCurrentPlayer() as ISurvivor).isInfected}
-            />
-            <div className="flex flex-col gap-2">
-              {!(getCurrentPlayer() as ISurvivor).isInfected &&
-                gameConfig.survivors
-                  .filter((survivor: ISurvivor) => survivor.name !== (getCurrentPlayer() as ISurvivor).name)
-                  .map((survivor: ISurvivor) => (
-                    <LongPressButton
-                      key={survivor.name}
-                      text={`Cure ${survivor.name}`}
-                      callback={() => survivorCure(survivor.name)}
-                      disabled={!survivor.isInfected && !survivor.isDead}
-                    />
-                  ))}
-            </div>
+            <LongPressButton text="Infect" callback={survivorInfect} disabled={isSurvivorInfected()} />
+            {!isSurvivorInfected() && (
+              <div className="flex flex-col gap-2">
+                {!(getCurrentPlayer() as ISurvivor).isInfected &&
+                  gameConfig.survivors
+                    .filter((survivor: ISurvivor) => survivor.name !== (getCurrentPlayer() as ISurvivor).name)
+                    .map((survivor: ISurvivor) => (
+                      <LongPressButton
+                        key={survivor.name}
+                        text={`Cure ${survivor.name}`}
+                        callback={() => survivorCure(survivor.name)}
+                        disabled={!survivor.isInfected && !survivor.isDead}
+                      />
+                    ))}
+              </div>
+            )}
           </div>
-          <h2>Get Item from Houses</h2>
-          <div className="houses pb-5">
-            {gameConfig.houses.map((house: IHouse) => (
-              <House key={`${house.id}`} house={house} survivor={getCurrentPlayer() as ISurvivor} dispatch={dispatch} />
-            ))}
-          </div>
-          <LongPressButton text="Escape" callback={survivorEscape} />
+          {!isSurvivorInfected() && (
+            <>
+              <h2>Get Item from Houses</h2>
+              <div className="houses pb-5">
+                {gameConfig.houses.map((house: IHouse) => (
+                  <House
+                    key={`${house.id}`}
+                    house={house}
+                    survivor={getCurrentPlayer() as ISurvivor}
+                    dispatch={dispatch}
+                  />
+                ))}
+              </div>
+              <LongPressButton text="Escape" callback={survivorEscape} />
+            </>
+          )}
           <SurvivorEvent />
         </div>
       )}
