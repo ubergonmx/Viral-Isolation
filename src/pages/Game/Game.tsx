@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
-import { INITIAL_GAME_CONFIG, ViralConfig } from "./gameConfig";
+import { EventConfig, INITIAL_GAME_CONFIG, ViralConfig } from "./gameConfig";
 import { GameConfigActionType, gameConfigReducer } from "./gameConfigReducer";
 import { IHouse, ISurvivor, IViral } from "./gameInterface";
 import House from "./House";
@@ -40,16 +40,23 @@ function Game() {
 
   // if its round 10, announce keycard locations
   useEffect(() => {
-    if (gameConfig.round === 10) {
+    if (gameConfig.round === EventConfig.KEYCARD_ANNOUNCEMENT_ROUND) {
       let announcement = "Attention!!! Keycard locations of the following survivors: ";
       // for each survivor, announce their keycard with <name> - <keycardHouse>
-      gameConfig.survivors.forEach((survivor) => {
-        announcement += `${survivor.name} - House ${survivor.keycardHouse}, `;
+      gameConfig.survivors.forEach((survivor, index, array) => {
+        announcement += `${survivor.name} - House ${survivor.keycardHouse}`;
+        announcement += index !== array.length - 1 ? ", " : ".";
       });
       const synth = new SpeechSynthesisUtterance(announcement);
-      synth.voice = speechSynthesis.getVoices()[0];
-      synth.pitch = 2;
-      synth.rate = 1.4;
+      // synth.voice = speechSynthesis.getVoices()[0];
+      for (const voice of speechSynthesis.getVoices()) {
+        //select default voice
+        if (voice.default) {
+          synth.voice = voice;
+        }
+      }
+      synth.pitch = 1.2;
+      synth.rate = 1.2;
       window.speechSynthesis.speak(synth);
     }
   }, [gameConfig.round]);
@@ -66,7 +73,12 @@ function Game() {
     console.log("end turn");
     console.log(gameConfig);
     dispatch({ type: GameConfigActionType.END_TURN });
-    socket.emit("end-turn", { code: code, turn: gameConfig.turn, round: gameConfig.round });
+    socket.emit("end-turn", {
+      code: code,
+      turn: gameConfig.turn,
+      round: gameConfig.round,
+      turnSkillPoint: ViralConfig.TURN_SKILLPOINT,
+    });
   }
 
   function survivorInfect(survivorName?: string) {
@@ -74,26 +86,37 @@ function Game() {
       ? gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)
       : (getCurrentPlayer() as ISurvivor);
     dispatch({ type: GameConfigActionType.SURVIVOR_INFECT, payload: data });
+    socket.emit("survivor-infect", { code: code, survivor: data, infectSkillPoint: ViralConfig.INFECT_SKILLPOINT });
   }
 
+  // TODO: add immune system skill point?
   function survivorCure(survivorName: string) {
+    const survivor = getCurrentPlayer() as ISurvivor;
     dispatch({
       type: GameConfigActionType.SURVIVOR_CURE,
-      payload: { survivorCurer: getCurrentPlayer() as ISurvivor, survivorCured: survivorName },
+      payload: { survivorCurer: survivor, survivorCured: survivorName },
     });
+    socket.emit("survivor-cure", { code: code, survivor: survivor, survivorCured: survivorName });
   }
 
+  // TODO: bug fix in escape, not working after reloading
   function survivorEscape() {
-    dispatch({ type: GameConfigActionType.SURVIVOR_ESCAPE, payload: getCurrentPlayer() as ISurvivor });
+    const survivor = getCurrentPlayer() as ISurvivor;
+    dispatch({ type: GameConfigActionType.SURVIVOR_ESCAPE, payload: survivor });
+    socket.emit("survivor-escape", { code: code, survivor: survivor });
   }
 
-  function survivorDie() {
-    dispatch({ type: GameConfigActionType.SURVIVOR_DIE, payload: getCurrentPlayer() as ISurvivor });
+  function survivorDie(survivorName?: string) {
+    const data = survivorName
+      ? gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)
+      : (getCurrentPlayer() as ISurvivor);
+    dispatch({ type: GameConfigActionType.SURVIVOR_DIE, payload: data });
+    socket.emit("survivor-die", { code: code, survivorName: data });
   }
 
-  function isSurvivorInfected(survivorName: string) {
-    return gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)?.isInfected;
-  }
+  // function isSurvivorInfected(survivorName: string) {
+  //   return gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)?.isInfected;
+  // }
 
   function isCurrentPlayerSurvivor() {
     return gameConfig.turnOrder[gameConfig.turn] !== gameConfig.viral.name;
@@ -205,7 +228,11 @@ function Game() {
                 <div className="flex items-center justify-center gap-2 pb-5">
                   {gameConfig.survivors.map((survivor: ISurvivor) =>
                     !survivor.isDead ? (
-                      <LongPressButton key={survivor.name} text={survivor.name} callback={() => survivorDie()} />
+                      <LongPressButton
+                        key={survivor.name}
+                        text={survivor.name}
+                        callback={() => survivorDie(survivor.name)}
+                      />
                     ) : null,
                   )}
                 </div>
@@ -213,7 +240,13 @@ function Game() {
             )}
             <h2>Skill points: {gameConfig.viral.skillPoints}</h2>
             <div className="grid grid-cols-2 divide-x px-4">
-              {/* TODO: refactor this monstrosity */}
+              {/* TODO: refactor this monstrosity 
+                [ ] add a socket.emit to the skill callback
+                [ ] add a skill tree component that takes in an array of skills and renders them
+                [ ] add a skill component that takes in a skill and renders it
+                [ ] add a skill type that has a name, description, cost, and callback
+                [ ] add a skill tree type that has a name, description, and array of skills
+              */}
               <div className="grid items-center justify-center gap-2">
                 <LongPressButton
                   text={gameConfig.viral.skill.acidReflux ? "Acid Reflux ✓" : "Acid Reflux"}

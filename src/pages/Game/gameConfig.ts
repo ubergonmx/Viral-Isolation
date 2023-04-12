@@ -1,6 +1,7 @@
 import { IGame, IHouse } from "./gameInterface";
 
 export enum EventConfig {
+  KEYCARD_ANNOUNCEMENT_ROUND = 2,
   RAINY_DAY = 1,
 }
 

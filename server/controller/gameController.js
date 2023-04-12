@@ -111,11 +111,24 @@ const game = {
       });
   },
   infectSurvivor: function (socket, data) {
-    const { code, survivor } = data;
+    const { code, survivor, infectSkillPoint } = data;
     Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.isInfected": true } })
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${survivor.name} is infected`);
+          // update viral skill point
+          Game.findOneAndUpdate({ code: code }, { $inc: { "viral.skillPoints": infectSkillPoint } })
+            .then((doc2) => {
+              if (doc2) {
+                console.log(
+                  `[U-${socket.id}] ${doc2.viral.name}'s infect gained ${infectSkillPoint} points (total: ${doc2.viral.skillPoints})`,
+                );
+              }
+            })
+            .catch((err) => {
+              rollbar.error(err);
+              console.log(err);
+            });
         }
       })
       .catch((err) => {
@@ -139,15 +152,56 @@ const game = {
         console.log(err);
       });
   },
+  escapeSurvivor: function (socket, data) {
+    const { code, survivor } = data;
+    Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.isEscaped": true } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${survivor.name} escaped`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
+  killSurvivor: function (socket, data) {
+    const { code, survivor } = data;
+    Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.isDead": true } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${doc.viral.name} killed ${survivor.name}`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
   // TODO:
   // [ ] increase roundsAlive for survivor
   // [ ] if survivor is not infected, increment numOfRoundsUninfected
   endTurn: function (socket, data) {
-    const { code, turn, round } = data;
+    const { code, turn, round, turnSkillPoint } = data;
     Game.findOneAndUpdate({ code: code }, { $set: { turn: turn, round: round } })
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${doc.turnOrder[turn]}'s turn ended`);
+          if (doc.turnOrder[turn + 1] && doc.turnOrder[turn + 1] === doc.viral.name) {
+            //increase skill point for viral
+            Game.findOneAndUpdate({ code: code }, { $inc: { "viral.skillPoints": turnSkillPoint } })
+              .then((doc2) => {
+                if (doc2) {
+                  console.log(
+                    `[U-${socket.id}] ${doc2.viral.name}'s turn gained ${turnSkillPoint} point (total: ${doc2.viral.skillPoints})`,
+                  );
+                }
+              })
+              .catch((err) => {
+                rollbar.error(err);
+                console.log(err);
+              });
+          }
         }
       })
       .catch((err) => {
