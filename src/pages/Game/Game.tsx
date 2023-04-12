@@ -55,8 +55,8 @@ function Game() {
           synth.voice = voice;
         }
       }
-      synth.pitch = 1.2;
-      synth.rate = 1.2;
+      synth.pitch = 1.1;
+      synth.rate = 1.1;
       window.speechSynthesis.speak(synth);
     }
   }, [gameConfig.round]);
