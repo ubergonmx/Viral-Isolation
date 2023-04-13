@@ -15,9 +15,9 @@ const generalEvents: event = [
 ];
 
 const viralEvents: event = [
-  { name: "Rat Snack", percent: 0.5 },
-  { name: "Random distraction", percent: 0.2 },
-  { name: "Nothing Happens", percent: 0.3 },
+  { name: "Rat Snack", percent: 0.2 },
+  { name: "Random distraction", percent: 0.3 },
+  { name: "Nothing Happens", percent: 0.5 },
 ];
 
 const survivorEvents: event = [

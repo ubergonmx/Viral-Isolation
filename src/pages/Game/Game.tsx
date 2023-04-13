@@ -161,6 +161,28 @@ function Game() {
         <h1>
           Game {code} {gameConfig && <>- R{gameConfig.round}</>}
         </h1>
+
+        {/* <div className="flex items-center justify-center gap-40 pt-4">
+        </div> */}
+
+        {/* <span className="text-sm">Turn order: </span> */}
+        <div className="flex flex-wrap justify-center gap-2 pb-5">
+          <LongPressButton text="End Turn" callback={endTurn} className="h-7" />
+          {gameConfig &&
+            gameConfig.turnOrder.map((turn: string, index: number) => {
+              return (
+                <div
+                  key={index}
+                  className={`${
+                    index === gameConfig.turn ? "bg-green-500" : "bg-gray-500"
+                  } flex h-7 items-center rounded-md p-2 text-sm`}
+                >
+                  {turn}
+                </div>
+              );
+            })}
+          <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" />
+        </div>
         {gameConfig && (
           <div className="flex items-center justify-center gap-3">
             <img
@@ -256,39 +278,51 @@ function Game() {
               */}
               <div className="grid items-center justify-center gap-2">
                 <LongPressButton
-                  text={gameConfig.viral.skill.acidReflux ? "Acid Reflux ✓" : "Acid Reflux"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ACIDREFLUX })}
-                  disabled={gameConfig.viral.skillPoints < ViralConfig.ACIDREFLUX_COST}
-                />
-                <LongPressButton
-                  text={gameConfig.viral.skill.agility ? "Agility ✓" : "Agility"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_AGILITY })}
-                  disabled={
-                    !gameConfig.viral.skill.acidReflux || gameConfig.viral.skillPoints < ViralConfig.AGILITY_COST
-                  }
+                  text={gameConfig.viral.skill.mindsEye ? "Mind's Eye ✓" : "Mind's Eye"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_MINDSEYE })}
+                  disabled={gameConfig.viral.skill.mindsEye || gameConfig.viral.skillPoints < ViralConfig.MINDSEYE_COST}
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.tank ? "Tank ✓" : "Tank"}
                   callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_TANK })}
-                  disabled={!gameConfig.viral.skill.agility || gameConfig.viral.skillPoints < ViralConfig.TANK_COST}
-                />
-              </div>
-              <div className="grid items-center justify-center gap-2">
-                <LongPressButton
-                  text={gameConfig.viral.skill.mindsEye ? "Mind's Eye ✓" : "Mind's Eye"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_MINDSEYE })}
-                  disabled={gameConfig.viral.skillPoints < ViralConfig.MINDSEYE_COST}
-                />
-                <LongPressButton
-                  text={gameConfig.viral.skill.leaping ? "Leaping ✓" : "Leaping"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_LEAPING })}
-                  disabled={!gameConfig.viral.skill.mindsEye || gameConfig.viral.skillPoints < ViralConfig.LEAPING_COST}
+                  disabled={
+                    !gameConfig.viral.skill.mindsEye ||
+                    gameConfig.viral.skill.tank ||
+                    gameConfig.viral.skillPoints < ViralConfig.TANK_COST
+                  }
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.onslaught ? "Onslaught ✓" : "Onslaught"}
                   callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ONSLAUGHT })}
                   disabled={
-                    !gameConfig.viral.skill.leaping || gameConfig.viral.skillPoints < ViralConfig.ONSLAUGHT_COST
+                    !gameConfig.viral.skill.tank ||
+                    gameConfig.viral.skill.onslaught ||
+                    gameConfig.viral.skillPoints < ViralConfig.ONSLAUGHT_COST
+                  }
+                />
+              </div>
+              <div className="grid items-center justify-center gap-2">
+                <LongPressButton
+                  text={gameConfig.viral.skill.leaping ? "Leaping ✓" : "Leaping"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_LEAPING })}
+                  disabled={gameConfig.viral.skill.leaping || gameConfig.viral.skillPoints < ViralConfig.LEAPING_COST}
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.acidReflux ? "Acid Reflux ✓" : "Acid Reflux"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ACIDREFLUX })}
+                  disabled={
+                    !gameConfig.viral.skill.leaping ||
+                    gameConfig.viral.skill.acidReflux ||
+                    gameConfig.viral.skillPoints < ViralConfig.ACIDREFLUX_COST
+                  }
+                />
+                <LongPressButton
+                  text={gameConfig.viral.skill.agility ? "Agility ✓" : "Agility"}
+                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_AGILITY })}
+                  disabled={
+                    !gameConfig.viral.skill.acidReflux ||
+                    gameConfig.viral.skill.agility ||
+                    gameConfig.viral.skillPoints < ViralConfig.AGILITY_COST
                   }
                 />
               </div>
@@ -313,10 +347,6 @@ function Game() {
         </>
       )}
       <GeneralEvent />
-      <div className="flex items-center justify-center gap-40 pt-4">
-        <LongPressButton text="End Turn" callback={endTurn} />
-        <LongPressButton text="Delete Game" callback={deleteGame} />
-      </div>
     </div>
   );
 }
