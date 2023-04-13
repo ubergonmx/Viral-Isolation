@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.13",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.0",
     "@rollbar/react": "^0.11.1",
     "cssnano": "^6.0.0",
     "react": "^18.2.0",
