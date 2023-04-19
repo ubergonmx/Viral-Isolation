@@ -30,6 +30,7 @@ import spawn_node from "/about/spawn-node.png";
 import tunnel from "/about/tunnel.png";
 import viral_node from "/about/viral-node.png";
 import zipline from "/about/zipline.png";
+import arrow1 from "/about/arrow1.png";
 import survivor_piece from "/pieces/player-2.png";
 import viral_piece from "/pieces/viral-1.png";
 
@@ -1893,7 +1894,7 @@ function About() {
                 <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
                   <img src={boat} style={{ width: "50px", height: "50px" }}></img>
                   <img src={gondola_lift} style={{ width: "50px", height: "50px" }}></img>
-                  <img src={boat} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={arrow1} style={{ width: "50px", height: "50px" }}></img>
                 </ListItemIcon>
                 <ListItem sx={{ display: "block" }}>
                   <ListItemText
