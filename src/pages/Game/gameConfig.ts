@@ -50,7 +50,7 @@ export const INITIAL_GAME_CONFIG: IGame = {
   survivors: [
     {
       name: "Survivor 1",
-      image: "/pieces/survivor-1.png",
+      image: "/pieces/player-1.png",
       keycardHouse: 0,
       hasEscaped: false,
       isDead: false,
@@ -63,7 +63,7 @@ export const INITIAL_GAME_CONFIG: IGame = {
     },
     {
       name: "Survivor 2",
-      image: "/pieces/survivor-2.png",
+      image: "/pieces/player-2.png",
       keycardHouse: 0,
       hasEscaped: false,
       isDead: false,

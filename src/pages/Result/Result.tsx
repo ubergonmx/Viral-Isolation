@@ -1,4 +1,3 @@
-import { useEffect, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { useEffect, useReducer, useState } from "react";
@@ -9,6 +8,7 @@ import player3 from "/pieces/player-3.png";
 import player4 from "/pieces/player-4.png";
 import viral1 from "/pieces/viral-1.png";
 import viral2 from "/pieces/viral-2.png";
+import { INITIAL_GAME_CONFIG } from "../Game/gameConfig";
 
 function Result() {
   const { code } = useParams<{ code: string }>();
@@ -24,7 +24,7 @@ function Result() {
       if (data.action === "goHome") navigate("/", { state: { error: data.message } });
     });
     socket.on("results", (data) => {
-      dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
+      // dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
       setIsLoading(false);
     });
 
@@ -51,38 +51,38 @@ function Result() {
             <fieldset style={{ textAlign: "left" }}>
               <legend>{survivor.name}</legend>
               <p>
-                <img src={player1} style={{ height: "20px", width: "20px", display: "inline" }} />
+                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
                 Has Escaped: {String(survivor.hasEscaped)}
               </p>
               <p>
-                <img src={player2} style={{ height: "20px", width: "20px", display: "inline" }} />
+                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
                 Is Dead: {String(survivor.isDead)}
               </p>
               <p>
-                <img src={player3} style={{ height: "20px", width: "20px", display: "inline" }} />
+                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
                 Number of cures: {survivor.numOfCures}
               </p>
               <p>
-                <img src={player4} style={{ height: "20px", width: "20px", display: "inline" }} />
+                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
                 Houses entered: {survivor.housesEntered}
               </p>
             </fieldset>
           </div>
-        ))} */}
+        ))}
       </div>
       <div style={{ backgroundColor: "black", padding: 10 }}>
         <fieldset style={{ textAlign: "left" }}>
           <legend>{results.viral.name}</legend>
           <p>
-            <img src={viral1} style={{ height: "20px", width: "20px", display: "inline" }} />
+            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
             Number of Infections: {results.viral.numOfInfections}
           </p>
           <p>
-            <img src={viral2} style={{ height: "20px", width: "20px", display: "inline" }} />
+            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
             Number of Killings: {results.viral.numOfKillings}
           </p>
           <p>
-            <img src={viral1} style={{ height: "20px", width: "20px", display: "inline" }} />
+            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
             Skill points: {results.viral.skillPoints}
           </p>
         </fieldset>

@@ -93,7 +93,6 @@ function Home() {
             ))}
         </div>
       </div>
-      <Result></Result>
     </div>
   );
 }
