@@ -1,5 +1,10 @@
 import { IGame, IHouse } from "./gameInterface";
 
+export enum GameStatus {
+  ONGOING = "ongoing",
+  END = "end",
+}
+
 export enum EventConfig {
   KEYCARD_4S_ANNOUNCEMENT_ROUND = 10,
   KEYCARD_3S_ANNOUNCEMENT_ROUND = 7,

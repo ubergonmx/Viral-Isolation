@@ -60,10 +60,10 @@ io.on("connection", (socket) => {
   socket.on("survivor-escape", (data) => game.escapeSurvivor(socket, data));
   socket.on("survivor-kill", (data) => game.killSurvivor(socket, data));
   socket.on("viral-skill", (data) => game.viralSkill(socket, data));
-
+  socket.on("game-end", (data) => game.gameEnd(socket, data));
 
   // Results events
-  socket.on("get-results", () => game.getResults(io));
+  socket.on("get-results", (data) => game.getResults(socket, data));
 
   // obsolete
   socket.on("getItem", (data) => {

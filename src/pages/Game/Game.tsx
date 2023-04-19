@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import "./Game.css";
-import { EventConfig, INITIAL_GAME_CONFIG, ViralConfig } from "./gameConfig";
+import { EventConfig, GameStatus, INITIAL_GAME_CONFIG, ViralConfig } from "./gameConfig";
 import { GameConfigActionType, gameConfigReducer } from "./gameConfigReducer";
 import { IHouse, ISurvivor, IViral } from "./gameInterface";
 import House from "./House";
@@ -159,12 +159,13 @@ function Game() {
     console.log("log game config");
     console.log(gameConfig);
     // check if game has ended by checking each survivor hasEscaped or isDead then redirect to results page
-    if (
+    if (gameConfig.status === GameStatus.ONGOING &&
       gameConfig.survivors.every((survivor: ISurvivor) => survivor.hasEscaped || survivor.isDead || survivor.isInfected)
     ) {
-      // socket.emit("end", { code: code });
-      // navigate(`/results/${code}`);
+      dispatch({ type: GameConfigActionType.END_GAME });
+      socket.emit("game-end", { code: code });
       console.log("game has ended");
+      navigate(`/results/${code}`);
     }
     let survivor = getCurrentPlayer() as ISurvivor;
     if (survivor.hasEscaped || survivor.isDead) dispatch({ type: GameConfigActionType.END_TURN });

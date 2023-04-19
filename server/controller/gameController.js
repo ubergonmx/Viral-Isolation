@@ -238,7 +238,37 @@ const game = {
         console.log(err);
       });
   },
-  getResults: function (socket, data) {},
+  gameEnd: function (socket, data) {
+    const { code } = data;
+    Game.findOneAndUpdate({ code: code }, { $set: { status: "end" } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] Game ended`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
+  getResults: function (socket, data) {
+    const { code } = data;
+    Game.findOne({ code: code })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] Results sent`);
+          socket.emit("results", doc);
+        }
+        else{
+          socket.emit("error", { message: "Results not found", action: "goHome" });
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+        socket.emit("error", { message: "Results error", action: "goHome" });
+      });
+  },
 };
 
 function toTitleCase(camelCaseStr) {

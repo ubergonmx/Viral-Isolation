@@ -21,6 +21,7 @@ export enum GameConfigActionType {
   VIRAL_SKILL_ONSLAUGHT = "VIRAL_SKILL_ONSLAUGHT",
   VIRAL_SKILL_APEX = "VIRAL_SKILL_APEX",
   END_TURN = "END_TURN",
+  END_GAME = "END_GAME",
 }
 
 export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame => {
@@ -153,7 +154,10 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
         viral: { ...viral, skillPoints: viral.skillPoints + ViralConfig.TURN_SKILLPOINT },
       };
     return { ...state, turn: newTurn, round: newRound };
-  } else {
+  } else if (action.type === GameConfigActionType.END_GAME) {
+    return { ...state, status: "end" };
+  } 
+  else {
     return state;
   }
 };
