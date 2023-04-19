@@ -74,50 +74,21 @@ function About() {
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
           <Tab label="Play Guide" {...a11yProps(0)} />
           <Tab label="Map Guide" {...a11yProps(1)} />
           <Tab label="FAQS" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Play Guide
         {/* About Page of Game Setup */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Set Up</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>
+              <b>Game Set Up</b>
+            </Typography>
+          </AccordionSummary>
           <AccordionDetails>
-            {/*}
-          <TableContainer>
-            <Table>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow>Layout the board and setup the digital companion.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• The digital companion will randomly decide turn order.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Note that the viral always goes last no matter what.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Choose 4 players to become the survivors (the game is playable with less survivors but expect
-                  difficulty to be unbalanced)
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Choose 1 player to become the viral</TableRow>
-                <TableRow>
-                  Pick your player pieces and set them on any of the spawn nodes as indicated by the Nodes section in
-                  Map Guides.
-                </TableRow>
-                <TableRow>
-                  Shuffle the deck of 46 item cards and place them face down next to the board. This will be the item
-                  draw deck.
-                </TableRow>
-                <TableRow>Place the 4 keycards face-up next to the item draw deck.</TableRow>
-                <TableRow>
-                  Set a space aside for the discard pile as well. This is where all used and discarded items will be
-                  placed.
-                </TableRow>
-                <TableRow>You are now ready to start playing!</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Proceed to the other guides to learn more about the game.</TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          */}
-
             <List>
               <ListItemText
                 disableTypography
@@ -179,774 +150,1080 @@ function About() {
         </Accordion>
         {/* About Page of Movements */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Movement Mechanics</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            {
+              <Typography>
+                <b>Movement Mechanics</b>
+              </Typography>
+            }
+          </AccordionSummary>
           <AccordionDetails>
-            {/*
-          <TableContainer>
-            <Table>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow>
-                  <b>What is movement?</b>
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Movement is the amount of steps you take decided by dice rolls which can be modified through
-                  skills/items but the default is 2 rolls.
-                </TableRow>
-                <TableRow>Which direction do I move my character piece?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Players may move in any direction but may not step on the same node twice in the same turn. This
-                  simply means that you cannot go forwards and backwards in the same turn.
-                </TableRow>
-                <TableRow>What do I do if I have extra steps remaining?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Players must use up all of their movement for the turn, if there are any extra steps left{" "}
-                  <u>you cannot end your turn</u>.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Note: Dead ends are not an exception to this rule, the map is designed in a way that there is always
-                  an alternative path to use all remaining steps, even if it leads to an unfavorable outcome.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Houses and red/yellow shortcuts are common ways to use up remaining steps quickly.
-                </TableRow>
-                <TableRow>What if I don’t want to move from my position?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • This is called “Skipping” - it is when a player decides to not roll the dice in favor of staying in
-                  the same node.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Side effect: This triggers a random event from the digital companion.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Limitation: This can only be done every other round.</TableRow>
-                <TableRow>
-                  • I was forced to move extra steps from a random event after skipping, how does that work exactly?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Simply move your character as if you had rolled 5 steps turns this turn.
-                </TableRow>
-                <TableRow>• A viral just got pushed by a weapon, how does work?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • The survivor responsible gets to move the viral a certain amount of steps which is stated by the
-                  weapon.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • The viral <u>can be pushed across shortcuts</u> which appropriately uses the given steps as usual.
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        */}
             <List>
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What is movement?" />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>What is movement?</b>
+                  </Typography>
+                }
+              />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Movement is the amount of steps you take decided by dice rolls which can be modified through skills/items but the default is 2 rolls."
+                primary={
+                  <Typography>
+                    • Movement is the amount of steps you take decided by dice rolls which can be modified through
+                    skills/items but the default is 2 rolls.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Which direction do I move my character piece?."
+                primary={
+                  <Typography>
+                    <b>Which direction do I move my character piece?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Players may move in any direction but may not step on the same node twice in the same turn. This simply means that you cannot go forwards and backwards in the same turn."
+                primary={
+                  <Typography>
+                    • Players may move in any direction but may not step on the same node twice in the same turn. This
+                    simply means that you cannot go forwards and backwards in the same turn.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="What do I do if I have extra steps remaining?"
+                primary={
+                  <Typography>
+                    <b>What do I do if I have extra steps remaining?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Players must use up all of their movement for the turn, if there are any extra steps left you cannot end your turn."
+                primary={
+                  <Typography>
+                    • Players must use up all of their movement for the turn, if there are any extra steps left{" "}
+                    <u>you cannot end your turn</u>.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Note: Dead ends are not an exception to this rule, the map is designed in a way that there is always an alternative path to use all remaining steps, even if it leads to an unfavorable outcome."
+                primary={
+                  <Typography>
+                    • Note: Dead ends are not an exception to this rule, the map is designed in a way that there is
+                    always an alternative path to use all remaining steps, even if it leads to an unfavorable outcome.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Houses and red/yellow shortcuts are common ways to use up remaining steps quickly."
+                primary={
+                  <Typography>
+                    • Houses and red/yellow shortcuts are common ways to use up remaining steps quickly.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="What if I don’t want to move from my position?"
+                primary={
+                  <Typography>
+                    <b>What if I don’t want to move from my position?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• This is called “Skipping” - it is when a player decides to not roll the dice in favor of staying in the same node."
+                primary={
+                  <Typography>
+                    • This is called “Skipping” - it is when a player decides to not roll the dice in favor of staying
+                    in the same node.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Side effect: You must press a button in the digital companion to see which random event you triggered by skipping."
+                primary={
+                  <Typography>
+                    • <b>Side effect</b>: You must press a button in the digital companion to see which random event you
+                    triggered by skipping.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Limitation: This can only be done every other round."
+                primary={
+                  <Typography>
+                    • <b>Limitation</b>: This can only be done every other round.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="I was forced to move extra steps from a random event after skipping, how does that work exactly?"
+                primary={
+                  <Typography>
+                    <b>
+                      I was forced to move extra steps from a random event after skipping, how does that work exactly?
+                    </b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Simply move your character as if you had rolled a “5” this turn."
+                primary={<Typography>• Simply move your character as if you had rolled a “5” this turn.</Typography>}
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="A viral just got pushed by a weapon, how does work?"
+                primary={
+                  <Typography>
+                    <b>A viral just got pushed by a weapon, how does work?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• The survivor responsible gets to move the viral a certain amount of steps which is stated by the weapon."
+                primary={
+                  <Typography>
+                    • The survivor responsible gets to move the viral a certain amount of steps which is stated by the
+                    weapon.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• The viral can be pushed across shortcuts which appropriately uses the given steps as usual."
+                primary={
+                  <Typography>
+                    • The viral <u>can be pushed across shortcuts</u> which appropriately uses the given steps as usual.
+                  </Typography>
+                }
               />
             </List>
           </AccordionDetails>
         </Accordion>
         {/* About Page of Balancing */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Balancing</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            {
+              <Typography>
+                <b>Balancing</b>
+              </Typography>
+            }
+          </AccordionSummary>
           <AccordionDetails>
             <List>
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• Since this is a fairly complex game with a lot of mechanics and even asymmetrical elements, any difference in skill among players can lead to a wide gap in player experience. If your play group feels that it is too one-sided, we encourage that you switch the players around or apply any of our optional rules that you can use to balance and make the game more interesting."
+                primary={
+                  <Typography>
+                    • Since this is a fairly complex game with a lot of mechanics and even asymmetrical elements, any
+                    difference in skill among players can lead to a wide gap in player experience. If your play group
+                    feels that it is too one-sided, we encourage that you switch the players around or apply any of our
+                    optional rules that you can use to balance and make the game more interesting.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Proximity Communication (Survivor Nerf)"
+                primary={
+                  <Typography>
+                    <b>Proximity Communication (Survivor Nerf)</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Survivors are not allowed to communicate in real life with other players at all unless they are currently in the process of trading. This is to add another layer of challenge for experienced survivors to strategize."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Keycard+ (Survivor Buff)" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Aside from the unique keycards, allow baseball bats to double function as a keycard as well. Make sure to announce that you got a baseball bat and show it just like a keycard if playing with this rule."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Restless Viral  (Viral Nerf)" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Remove the viral’s ability to skip. This effectively removes camping outside houses."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Mind’s eye+ (Viral Buff)" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• In addition to Mind’s eye’s original effect, once at the start of his turn, allow the viral to view the top 3 cards of the deck, and decide to shuffle it or not."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Acid Reflux+ (Viral Buff)" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Allow the viral to place it at any point during his turn rather than just at the start."
+                primary={
+                  <Typography>
+                    • Survivors are <u>not allowed</u> to communicate in real life with other players at all unless they
+                    are currently in the process of trading. This is to add another layer of challenge for experienced
+                    survivors to strategize.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="In addition to all of these, any house rules that don’t break the game fundamentally are a great way to balance the game to your liking."
+                primary={
+                  <Typography>
+                    <b>Keycard+ (Survivor Buff)</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • Aside from the unique keycards, allow baseball bats to double function as a keycard as well. Make
+                    sure to announce that you got a baseball bat and show it just like a keycard if playing with this
+                    rule.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Restless Viral (Viral Nerf)</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • Remove the viral’s ability to skip. This effectively removes camping outside houses.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Mind’s eye+ (Viral Buff)</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • In addition to Mind’s eye’s original effect, once at the start of his turn, allow the viral to
+                    view the top 3 cards of the deck, and decide to shuffle it or not.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Acid Reflux+ (Viral Buff)</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • Allow the viral to place it at any point during his turn rather than just at the start.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    In addition to all of these, any house rules that don’t break the game fundamentally are a great way
+                    to balance the game to your liking.
+                  </Typography>
+                }
               />
             </List>
           </AccordionDetails>
         </Accordion>
         {/* About Page of Survivor */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Survivor</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            {
+              <Typography>
+                <b>Survivor</b>
+              </Typography>
+            }
+          </AccordionSummary>
           <AccordionDetails>
             <List>
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="How do I win?" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• As a survivor, your main objective is to find the keycard and escape through the exit node. You can
-              search through all the houses for it or wait for another player to unlock the gate for you, but once
-              you've reached the exit node uninfected then you're now one of this game's winners!"
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What can I do during my turn?" />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Here’s a quick rundown in order of what a survivor turn should look like:"
+                primary={
+                  <Typography>
+                    <b>How do I win?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Use item/s (optional)"
+                primary={
+                  <Typography>
+                    • As a survivor, your main objective is to find the keycard and escape through the exit node. You
+                    can search through all the houses for it or wait for another player to unlock the gate for you, but
+                    once you've reached the exit node uninfected then you're now one of this game's winners!
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>What can I do during my turn?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Note: must be done before moving/skipping"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Note: there is no limit for item usage"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>Here’s a quick rundown in order of what a survivor turn should look like:</Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Choose between movement and skipping (required)"
+                primary={<Typography>• Use item/s (optional)</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Movement - roll 2 dice to determine step count"
+                primary={
+                  <Typography>
+                    • Note: <u>must be done before moving/skipping</u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Skipping - 0 steps but activate a random event"
+                primary={
+                  <Typography>
+                    • Note: <u>there is no limit for item usage</u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If survivor is encountered (same node as you) while moving, you may stop and:"
+                primary={<Typography>• Choose between movement and skipping (required)</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Trade - exchange item cards, afterwards continue using your remaining steps"
+                primary={<Typography>• Movement - roll 2 dice to determine step count</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Cure - cure their infection (need cure item), this ends your turn early but you get an additional turn right after."
+                primary={<Typography>• Skipping - 0 steps but activate a random event</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • If <u>survivor is encountered</u> (same node as you) while moving, you may stop and:
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={
+                  <Typography>• Trade - exchange item cards, afterwards continue using your remaining steps</Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={
+                  <Typography>
+                    • Cure - cure their infection (need cure item), this ends your turn early but you get an additional
+                    turn right after.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "48px" }}
-                primary="• Note: can only cure infected players"
+                primary={
+                  <Typography>
+                    • Note: <u>can only cure infected players</u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "48px" }}
-                primary="• Note: cured players stay immune to infection for the rest of the round they were cured"
+                primary={
+                  <Typography>
+                    • Note: cured players <u>stay immune to infection</u> for the rest of the round they were cured
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If viral is encountered, you are forced to stop and either:"
+                primary={
+                  <Typography>
+                    • If <u>viral is encountered</u>, you are forced to stop and either:
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Fight - use weapon item to prevent infection, afterwards continue using remaining steps"
+                primary={
+                  <Typography>
+                    • Fight - use weapon item to prevent infection, afterwards continue using remaining steps
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "48px" }}
-                primary="• Note: If used successfully, stay immune to infection for the rest of this turn."
+                primary={
+                  <Typography>
+                    • Note: If used successfully, <u>stay immune to infection</u> for the rest of this turn.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Get infected - you will be infected, stop moving"
+                primary={<Typography>• Get infected - you will be infected, stop moving</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If item count is greater than 5, discard one item into the discard pile."
+                primary={
+                  <Typography>
+                    • If <u>item count is greater than 5</u>, discard one item into the discard pile.
+                  </Typography>
+                }
               />
               <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• End Turn" />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What happens when I’m infected?" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• You’re current objective changes to moving towards uninfected players so that you can trade items and they can cure you. While infected your actions will be changed as follows:"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• cannot use any items"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• cannot enter houses"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• movement is only 1 die"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• can break any obstacle/trap with no cost"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>What happens when I’m infected?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If all players remaining on the board are infected, then the game ends and those players lose. If you want to win, then make sure to cure other survivors whenever possible so that they can do the same for you. Or at the very least escape before being infected yourself!"
+                primary={
+                  <Typography>
+                    • You’re current objective changes to moving towards uninfected players so that you can trade items
+                    and they can cure you. While infected your actions will be changed as follows:
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• cannot use any items</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• cannot enter houses</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• movement is only 1 die</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• can break any obstacle/trap with no cost</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • If <u>all players remaining on the board are infected</u>, then the game ends and those players
+                    lose. If you want to win, then make sure to cure other survivors whenever possible so that they can
+                    do the same for you. Or at the very least escape before being infected yourself!
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Tip: While infected you can help your fellow survivors by clearing up vomit traps and other obstacles since you are immune to them."
+                primary={
+                  <Typography>
+                    <b>Tip:</b> While infected you can help your fellow survivors by clearing up vomit traps and other
+                    obstacles since you are immune to them.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Tip: Never let yourself be infected intentionally since this speeds up the growth of the viral exponentially by letting him get more skills early."
+                primary={
+                  <Typography>
+                    <b>Tip:</b> Never let yourself be infected intentionally since this speeds up the growth of the
+                    viral exponentially by letting him get more skills early.
+                  </Typography>
+                }
               />
             </List>
-            {/*
-          <TableContainer>
-            <Table>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow sx={{ textIndent: 16 }}>How do I win?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • As a survivor, your main objective is to find the keycard and escape through the exit node. You can
-                  search through all the houses for it or wait for another player to unlock the gate for you, but once
-                  you've reached the exit node uninfected then you're now one of this game's winners!
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>What can I do during my turn?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  Here's a quick rundown of what a survivor turn should look like:
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Use item/s (optional)</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Note: must be done before moving/skipping</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Choose between movement and skipping (required)</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Movement - roll 2 dice to determine step count</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Skipping - 0 steps but activate a random event</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • If survivor is encountered (same node as you) while moving, you may stop and:
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Trade - exchange item cards, afterwards continue using your remaining steps
-                </TableRow>
-                <TableRow sx={{ textIndent: 48 }}>• Note: cannot trade with infected players</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Cure - cure their infection (need cure item), this ends your turn early but you get an an additional
-                  turn right after.
-                </TableRow>
-                <TableRow sx={{ textIndent: 48 }}>• Note: can only cure infected players</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  I was forced to move extra steps from a random event, how does that work?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • If viral is encountered, you are forced to stop and either:
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Fight - use weapon item to prevent infection, afterwards continue using remaining steps.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Get infected - you will be infected, stop moving.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • If item count is greater than 5, discard one item into the discard pile.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• End Turn.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>What happens when I'm infected?</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • You're current objective changes to moving towards uninfected players so that you can trade items
-                  and they can cure you. While infected your actions will be limited as follows:
-                </TableRow>
-                <TableRow sx={{ textIndent: 48 }}>• cannot use any items.</TableRow>
-                <TableRow sx={{ textIndent: 48 }}>• cannot enter houses.</TableRow>
-                <TableRow sx={{ textIndent: 48 }}>• movement is only 1 die.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  Note: You can also help your fellow survivors by using up vomit traps set by the viral since you have
-                  nothing to lose.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • If all players remaining on the board are infected, then the game ends and those players lose. If
-                  you want to win, then make sure to cure other survivors whenever possible so that they can do the same
-                  for you. Or at the very least escape before being infected yourself!.
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          */}
           </AccordionDetails>
         </Accordion>
         {/* About Page of Viral */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Viral</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            {
+              <Typography>
+                <b>Viral</b>
+              </Typography>
+            }
+          </AccordionSummary>
           <AccordionDetails>
-            {/*
-          <TableContainer>
-            <Table>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow sx={{ textIndent: 16 }}>How do I win?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • As a viral, your main objective is to infect all the survivors. Once all survivors have either
-                  escaped or are currently infected, then the game ends. The amount of infected players at the end will
-                  determine your performance.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• 3 survivors infected is considered a win.</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• 4 survivors infected is considered a perfect victory.</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• anything less than those is considered a loss.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  *Note: If playing with less than 4 survivors the only way to win is to infect all of them.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  What's the point in playing if two survivors already escaped?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Even though you've already lost, you can still drag down the remaining survivors down with you so
-                  try your best not to be the only loser in the group!
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>What can I do during my turn?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  Here's a quick rundown of what a viral turn should look like:
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • At the start of your turn, you gain +1 skill point every time.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Upgrade and choose new skill (if at least 3 skill points accumulated).
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Use skill/s (optional).</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Choose between movement and skipping (required):</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Movement - roll 2 dice to determine steps.</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Skipping - 0 steps but activate random event.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • If uninfected survivor encountered - stop and infect player
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • If there are 2 survivors in that node, stop and infect both of them.
-                </TableRow>
-                <TableRow sx={{ textIndent: 48 }}>
-                  • In this scenario, only 1 of those survivors are required to use an item to prevent infection for
-                  both players.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• If infection is successful, +2 skill points.</TableRow>
-                <TableRow sx={{ textIndent: 48 }}>
-                  • If onslaught ability has been obtained, after end turn you get an additional turn.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• End Turn.</TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        */}
             <List>
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="How do I win?" />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>How do I win?</b>
+                  </Typography>
+                }
+              />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• As a viral, your main objective is to infect as much survivors as possible. Once all survivors have either escaped or are currently infected, then the game ends. The amount of infected players at the end will determine your performance. "
+                primary={
+                  <Typography>
+                    • As a viral, your main objective is to infect as much survivors as possible. Once all survivors
+                    have either escaped or are currently infected, then the game ends. The amount of infected players at
+                    the end will determine your performance.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• 3 survivors infected is considered a win"
+                primary={<Typography>• 3 survivors infected is considered a win</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• 4 survivors infected is considered a perfect victory"
+                primary={<Typography>• 4 survivors infected is considered a perfect victory</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• anything less than those is considered a loss"
+                primary={<Typography>• anything less than those is considered a loss</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="*Note: If playing with less than 4 survivors the only way to win is to infect all of them"
+                primary={
+                  <Typography>
+                    *Note: If playing with less than 4 survivors the only way to win is to infect all of them
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="What’s the point in playing if two survivors already escaped?"
+                primary={
+                  <Typography>
+                    <b>What’s the point in playing if two survivors already escaped?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Even though you’ve already lost, you can still drag down the remaining survivors down with you so try your best not to be the only loser in the group!"
+                primary={
+                  <Typography>
+                    • Even though you’ve already lost, you can still drag down the remaining survivors down with you so
+                    try your best not to be the only loser in the group!
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What can I do during my turn?" />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Here’s a quick rundown of what a viral turn should look like:"
+                primary={
+                  <Typography>
+                    <b>What can I do during my turn?</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={<Typography>Here’s a quick rundown of what a viral turn should look like:</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• At the start of your turn, you gain +1 skill point every time"
+                primary={<Typography>• At the start of your turn, you gain +1 skill point every time</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Upgrade and choose new skill (uses up 3 skill points)"
+                primary={<Typography>• Upgrade and choose new skill (uses up 3 skill points)</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Use active skill/s (optional)"
+                primary={<Typography>• Use active skill/s (optional)</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Choose between movement and skipping (required)"
+                primary={<Typography>• Choose between movement and skipping (required)</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Movement - roll 2 dice to determine steps"
+                primary={<Typography>• Movement - roll 2 dice to determine steps</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Skipping - 0 steps but activate random event"
+                primary={<Typography>• Skipping - 0 steps but activate random event</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If uninfected survivor encountered - stop and infect player"
+                primary={<Typography>• If uninfected survivor encountered - stop and infect player</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• If onslaught ability has been obtained, gain an extra Turn when you end your Turn."
+                primary={
+                  <Typography>
+                    • If onslaught ability has been obtained, gain an extra Turn when you end your Turn.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• If there are 2 survivors in that node, stop and infect both players."
+                primary={
+                  <Typography>• If there are 2 survivors in that node, stop and infect both players.</Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "48px" }}
-                primary="• In this scenario, only 1 of those survivors are required to use an item to prevent infection for both players."
+                primary={
+                  <Typography>
+                    • In this scenario, only 1 of those survivors are required to use an item to prevent infection for
+                    both players.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• If infection is successful, +2 skill points."
-              />
-              <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• End Turn" />
-              <Divider />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start" }}
-                primary="What else should I know about viral skills?"
+                primary={<Typography>• If infection is successful, +2 skill points.</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Use the digital companion to keep track of skill points."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Refer to the skill tree for the descriptions as well as the order in which they can be unlocked. Skills under require the ability directly above it to be available with Apex needed both sides maxed out."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Passive skills trigger automatically while active skills need to be purposely activated in the proper scenario such as the start of your turn for Mind’s eye and Acid Reflux and encountering an obstacle or weapon for tank."
+                primary={<Typography>• End Turn</Typography>}
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="I got a rat snack from a random event what is that?"
+                primary={
+                  <Typography>
+                    <b>What else should I know about viral skills?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• When this happens take a rat piece from the game pieces into your inventory."
+                primary={<Typography>• Use the digital companion to keep track of skill points.</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• This functions similarly to the food item card for survivors as it gives you one additional roll at the start of your turn."
+                primary={
+                  <Typography>
+                    • Refer to the skill tree for the descriptions as well as the order in which they can be unlocked.
+                    Skills under require the ability directly above it to be available with Apex needed both sides maxed
+                    out.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• You can only have a max of two rats at a time."
+                primary={
+                  <Typography>
+                    • Passive skills trigger automatically while active skills need to be purposely activated in the
+                    proper scenario such as the start of your turn for Mind’s eye and Acid Reflux and encountering an
+                    obstacle or weapon for tank.
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What is vomit from Acid Reflux?" />
-              <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="Vomit" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• any survivor that steps on it becomes infected (if not already) and stops moving"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>I got a rat snack from a random event what is that?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• can only be activated by survivors"
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • When this happens take a rat piece from the game pieces into your inventory.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• can overwrite existing obstacles because of its acidic properties."
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • This functions similarly to the food item card for survivors as it gives you one additional roll
+                    at the start of your turn.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• successful infection of an uninfected player gives 2 skill points per usual."
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={<Typography>• You can only have a max of two rats at a time.</Typography>}
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="Limitations:" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Only one can exist at a time. Placing a new one will cause the old vomit to disappear."
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>What is vomit from Acid Reflux?</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    <b>Vomit</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Cannot be placed on houses or through shortcuts."
+                primary={
+                  <Typography>
+                    • any survivor that steps on it becomes infected (if not already) and stops moving
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• Once activated it will disappear."
+                primary={<Typography>• can only be activated by survivors</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• can overwrite existing obstacles because of its acidic properties.</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={
+                  <Typography>
+                    • successful infection of an uninfected player gives 2 skill points per usual.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={<Typography>Limitations:</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={
+                  <Typography>
+                    • Only one can exist at a time. Placing a new one will cause the old vomit to disappear.
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• Cannot be placed on houses or through shortcuts.</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "32px" }}
+                primary={<Typography>• Once activated it will disappear.</Typography>}
               />
             </List>
           </AccordionDetails>
         </Accordion>
         {/* Random Event */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Random Events</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>
+              <b>Random Events</b>
+            </Typography>
+          </AccordionSummary>
           <AccordionDetails>
             <List>
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• These are randomly selected effects that can change the state of the game such as by forcing movement, giving free items, and slowing movement among others."
+                primary={
+                  <Typography>
+                    <b>What are random events?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• They can be separated into two groups: "
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Skip events - these trigger whenever a player skips their turn. There are different skip events for viral and survivor."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Node events - these trigger when ending your turn on an event node. See Map Guide - Nodes for more details. The events for these are the same for viral and survivor."
+                primary={
+                  <Typography>
+                    • These are randomly selected effects that can change the state of the game such as by forcing
+                    movement, giving free items, and slowing movement among others.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• Here is the full list of the chances and effects of the events: "
+                primary={<Typography>• They can be separated into two groups:</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • <b>Skip events</b> - these trigger whenever a player skips their turn. There are different skip
+                    events for viral and survivor
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • <b>Node events</b> - these trigger when ending your turn on an event node. See{" "}
+                    <u>Map Guide - Nodes</u> for more details. The events for these are the same for viral and survivor.
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={<Typography>• Here is the full list of the chances and effects of the events:</Typography>}
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Survivor (skip turn)" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Nothing Happens (40%) - …nothing happens"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Survivor</b> (skip turn)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Panic attack (20%) -  forced to move 5 steps this round "
+                primary={
+                  <Typography>
+                    <b>• Nothing Happens (40%)</b> - …nothing happens
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Lucky day (20%) - shuffle discard pile and draw one, if discard pile is empty then no card is drawn."
+                primary={
+                  <Typography>
+                    <b>• Panic attack (20%)</b> - forced to move 5 steps this round
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Muscle cramps (20%) - lose one dice roll next round."
+                primary={
+                  <Typography>
+                    <b>• Lucky day (20%)</b> - shuffle discard pile and draw one, if discard pile is empty then no card
+                    is drawn.
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    <b>• Muscle cramps (20%)</b> - lose one dice roll next round.
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Viral (skip turn)" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Nothing Happens (50%) - …nothing happens"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Viral</b> (skip turn)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Random distraction  (20%) -  forced to move 5 steps this round"
+                primary={
+                  <Typography>
+                    <b>• Nothing Happens (50%)</b> - …nothing happens
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Rat snack (20%) - Obtain a rat nearby as an item. Can be used to add one additional roll. (max 2 at a time)"
+                primary={
+                  <Typography>
+                    <b>• Random distraction (20%)</b> - forced to move 5 steps this round
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    <b>• Rat snack (20%)</b> - Obtain a rat nearby as an item. Can be used to add one additional roll.
+                    (max 2 at a time)
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="All (random event node)" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Fallen boulder (30%) - obstructs path behind players (direction you came from) "
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>All</b> (random event node)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Fallen tree (30%) - obstructs path in front of player (direction opposite where you came from) "
+                primary={
+                  <Typography>
+                    <b>• Fallen boulder (30%)</b> - obstructs path behind players (direction you came from)
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    <b>• Fallen tree (30%)</b> - obstructs path in front of player (direction opposite where you came
+                    from)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• if occupied by another player, move that player to the event node that triggered it"
+                primary={
+                  <Typography>
+                    • if occupied by another player, <u>move that player to the event node that triggered it</u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• If occupied by another obstacle/trap, overwrite it"
+                primary={<Typography>• If occupied by another obstacle/trap, overwrite it</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• functions similarly to a trap"
+                primary={<Typography>• functions similarly to a trap</Typography>}
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Rainy day (20%) - pathway becomes muddy (movement of players becomes half of what they roll) *lasts until after the next turn of the player who activated the event"
+                primary={
+                  <Typography>
+                    <b>• Rainy day (20%)</b> - pathway becomes muddy (movement of players becomes half of what they
+                    roll) *lasts until after the next turn of the player who activated the event
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Earthquake (20%) - all players inside a house are immediately forced to move one step"
+                primary={
+                  <Typography>
+                    <b>• Earthquake (20%)</b> - all players inside a house are immediately forced to move one step
+                  </Typography>
+                }
               />
             </List>
           </AccordionDetails>
@@ -1322,53 +1599,12 @@ function About() {
         </Accordion>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Map Guide
         {/* About Page of Nodes */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <b>Nodes</b>
           </AccordionSummary>
           <AccordionDetails>
-            {/*
-          <TableContainer>
-            <Table>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • these are the circles where you place character pieces, traps, and obstacles.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • an adjacent node is one that is right next to the player's current node.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • houses are special and as such traps cannot be placed there.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • elevation is indicated by the darker hue of the bottom floor.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • notably the bridge to the exit is not connected to the underground pathway except through the ladder
-                  shortcut.
-                </TableRow>
-                <TableRow sx={{ textIndent: 40 }}>Image 1: Regular Node - Nothing happens.</TableRow>
-                <TableRow sx={{ textIndent: 40 }}>
-                  Image 2: Event Node - Random general event when ending on it.
-                </TableRow>
-                <TableRow sx={{ textIndent: 40 }}>
-                  Image 3: Exit Node - Goal of the survivors, initially requires key card to be opened.
-                </TableRow>
-                <TableRow sx={{ textIndent: 40 }}>Image 4: Survivor Spawn Node - Spawn point of a survivor.</TableRow>
-                <TableRow sx={{ textIndent: 40 }}>Image 5: Viral Spawn Node - Spawn point of the viral.</TableRow>
-                <TableRow sx={{ textIndent: 40 }}>Image 6: House Node:</TableRow>
-                <TableRow sx={{ textIndent: 90 }}>• chance to get an item upon entering.</TableRow>
-                <TableRow sx={{ textIndent: 90 }}>• consumes all remaining steps upon entering.</TableRow>
-                <TableRow sx={{ textIndent: 90 }}>
-                  • a survivor may not enter the same house twice in the same game.
-                </TableRow>
-                <TableRow sx={{ textIndent: 90 }}>• viral cannot enter houses without the Apex skill.</TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          */}
             <List>
               <ListItemText
                 disableTypography
@@ -1570,41 +1806,6 @@ function About() {
             <b>Shortcuts</b>
           </AccordionSummary>
           <AccordionDetails>
-            {/*
-            <TableContainer>
-              <Table>
-                <TableBody sx={{ textAlign: "start" }}>
-                  <TableRow sx={{ textIndent: 16 }}>• these are not nodes but pathways.</TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>• a player cannot stand on them but only cross them.</TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    • nodes separated by shortcuts are not considered adjacent.
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    • default viral cannot make use of ladder, zip lines, and boats.
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 32 }}>
-                    • once leaping ability is obtained, viral can use any shortcut.
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    Image 1.1, Image 1.2: Ladders/Zip lines - Consumes all remaining steps to cross, zip lines is one
-                    way.
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    Image 2.1, Image 2.2: Boat/Gondola lift - Consumes only one step to cross, lift is only one way
-                    upwards.
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    Image 3.1, Image 3.2: Cliff jumps - Consumes only one step to cross but is one-way downwards (note:
-                    viral with leaping ability can jump upwards as well).
-                  </TableRow>
-                  <TableRow sx={{ textIndent: 16 }}>
-                    Image 4.1, Image 4.2: Boat/Gondola lift - Underground tunnel - Consumes all remaining steps to cross
-                    (note: viral with leaping ability still costs all steps to use).
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            */}
             <List>
               <ListItemText
                 disableTypography
@@ -1986,48 +2187,12 @@ function About() {
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        FAQS
         {/* FAQS*/}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <b>FAQ Section</b>
           </AccordionSummary>
           <AccordionDetails>
-            {/*
-          <TableContainer>
-            <Table>
-              <TableHead>FAQ Section</TableHead>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow sx={{ textIndent: 16 }}>
-                  Can both survivors and Viral be considered winners at the same time?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Yes, when one survivor escapes while the rest are infected, the Viral and escapee are considered
-                  winners.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>When can I use items?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Please refer to the individual item descriptions. As a general rule, all items can only be used at
-                  the start of your turn except for Cure, Keycard, and Weapons.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  What happens if the viral encounters two players on the same node?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • If there are 2 survivors in that node, stop and infect both of them.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • In this scenario, only 1 of those survivors are required to use an item to prevent infection for
-                  both players.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>Is the viral forced to bite players?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Yes, whenever you are in the same node as a survivor an infection attempt is required.
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        */}
             <List>
               <ListItemText
                 disableTypography
@@ -2140,62 +2305,5 @@ function About() {
     </div>
   );
 }
-
-// function About() {
-//   return (
-//     <div>
-//       <h1>About</h1>
-//       <p>This is a game that requires 3-5 players.</p>
-//       <div className="flex max-w-2xl flex-col gap-2.5">
-//         <div className="rounded border border-solid border-white p-2.5">
-//           <h1>Map Guide</h1>
-//           <ol className="text-justify">
-//             <li className="list-inside list-decimal">Nodes</li>
-//             <div>
-//               <ul className="block">
-//                 <li className="list-inside list-disc">
-//                   these are the circles where you place character pieces, traps, and obstacles. these are the circles
-//                   where you place character pieces, traps, and obstacles.
-//                 </li>
-//                 <li className="list-inside list-disc">
-//                   an adjacent node is one that is right next to the player’s current node.
-//                 </li>
-//                 <li className="list-inside list-disc">houses are special and as such traps cannot be placed there.</li>
-//                 <li className="list-inside list-disc">elevation is indicated by the darker hue of the bottom floor.</li>
-//               </ul>
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//             </div>
-//             <li className="list-inside list-decimal">Shortcuts</li>
-//             <div>
-//               <ul className="block">
-//                 <li className="list-inside list-disc">these are not nodes but pathways.</li>
-//                 <li className="list-inside list-disc">a player cannot stand on them but only cross them.</li>
-//                 <li className="list-inside list-disc">nodes separated by shortcuts are not considered adjacent.</li>
-//                 <li className="list-inside list-disc">default viral cannot make use of ladder, ziplines, and boats.</li>
-//               </ul>
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//               <img className="h-5 w-5" src="/pieces/player-1.png" />
-//             </div>
-//           </ol>
-//         </div>
-//         <div className="rounded border border-solid border-white p-2.5">
-//           <h1>Play Guide</h1>
-//           <ol className="text-justify">
-//             <li className="list-inside list-decimal">Player Movement</li>
-//             <li className="list-inside list-decimal">Game Setup</li>
-//             <li className="list-inside list-decimal">Survivor Gameplay</li>
-//             <li className="list-inside list-decimal">Viral Gameplay</li>
-//           </ol>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 
 export default About;
