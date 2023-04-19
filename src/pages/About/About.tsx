@@ -15,6 +15,10 @@ import {
 } from "@mui/material";
 import * as React from "react";
 
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -54,7 +58,7 @@ function About() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  
+
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -251,6 +255,54 @@ function About() {
       <Accordion sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>Survivor</AccordionSummary>
         <AccordionDetails>
+          <List>
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="How do I win?" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• As a survivor, your main objective is to find the keycard and escape through the exit node. You can
+              search through all the houses for it or wait for another player to unlock the gate for you, but once
+              you've reached the exit node uninfected then you're now one of this game's winners!"
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What can I do during my turn?" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="Here’s a quick rundown in order of what a survivor turn should look like:"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Use item/s (optional)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• Note: must be done before moving/skipping"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• Note: there is no limit for item usage"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Choose between movement and skipping (required)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• Movement - roll 2 dice to determine step count"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• Skipping - 0 steps but activate a random event"
+            />
+          </List>
+          <Divider />
           <TableContainer>
             <Table>
               <TableBody sx={{ textAlign: "start" }}>

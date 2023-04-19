@@ -36,12 +36,12 @@
 nav {
   @apply flex justify-center;
 }
-ul {
+/* ul {
   @apply flex gap-[30px] p-0;
 }
 li {
   list-style: none;
-}
+} */
 
 /* 
 #root {
