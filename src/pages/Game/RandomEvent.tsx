@@ -1,30 +1,42 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import boulder from "/sfx/boulder.mp3";
+import fallingTree from "/sfx/falling-tree.mp3";
+import earthquake from "/sfx/earthquake.mp3";
+import rain from "/sfx/rain.mp3";
+import legCramp from "/sfx/leg-cramp.mp3";
+import luckyDay from "/sfx/lucky-day.mp3";
+import nothingHappen from "/sfx/nothing-happen.mp3";
+import panicAttack from "/sfx/panic-attack.mp3";
+import randomDistraction from "/sfx/random-distraction.mp3";
+import ratSnack from "/sfx/rat-snack.mp3";
+
 
 type event = {
   name: string;
   percent: number;
+  sfx: string
 }[];
 
 // create a list of events with their percentages
 const generalEvents: event = [
-  { name: "Earthquake", percent: 0.2 },
-  { name: "Rainy Day", percent: 0.2 },
-  { name: "Fallen Tree", percent: 0.3 },
-  { name: "Fallen Boulder", percent: 0.3 },
+  { name: "Earthquake", percent: 0.2, sfx: earthquake },
+  { name: "Rainy Day", percent: 0.2, sfx: rain},
+  { name: "Fallen Tree", percent: 0.3, sfx: fallingTree},
+  { name: "Fallen Boulder", percent: 0.3, sfx: boulder },
 ];
 
 const viralEvents: event = [
-  { name: "Rat Snack", percent: 0.2 },
-  { name: "Random distraction", percent: 0.3 },
-  { name: "Nothing Happens", percent: 0.5 },
+  { name: "Rat Snack", percent: 0.2, sfx: ratSnack},
+  { name: "Random distraction", percent: 0.3, sfx: randomDistraction },
+  { name: "Nothing Happens", percent: 0.5, sfx: nothingHappen },
 ];
 
 const survivorEvents: event = [
-  { name: "Muscle Cramps", percent: 0.2 },
-  { name: "Lucky Day", percent: 0.2 },
-  { name: "Panic attack", percent: 0.2 },
-  { name: "Nothing Happens", percent: 0.4 },
+  { name: "Muscle Cramps", percent: 0.2, sfx: legCramp },
+  { name: "Lucky Day", percent: 0.2, sfx: luckyDay },
+  { name: "Panic attack", percent: 0.2, sfx: panicAttack },
+  { name: "Nothing Happens", percent: 0.4, sfx: nothingHappen },
 ];
 
 // create a function to randomly select an event
@@ -40,6 +52,12 @@ function getRandomEvent(event: event) {
     // if the random number is less than the total percentage
     if (randomNum < totalPercent) {
       // return the name of the current event
+      var audio = (new Audio(event[i].sfx));
+      audio.play();
+      setTimeout(function(){
+        audio.pause();
+        audio.currentTime = 0;
+      }, 10000);
       return event[i].name;
     }
   }

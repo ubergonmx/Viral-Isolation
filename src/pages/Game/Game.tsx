@@ -8,6 +8,7 @@ import { IHouse, ISurvivor, IViral } from "./gameInterface";
 import House from "./House";
 import LongPressButton from "./LongPressButton";
 import { GeneralEvent, SurvivorEvent, ViralEvent } from "./RandomEvent";
+import alarm from "/sfx/alarm.mp3";
 
 function Game() {
   const { code } = useParams();
@@ -76,6 +77,9 @@ function Game() {
       }
       synth.pitch = 1.1;
       synth.rate = 1.1;
+      let audio = new Audio(alarm)
+      audio.volume = 0.1;
+      audio.play();
       window.speechSynthesis.speak(synth);
     }
   }, [gameConfig.round]);
