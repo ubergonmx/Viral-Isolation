@@ -18,6 +18,7 @@ function Home() {
 
   const [lobbies, setLobbies] = useState([]);
   const [games, setGames] = useState([]);
+  const [results, setResults] = useState([]);
 
   //get lobbies
   useEffect(() => {
@@ -33,6 +34,12 @@ function Home() {
       setGames(rooms);
     });
 
+    socket.emit("get-results");
+    socket.on("results", (rooms: any) => {
+      // console.log(rooms);
+      setResults(rooms);
+    });
+
     socket.on("created", (room: any) => {
       console.log("lobby created");
       navigate("/lobby/" + room.code);
@@ -40,6 +47,7 @@ function Home() {
     return () => {
       socket.off("lobbies");
       socket.off("games");
+      socket.off("results")
       socket.off("created");
     };
   }, []);
@@ -55,7 +63,7 @@ function Home() {
       <button onClick={createGame}>Create a new game</button>
       {state?.error && <p className="text-red-500">{state.error}</p>}
       <br />
-      <div className="grid grid-cols-2 divide-x px-4">
+      <div className="grid grid-cols-3 divide-x px-4">
         <div className="grid px-2 gap-2 content-start">
           <h2>Open Lobbies</h2>
           {lobbies.length > 0 &&
@@ -71,6 +79,15 @@ function Home() {
             games.map((game: any) => (
               <button key={game} className="h-10" onClick={() => navigate("/game/" + game)}>
                 {game}
+              </button>
+            ))}
+        </div>
+        <div className="grid px-2 gap-2 content-start">
+          <h2>Results</h2>
+          {results.length > 0 &&
+            results.map((result: any) => (
+              <button key={result} className="h-10" onClick={() => navigate("/results/" + result)}>
+                {result}
               </button>
             ))}
         </div>

@@ -186,10 +186,6 @@ function Game() {
           Game {code} {gameConfig && <>- R{gameConfig.round}</>}
         </h1>
 
-        {/* <div className="flex items-center justify-center gap-40 pt-4">
-        </div> */}
-
-        {/* <span className="text-sm">Turn order: </span> */}
         <div className="flex flex-wrap justify-center gap-2 pb-5">
           <LongPressButton text="End Turn" callback={endTurn} className="h-7" />
           {gameConfig &&
