@@ -54,7 +54,7 @@ function About() {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
+  
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -73,13 +73,106 @@ function About() {
       <TabPanel value={value} index={2}>
         Item Three
       </TabPanel>
+      {/* About Page of Game Setup */}
+      <Accordion sx={{ width: "100%" }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Set Up</AccordionSummary>
+        <AccordionDetails>
+          <TableContainer>
+            <Table>
+              <TableBody sx={{ textAlign: "start" }}>
+                <TableRow>Layout the board and setup the digital companion.</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>• The digital companion will randomly decide turn order.</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>• Note that the viral always goes last no matter what.</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • Choose 4 players to become the survivors (the game is playable with less survivors but expect
+                  difficulty to be unbalanced)
+                </TableRow>
+                <TableRow sx={{ textIndent: 16 }}>• Choose 1 player to become the viral</TableRow>
+                <TableRow>
+                  Pick your player pieces and set them on any of the spawn nodes as indicated by the Nodes section in
+                  Map Guides.
+                </TableRow>
+                <TableRow>
+                  Shuffle the deck of 46 item cards and place them face down next to the board. This will be the item
+                  draw deck.
+                </TableRow>
+                <TableRow>Place the 4 keycards face-up next to the item draw deck.</TableRow>
+                <TableRow>
+                  Set a space aside for the discard pile as well. This is where all used and discarded items will be
+                  placed.
+                </TableRow>
+                <TableRow>You are now ready to start playing!</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>• Proceed to the other guides to learn more about the game.</TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </AccordionDetails>
+      </Accordion>
+      {/* About Page of Movements */}
+      <Accordion sx={{ width: "100%" }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Movement Mechanics</AccordionSummary>
+        <AccordionDetails>
+          <TableContainer>
+            <Table>
+              <TableBody sx={{ textAlign: "start" }}>
+                <TableRow>
+                  <b>What is movement?</b>
+                </TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • Movement is the amount of steps you take decided by dice rolls which can be modified through
+                  skills/items but the default is 2 rolls.
+                </TableRow>
+                <TableRow>Which direction do I move my character piece?</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • Players may move in any direction but may not step on the same node twice in the same turn. This
+                  simply means that you cannot go forwards and backwards in the same turn.
+                </TableRow>
+                <TableRow>What do I do if I have extra steps remaining?</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • Players must use up all of their movement for the turn, if there are any extra steps left{" "}
+                  <u>you cannot end your turn</u>.
+                </TableRow>
+                <TableRow sx={{ textIndent: 32 }}>
+                  • Note: Dead ends are not an exception to this rule, the map is designed in a way that there is always
+                  an alternative path to use all remaining steps, even if it leads to an unfavorable outcome.
+                </TableRow>
+                <TableRow sx={{ textIndent: 32 }}>
+                  • Houses and red/yellow shortcuts are common ways to use up remaining steps quickly.
+                </TableRow>
+                <TableRow>What if I don’t want to move from my position?</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • This is called “Skipping” - it is when a player decides to not roll the dice in favor of staying in
+                  the same node.
+                </TableRow>
+                <TableRow sx={{ textIndent: 32 }}>
+                  • Side effect: This triggers a random event from the digital companion.
+                </TableRow>
+                <TableRow sx={{ textIndent: 32 }}>• Limitation: This can only be done every other round.</TableRow>
+                <TableRow>
+                  • I was forced to move extra steps from a random event after skipping, how does that work exactly?
+                </TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • Simply move your character as if you had rolled 5 steps turns this turn.
+                </TableRow>
+                <TableRow>• A viral just got pushed by a weapon, how does work?</TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • The survivor responsible gets to move the viral a certain amount of steps which is stated by the
+                  weapon.
+                </TableRow>
+                <TableRow sx={{ textIndent: 16 }}>
+                  • The viral <u>can be pushed across shortcuts</u> which appropriately uses the given steps as usual.
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </AccordionDetails>
+      </Accordion>
       {/* About Page of Nodes */}
       <Accordion sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>Nodes</AccordionSummary>
         <AccordionDetails>
           <TableContainer>
             <Table>
-              <TableHead>Nodes</TableHead>
               <TableBody sx={{ textAlign: "start" }}>
                 <TableRow sx={{ textIndent: 16 }}>
                   • these are the circles where you place character pieces, traps, and obstacles.
@@ -124,7 +217,6 @@ function About() {
         <AccordionDetails>
           <TableContainer>
             <Table>
-              <TableHead>Shortcuts</TableHead>
               <TableBody sx={{ textAlign: "start" }}>
                 <TableRow sx={{ textIndent: 16 }}>• these are not nodes but pathways.</TableRow>
                 <TableRow sx={{ textIndent: 16 }}>• a player cannot stand on them but only cross them.</TableRow>
@@ -155,105 +247,12 @@ function About() {
           </TableContainer>
         </AccordionDetails>
       </Accordion>
-      {/* About Page of Game Setup */}
-      <Accordion sx={{ width: "100%" }}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Set Up</AccordionSummary>
-        <AccordionDetails>
-          <TableContainer>
-            <Table>
-              <TableHead>Game Set Up</TableHead>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow>Layout the board and setup the digital companion.</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Decide on a turn order, youngest to oldest would be the default. *Note that the viral always goes
-                  last no matter what.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Choose 4 players to become the survivors (the game is playable with less survivors but expect
-                  difficulty to be unbalanced)
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Choose 1 player to become the viral</TableRow>
-                <TableRow>
-                  Pick your player pieces and set them on the spawn nodes as indicated by the Map Nodes Visual Guide.
-                </TableRow>
-                <TableRow>
-                  Shuffle the deck of 46 item cards and place them face down next to the board. This will be the item
-                  draw deck.
-                </TableRow>
-                <TableRow>Place the 4 keycards faceup next to the item draw deck.</TableRow>
-                <TableRow>
-                  Set a space aside for the discard pile as well. This is where all used and discarded items will be
-                  placed.
-                </TableRow>
-                <TableRow>You are now ready to start playing!</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>• Proceed to the other guides to learn more about the game.</TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </AccordionDetails>
-      </Accordion>
-      {/* About Page of Movements */}
-      <Accordion sx={{ width: "100%" }}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Movement Mechanics</AccordionSummary>
-        <AccordionDetails>
-          <TableContainer>
-            <Table>
-              <TableHead>Movement Mechanics</TableHead>
-              <TableBody sx={{ textAlign: "start" }}>
-                <TableRow sx={{ textIndent: 16 }}>What is movement?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Movement is the amount of steps you take decided by dice rolls which can be modified through
-                  skills/items but the default is 2 rolls.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>Which direction do I move my character piece?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Players may move in any direction but may not step on the same node twice in the same turn. This
-                  simply means that you cannot go forwards and backwards in the same turn.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Players may move in any direction but may not step on the same node twice in the same turn. This
-                  simply means that you cannot go forwards and backwards in the same turn.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>What do I do if I have extra steps remaining?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Players must use up all of their movement for the turn, if there are any extra steps left you cannot
-                  end your turn.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Note: Dead ends other than boulders and fallen tree obstacles are not an exception to this rule, the
-                  map is designed in a way that there is always an alternative path to use all remaining steps, even if
-                  it leads to an unfavorable outcome.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Houses and ladders are common ways to use up remaining steps.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>What if I don’t want to move from my position?</TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • This is called “Skipping” - it is when a player decides to not roll the dice in favor of staying in
-                  the same node.
-                </TableRow>
-                <TableRow sx={{ textIndent: 32 }}>• Limitation: This can only be done every other round.</TableRow>
-                <TableRow sx={{ textIndent: 32 }}>
-                  • Side effect: This triggers a random event from the digital companion.
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  I was forced to move extra steps from a random event, how does that work?
-                </TableRow>
-                <TableRow sx={{ textIndent: 16 }}>
-                  • Simply move your character as if you had rolled 5 steps turns this turn.
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </AccordionDetails>
-      </Accordion>
       {/* About Page of Survivor */}
       <Accordion sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>Survivor</AccordionSummary>
         <AccordionDetails>
           <TableContainer>
             <Table>
-              <TableHead>Survivor</TableHead>
               <TableBody sx={{ textAlign: "start" }}>
                 <TableRow sx={{ textIndent: 16 }}>How do I win?</TableRow>
                 <TableRow sx={{ textIndent: 16 }}>
@@ -324,7 +323,6 @@ function About() {
         <AccordionDetails>
           <TableContainer>
             <Table>
-              <TableHead>Viral</TableHead>
               <TableBody sx={{ textAlign: "start" }}>
                 <TableRow sx={{ textIndent: 16 }}>How do I win?</TableRow>
                 <TableRow sx={{ textIndent: 16 }}>
