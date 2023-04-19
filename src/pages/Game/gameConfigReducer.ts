@@ -17,7 +17,7 @@ export enum GameConfigActionType {
   VIRAL_SKILL_AGILITY = "VIRAL_SKILL_AGILITY",
   VIRAL_SKILL_TANK = "VIRAL_SKILL_TANK",
   VIRAL_SKILL_MINDSEYE = "VIRAL_SKILL_MINDSEYE",
-  VIRAL_SKILL_LEAPING = "VIRAL_SKILL_LEAPING",
+  VIRAL_SKILL_PATHFINDER = "VIRAL_SKILL_PATHFINDER",
   VIRAL_SKILL_ONSLAUGHT = "VIRAL_SKILL_ONSLAUGHT",
   VIRAL_SKILL_APEX = "VIRAL_SKILL_APEX",
   END_TURN = "END_TURN",
@@ -39,6 +39,11 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
     const survivorIndex = survivors.findIndex((survivor: ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], isInfected: true };
     return { ...state, survivors, viral: { ...viral, skillPoints: viral.skillPoints + ViralConfig.INFECT_SKILLPOINT } };
+  } else if (action.type === GameConfigActionType.SURVIVOR_DIE) {
+    const { survivors } = state;
+    const survivorIndex = survivors.findIndex((survivor: ISurvivor) => survivor.name === action.payload.name);
+    survivors[survivorIndex] = { ...survivors[survivorIndex], isDead: true };
+    return { ...state, survivors };
   } else if (action.type === GameConfigActionType.SURVIVOR_CURE) {
     const { survivors } = state;
     const survivorIndex = survivors.findIndex((survivor: ISurvivor) => survivor.name === action.payload.survivorCured);
@@ -48,11 +53,6 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
     const { survivors, turn } = state;
     const survivorIndex = survivors.findIndex((survivor: ISurvivor) => survivor.name === action.payload.name);
     survivors[survivorIndex] = { ...survivors[survivorIndex], hasEscaped: true };
-    return { ...state, survivors, turn: turn + 1 };
-  } else if (action.type === GameConfigActionType.SURVIVOR_DIE) {
-    const { survivors, turn } = state;
-    const survivorIndex = survivors.findIndex((survivor: ISurvivor) => survivor.name === action.payload.name);
-    survivors[survivorIndex] = { ...survivors[survivorIndex], isDead: true };
     return { ...state, survivors, turn: turn + 1 };
   } else if (action.type === GameConfigActionType.VIRAL_SKILL_ACIDREFLUX) {
     const {
@@ -102,7 +102,7 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
         skill: { ...skill, mindsEye: true },
       },
     };
-  } else if (action.type === GameConfigActionType.VIRAL_SKILL_LEAPING) {
+  } else if (action.type === GameConfigActionType.VIRAL_SKILL_PATHFINDER) {
     const {
       viral,
       viral: { skill },
@@ -111,8 +111,8 @@ export const gameConfigReducer = (state: IGame, action: GameConfigAction): IGame
       ...state,
       viral: {
         ...viral,
-        skillPoints: viral.skillPoints - ViralConfig.LEAPING_COST,
-        skill: { ...skill, leaping: true },
+        skillPoints: viral.skillPoints - ViralConfig.PATHFINDER_COST,
+        skill: { ...skill, pathfinder: true },
       },
     };
   } else if (action.type === GameConfigActionType.VIRAL_SKILL_ONSLAUGHT) {

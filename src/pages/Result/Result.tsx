@@ -1,31 +1,25 @@
-export type Viral = {
-  name: string;
-  skill: number;
-  noOfInfections: number;
-  noOfKillings: number;
-};
-export type Survivor = {
-  name: string;
-  hp: number;
-  hasEscaped: boolean;
-  isDead: boolean;
-};
+import { useNavigate, useParams } from "react-router-dom";
+import { useSocket } from "../../context/SocketContext";
+import { useEffect } from "react";
 
-export type GameResult = {
-  id: number;
-  survivor: Survivor[];
-  viral: Viral;
-  gameTime: number;
-};
 
-function Result({ results }: { results: GameResult }) {
+function Result() {
+  const { code } = useParams<{ code: string }>();
+  const navigate = useNavigate();
+  const socket = useSocket();
+
+  useEffect(() => {
+    socket.emit("join", { code: code });
+    socket.on("error", (data) => {
+    });
+  }, []);
+
   return (
     <>
-      <h1>Results</h1>
+      {/* <h1>Results</h1>
       <fieldset style={{ textAlign: "left", backgroundColor: "yellow" }}>
         <legend>Game Information:</legend>
         <p>Game ID: {results.id}</p>
-        <p>Game Time: {results.gameTime}</p>
       </fieldset>
       <div>
         {results.survivor.map((survivor, index) => (
@@ -46,7 +40,7 @@ function Result({ results }: { results: GameResult }) {
           <p>Number of Infections: {results.viral.noOfInfections}</p>
           <p>Number of Killings: {results.viral.noOfKillings}</p>
         </fieldset>
-      </div>
+      </div> */}
     </>
   );
 }

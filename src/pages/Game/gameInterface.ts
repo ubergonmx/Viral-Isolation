@@ -25,7 +25,7 @@ export interface IViral {
     agility: boolean;
     tank: boolean;
     mindsEye: boolean;
-    leaping: boolean;
+    pathfinder: boolean;
     onslaught: boolean;
     apex: boolean;
   };

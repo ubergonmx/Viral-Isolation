@@ -53,13 +53,14 @@ io.on("connection", (socket) => {
   // Game events
   socket.on("start", (data) => game.start(socket, io, data));
   socket.on("get-survivor-item", (data) => game.getSurvivorItem(socket, data));
-  // socket.on("get-viral-item", (data) => game.getViralItem(socket, data));
   socket.on("end-turn", (data) => game.endTurn(socket, data));
   socket.on("next-turn", (data) => game.nextTurn(socket, data));
   socket.on("survivor-infect", (data) => game.infectSurvivor(socket, data));
   socket.on("survivor-cure", (data) => game.cureSurvivor(socket, data));
   socket.on("survivor-escape", (data) => game.escapeSurvivor(socket, data));
   socket.on("survivor-kill", (data) => game.killSurvivor(socket, data));
+  socket.on("viral-skill", (data) => game.viralSkill(socket, data));
+
 
   // Results events
   socket.on("get-results", () => game.getResults(io));

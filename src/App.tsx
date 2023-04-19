@@ -61,8 +61,8 @@ function GameWithFallback() {
 function ResultWithFallback() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      {/* <Result /> */}
-      <h1>Currently in development...</h1>
+      <Result />
+      {/* <h1>Currently in development...</h1> */}
     </Suspense>
   );
 }

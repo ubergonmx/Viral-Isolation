@@ -107,7 +107,15 @@ function Game() {
     dispatch({ type: GameConfigActionType.SURVIVOR_INFECT, payload: data });
     socket.emit("survivor-infect", { code: code, survivor: data, infectSkillPoint: ViralConfig.INFECT_SKILLPOINT });
   }
-
+  
+  function survivorKill(survivorName?: string) {
+    const data = survivorName
+      ? gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)
+      : (getCurrentPlayer() as ISurvivor);
+    dispatch({ type: GameConfigActionType.SURVIVOR_DIE, payload: data });
+    socket.emit("survivor-kill", { code: code, survivor: data });
+  }
+  
   // TODO: add immune system skill point?
   function survivorCure(survivorName: string) {
     const survivor = getCurrentPlayer() as ISurvivor;
@@ -123,14 +131,6 @@ function Game() {
     const survivor = getCurrentPlayer() as ISurvivor;
     dispatch({ type: GameConfigActionType.SURVIVOR_ESCAPE, payload: survivor });
     socket.emit("survivor-escape", { code: code, survivor: survivor });
-  }
-
-  function survivorDie(survivorName?: string) {
-    const data = survivorName
-      ? gameConfig.survivors.find((survivor: ISurvivor) => survivor.name === survivorName)
-      : (getCurrentPlayer() as ISurvivor);
-    dispatch({ type: GameConfigActionType.SURVIVOR_DIE, payload: data });
-    socket.emit("survivor-die", { code: code, survivorName: data });
   }
 
   function isSurvivorInfected() {
@@ -189,16 +189,23 @@ function Game() {
           <LongPressButton text="End Turn" callback={endTurn} className="h-7" />
           {gameConfig &&
             gameConfig.turnOrder.map((turn: string, index: number) => {
+              let player, survivorColor;
+              if (gameConfig.survivors.some(s => s.name === turn)) {
+                player = gameConfig.survivors.find((s:ISurvivor) => s.name === turn);
+                if(player){
+                  survivorColor = player.isDead ? "bg-red-900 text-gray-400" : player.hasEscaped ? "bg-gray-700 text-gray-400" : "bg-gray-500";
+                }
+              }
               return (
                 <div
                   key={index}
                   className={`${
-                    index === gameConfig.turn ? "bg-green-500" : "bg-gray-500"
+                    index === gameConfig.turn ? "bg-green-500" : (player && (player.hasEscaped || player.isDead)) ? survivorColor: "bg-gray-500"
                   } flex h-7 items-center rounded-md p-2 text-sm`}
                 >
                   {turn}
                 </div>
-              );
+              )
             })}
           <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" />
         </div>
@@ -260,7 +267,7 @@ function Game() {
                 <h2>Infect Survivors</h2>
                 <div className="flex items-center justify-center gap-2 pb-5">
                   {gameConfig.survivors.map((survivor: ISurvivor) =>
-                    !survivor.isInfected ? (
+                    !survivor.isInfected && !survivor.isDead && !survivor.hasEscaped ? (
                       <LongPressButton
                         key={survivor.name}
                         text={survivor.name}
@@ -275,11 +282,11 @@ function Game() {
                 <h2>Kill Survivors</h2>
                 <div className="flex items-center justify-center gap-2 pb-5">
                   {gameConfig.survivors.map((survivor: ISurvivor) =>
-                    !survivor.isDead ? (
+                    !survivor.isDead && !survivor.hasEscaped ? (
                       <LongPressButton
                         key={survivor.name}
                         text={survivor.name}
-                        callback={() => survivorDie(survivor.name)}
+                        callback={() => survivorKill(survivor.name)}
                       />
                     ) : null,
                   )}
@@ -298,12 +305,22 @@ function Game() {
               <div className="grid items-center justify-center gap-2">
                 <LongPressButton
                   text={gameConfig.viral.skill.mindsEye ? "Mind's Eye ✓" : "Mind's Eye"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_MINDSEYE })}
+                  callback={() => 
+                    { 
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_MINDSEYE })
+                      socket.emit("viral-skill", { code: code, skill: "mindsEye", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.MINDSEYE_COST })
+                    }
+                  }
                   disabled={gameConfig.viral.skill.mindsEye || gameConfig.viral.skillPoints < ViralConfig.MINDSEYE_COST}
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.tank ? "Tank ✓" : "Tank"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_TANK })}
+                  callback={() => 
+                    {
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_TANK })
+                      socket.emit("viral-skill", { code: code, skill: "tank", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.TANK_COST })
+                    }
+                  }
                   disabled={
                     !gameConfig.viral.skill.mindsEye ||
                     gameConfig.viral.skill.tank ||
@@ -312,7 +329,12 @@ function Game() {
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.onslaught ? "Onslaught ✓" : "Onslaught"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ONSLAUGHT })}
+                  callback={() => 
+                    {
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_ONSLAUGHT })  
+                      socket.emit("viral-skill", { code: code, skill: "onslaught", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.ONSLAUGHT_COST })
+                    }
+                  }
                   disabled={
                     !gameConfig.viral.skill.tank ||
                     gameConfig.viral.skill.onslaught ||
@@ -322,22 +344,37 @@ function Game() {
               </div>
               <div className="grid items-center justify-center gap-2">
                 <LongPressButton
-                  text={gameConfig.viral.skill.leaping ? "Leaping ✓" : "Leaping"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_LEAPING })}
-                  disabled={gameConfig.viral.skill.leaping || gameConfig.viral.skillPoints < ViralConfig.LEAPING_COST}
+                  text={gameConfig.viral.skill.pathfinder ? "Pathfinder ✓" : "Pathfinder"}
+                  callback={() => 
+                    { 
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_PATHFINDER })
+                      socket.emit("viral-skill", { code: code, skill: "pathfinder", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.PATHFINDER_COST })
+                    }
+                  }
+                  disabled={gameConfig.viral.skill.pathfinder || gameConfig.viral.skillPoints < ViralConfig.PATHFINDER_COST}
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.acidReflux ? "Acid Reflux ✓" : "Acid Reflux"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_ACIDREFLUX })}
+                  callback={() => 
+                    { 
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_ACIDREFLUX })
+                      socket.emit("viral-skill", { code: code, skill: "acidReflux", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.ACIDREFLUX_COST })
+                    }
+                  }
                   disabled={
-                    !gameConfig.viral.skill.leaping ||
+                    !gameConfig.viral.skill.pathfinder ||
                     gameConfig.viral.skill.acidReflux ||
                     gameConfig.viral.skillPoints < ViralConfig.ACIDREFLUX_COST
                   }
                 />
                 <LongPressButton
                   text={gameConfig.viral.skill.agility ? "Agility ✓" : "Agility"}
-                  callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_AGILITY })}
+                  callback={() => 
+                    { 
+                      dispatch({ type: GameConfigActionType.VIRAL_SKILL_AGILITY })
+                      socket.emit("viral-skill", { code: code, skill: "agility", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.AGILITY_COST})
+                    }
+                  }
                   disabled={
                     !gameConfig.viral.skill.acidReflux ||
                     gameConfig.viral.skill.agility ||
@@ -349,13 +386,18 @@ function Game() {
             <div className="flex items-center justify-center gap-2">
               <LongPressButton
                 text={gameConfig.viral.skill.apex ? "Apex ✓" : "Apex"}
-                callback={() => dispatch({ type: GameConfigActionType.VIRAL_SKILL_APEX })}
+                callback={() => 
+                  { 
+                    dispatch({ type: GameConfigActionType.VIRAL_SKILL_APEX })
+                    socket.emit("viral-skill", { code: code, skill: "apex", skillPoints: gameConfig.viral.skillPoints, pointsRequired: ViralConfig.APEX_COST })
+                  }
+                }
                 disabled={
                   !gameConfig.viral.skill.acidReflux ||
                   !gameConfig.viral.skill.agility ||
                   !gameConfig.viral.skill.tank ||
                   !gameConfig.viral.skill.mindsEye ||
-                  !gameConfig.viral.skill.leaping ||
+                  !gameConfig.viral.skill.pathfinder ||
                   !gameConfig.viral.skill.onslaught ||
                   gameConfig.viral.skillPoints < ViralConfig.APEX_COST
                 }

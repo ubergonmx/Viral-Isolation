@@ -24,7 +24,7 @@ const gameSchema = new mongoose.Schema({
       agility: { type: Boolean, default: false },
       tank: { type: Boolean, default: false },
       mindsEye: { type: Boolean, default: false },
-      leaping: { type: Boolean, default: false },
+      pathfinder: { type: Boolean, default: false },
       onslaught: { type: Boolean, default: false },
       apex: { type: Boolean, default: false },
     },

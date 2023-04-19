@@ -154,7 +154,7 @@ const game = {
   },
   escapeSurvivor: function (socket, data) {
     const { code, survivor } = data;
-    Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.isEscaped": true } })
+    Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $set: { "survivors.$.hasEscaped": true } })
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${survivor.name} escaped`);
@@ -178,6 +178,21 @@ const game = {
         console.log(err);
       });
   },
+  viralSkill: function (socket, data) {
+    const { code, skill, skillPoints, pointsRequired } = data;
+    let newSkillPoints = skillPoints - pointsRequired;
+    Game.findOneAndUpdate({ code: code }, { $set: { [`viral.skill.${skill}`]: true, "viral.skillPoints": newSkillPoints } })
+      .then((doc) => {
+        if (doc) {
+          console.log(`[U-${socket.id}] ${doc.viral.name} used ${toTitleCase(skill)} skill`);
+        }
+      })
+      .catch((err) => {
+        rollbar.error(err);
+        console.log(err);
+      });
+  },
+
   // TODO:
   // [ ] increase roundsAlive for survivor
   // [ ] if survivor is not infected, increment numOfRoundsUninfected
@@ -225,5 +240,11 @@ const game = {
   },
   getResults: function (socket, data) {},
 };
+
+function toTitleCase(camelCaseStr) {
+  return camelCaseStr
+    .replace(/([A-Z])/g, " $1") 
+    .replace(/^./, (matched) => matched.toUpperCase());
+}
 
 module.exports = game;
