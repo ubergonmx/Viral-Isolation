@@ -40,17 +40,17 @@ function Lobby() {
   const [playerList, setPlayerList] = useState<IPlayer[]>([
     {
       role: "Viral",
-      image: "/pieces/viral-1.png",
+      image: viralImages[0],
       name: "Viral",
     },
     {
       role: "Survivor",
-      image: "/pieces/player-1.png",
+      image: survivorImages[0],
       name: "Survivor 1",
     },
     {
       role: "Survivor",
-      image: "/pieces/player-2.png",
+      image: survivorImages[1],
       name: "Survivor 2",
     },
   ]);
