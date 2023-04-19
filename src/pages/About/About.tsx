@@ -23,6 +23,7 @@ import event_node from "/about/event-node.png";
 import house from "/about/house.png";
 import regular_node from "/about/regular-node.png";
 import spawn_node from "/about/spawn-node.png";
+import viral_node from "/about/viral-node.png";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -496,7 +497,7 @@ function About() {
             </ListItem>
             <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
               <ListItemIcon>
-                <h1>Viral Spawn Node Here</h1>
+              <img src={viral_node} style={{ width: "50px", height: "50px" }}></img>
               </ListItemIcon>
               <ListItem sx={{ display: "block" }}>
                 <ListItemText
@@ -1139,6 +1140,7 @@ function About() {
           </List>
         </AccordionDetails>
       </Accordion>
+
     </div>
   );
 }
