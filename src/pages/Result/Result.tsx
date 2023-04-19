@@ -21,10 +21,10 @@ function Result() {
       dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
     });
 
-    return () => {
-      socket.off("error");
-      socket.off("results");
-    }
+    // return () => {
+    //   socket.off("error");
+    //   socket.off("results");
+    // }
   }, []);
 
   if(!results) return <>Loading results...</>;
