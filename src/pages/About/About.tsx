@@ -497,7 +497,7 @@ function About() {
             </ListItem>
             <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
               <ListItemIcon>
-              <img src={viral_node} style={{ width: "50px", height: "50px" }}></img>
+                <img src={viral_node} style={{ width: "50px", height: "50px" }}></img>
               </ListItemIcon>
               <ListItem sx={{ display: "block" }}>
                 <ListItemText
@@ -861,7 +861,7 @@ function About() {
             <ListItemText
               disableTypography
               sx={{ textAlign: "start", paddingLeft: "16px" }}
-              primary="• As a viral, your main objective is to infect as much survivors as possible. Once all survivors have either escaped or are currently infected, then the game ends. The amount of infected players at the end will determine your performance."
+              primary="• As a viral, your main objective is to infect as much survivors as possible. Once all survivors have either escaped or are currently infected, then the game ends. The amount of infected players at the end will determine your performance. "
             />
             <ListItemText
               disableTypography
@@ -1140,7 +1140,261 @@ function About() {
           </List>
         </AccordionDetails>
       </Accordion>
+      {/* Random Event */}
+      <Accordion sx={{ width: "100%" }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Random Events</AccordionSummary>
+        <AccordionDetails>
+          <List>
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• These are randomly selected effects that can change the state of the game such as by forcing movement, giving free items, and slowing movement among others."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• They can be separated into two groups: "
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Skip events - these trigger whenever a player skips their turn. There are different skip events for viral and survivor."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Node events - these trigger when ending your turn on an event node. See Map Guide - Nodes for more details. The events for these are the same for viral and survivor."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• Here is the full list of the chances and effects of the events: "
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Survivor (skip turn)" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Nothing Happens (40%) - …nothing happens"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Panic attack (20%) -  forced to move 5 steps this round "
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Lucky day (20%) - shuffle discard pile and draw one, if discard pile is empty then no card is drawn."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Muscle cramps (20%) - lose one dice roll next round."
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Viral (skip turn)" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Nothing Happens (50%) - …nothing happens"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Random distraction  (20%) -  forced to move 5 steps this round"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Rat snack (20%) - Obtain a rat nearby as an item. Can be used to add one additional roll. (max 2 at a time)"
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="All (random event node)" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Fallen boulder (30%) - obstructs path behind players (direction you came from) "
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Fallen tree (30%) - obstructs path in front of player (direction opposite where you came from) "
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• if occupied by another player, move that player to the event node that triggered it"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• If occupied by another obstacle/trap, overwrite it"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• functions similarly to a trap"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Rainy day (20%) - pathway becomes muddy (movement of players becomes half of what they roll) *lasts until after the next turn of the player who activated the event"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Earthquake (20%) - all players inside a house are immediately forced to move one step"
+            />
+          </List>
+        </AccordionDetails>
+      </Accordion>
+      {/* Items */}
+      <Accordion sx={{ width: "100%" }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>Items</AccordionSummary>
+        <AccordionDetails>
+          <List>
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• These are found inside houses and can provide various different effects that can help the survivors."
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What makes keycard special?" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• These are not shuffled into the main deck but instead the digital companion will decide if the house you entered contains your specific keycard."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• At round 10, the digital companion will announce all the keycard locations only one time so pay very close attention."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Keycard ownership is public information and should not be hidden."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px"}}
+              primary="• However, players are still allowed to trade keycards."
+            />
+            <Divider />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="What else should I know about items?"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• After using/discarding an item, place it in the discard pile."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Most items can only be used at the start of your turn with the exception of the keycard, weapons, and cure items."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "16px" }}
+              primary="• Here is the full list of all item cards: "
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="unique - 4" />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• keycard - 4" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• used to unlock the exit node allow survivors to escape (MUST BE SHOWN AT ALL TIMES)"
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="movement - 10" />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"  }} primary="• adrenaline - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• double your steps from rolls, (must use before rolling)"
+            />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"  }} primary="• food - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• obtain one additional dice roll, (must use before rolling)"
+            />
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="weapons - 15" />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"  }} primary="• frying pan - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• prevents bite infections for the rest of the turn and pushes viral one node away (can use anytime a viral tries to infect you) (you can choose where the viral gets pushed)"
+            />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"  }} primary="• baseball bat - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• prevents bite infections for the rest of the turn and pushes viral 3 nodes away (can use anytime a viral tries to infect you)(you can choose where the viral gets pushed). "
+            />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"  }} primary="• bear trap - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• place on current node (cannot be a house) (must use before rolling)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• effect: ends viral’s turn early when stepping on it, then the trap gets discarded"
+            />
 
+            <Divider />
+            <ListItemText disableTypography sx={{ textAlign: "start" }} primary="coop items - 21" />
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px"}} primary="• cure - 11" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• used to cure infection of another survivor (anytime during your turn)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• after using, end your turn early and get an additional turn right after."
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• the cured survivor will remain immune to infection for the rest of the round."
+            />
+
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• Swapper - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• swaps positions with any player of your choice, (must use before rolling/skipping)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• cannot swap if either player is inside a house"
+            />
+
+            <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• Summoner - 5" />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• summons any player of your choice to your position, (must use before rolling/skipping)"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start", paddingLeft: "32px" }}
+              primary="• cannot summon if you are inside a house (player summoned can be from a house)"
+            />
+          </List>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }
