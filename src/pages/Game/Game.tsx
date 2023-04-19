@@ -38,15 +38,34 @@ function Game() {
     };
   }, []);
 
-  // if its round 10, announce keycard locations
+  // if its round 4,7,10, announce keycard locations
   useEffect(() => {
-    if (gameConfig.round === EventConfig.KEYCARD_ANNOUNCEMENT_ROUND) {
+    let roundAnnounce = 10;
+    switch (gameConfig.survivors.length){
+      case 2:
+        roundAnnounce = EventConfig.KEYCARD_2S_ANNOUNCEMENT_ROUND;
+        break;
+      case 3:
+        roundAnnounce = EventConfig.KEYCARD_3S_ANNOUNCEMENT_ROUND;
+        break;
+      case 4:
+        roundAnnounce = EventConfig.KEYCARD_4S_ANNOUNCEMENT_ROUND;
+        break;
+      default:
+        break;
+    }
+
+    if (gameConfig.round === roundAnnounce) {
       let announcement = "Attention!!! Keycard locations of the following survivors: ";
+      let keycardLocations = "";
       // for each survivor, announce their keycard with <name> - <keycardHouse>
       gameConfig.survivors.forEach((survivor, index, array) => {
-        announcement += `${survivor.name} - House ${survivor.keycardHouse}`;
-        announcement += index !== array.length - 1 ? ", " : ".";
+        keycardLocations += `${survivor.name} - House ${survivor.keycardHouse}`;
+        keycardLocations += index !== array.length - 1 ? ", " : ".";
       });
+      
+      announcement = announcement.concat(keycardLocations) + " I repeat, " + keycardLocations;
+
       const synth = new SpeechSynthesisUtterance(announcement);
       // synth.voice = speechSynthesis.getVoices()[0];
       for (const voice of speechSynthesis.getVoices()) {

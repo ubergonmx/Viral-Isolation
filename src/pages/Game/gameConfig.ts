@@ -1,7 +1,9 @@
 import { IGame, IHouse } from "./gameInterface";
 
 export enum EventConfig {
-  KEYCARD_ANNOUNCEMENT_ROUND = 10,
+  KEYCARD_4S_ANNOUNCEMENT_ROUND = 10,
+  KEYCARD_3S_ANNOUNCEMENT_ROUND = 7,
+  KEYCARD_2S_ANNOUNCEMENT_ROUND = 4,
   RAINY_DAY = 1,
 }
 
