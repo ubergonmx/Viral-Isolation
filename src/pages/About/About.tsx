@@ -76,6 +76,7 @@ function About() {
       </Box>
       <TabPanel value={value} index={0}>
         Play Guide
+
         {/* About Page of Game Setup */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Set Up</AccordionSummary>
@@ -171,6 +172,7 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
         {/* About Page of Movements */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Movement Mechanics</AccordionSummary>
@@ -320,6 +322,7 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
         {/* About Page of Balancing */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Balancing</AccordionSummary>
@@ -378,6 +381,47 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
+        {/* Game Pieces */}
+        <Accordion sx={{ width: "100%" }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Pieces</AccordionSummary>
+          <AccordionDetails>
+            <List>
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary="• these are circle pieces which you place on the map with the exception of the rat piece which functions as a viral item."
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary="• all traps/obstacles have the same effect of ending a player’s turn early as well as being removed from the map after its effect."
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary="• traps cannot be placed on house nodes or through shortcuts."
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start"}}
+                primary="Player pieces: Survivors/Viral"
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary="• these represent the players of the game"
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary="• flipping the survivor pieces indicates infection"
+              />
+            </List>
+          </AccordionDetails>
+        </Accordion>
+
         {/* About Page of Survivor */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Survivor</AccordionSummary>
@@ -590,6 +634,7 @@ function About() {
           */}
           </AccordionDetails>
         </Accordion>
+        
         {/* About Page of Viral */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Viral</AccordionSummary>
@@ -836,6 +881,7 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
         {/* Random Event */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Random Events</AccordionSummary>
@@ -945,6 +991,7 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
         {/* Items */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Items</AccordionSummary>
@@ -1122,6 +1169,7 @@ function About() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         Map Guide
+
         {/* About Page of Nodes */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Nodes</AccordionSummary>
@@ -1289,6 +1337,7 @@ function About() {
             </List>
           </AccordionDetails>
         </Accordion>
+
         {/* About Page of Shortcuts */}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>Shortcuts</AccordionSummary>
@@ -1329,8 +1378,10 @@ function About() {
           </AccordionDetails>
         </Accordion>
       </TabPanel>
+
       <TabPanel value={value} index={2}>
         FAQS
+
         {/* FAQS*/}
         <Accordion sx={{ width: "100%" }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>FAQ Section</AccordionSummary>
