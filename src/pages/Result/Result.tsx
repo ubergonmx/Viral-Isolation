@@ -9,6 +9,7 @@ import player4 from "/pieces/player-4.png";
 import viral1 from "/pieces/viral-1.png";
 import viral2 from "/pieces/viral-2.png";
 import { INITIAL_GAME_CONFIG } from "../Game/gameConfig";
+import LongPressButton from "../Game/LongPressButton";
 
 function Result() {
   const { code } = useParams<{ code: string }>();
@@ -33,6 +34,12 @@ function Result() {
       socket.off("results");
     };
   }, []);
+
+  function deleteGame() {
+    console.log("delete game");
+    socket.emit("delete", { code: code });
+    navigate("/");
+  }
 
   if(isLoading) return <>Loading results...</>;
 
@@ -86,7 +93,10 @@ function Result() {
             Skill points: {results.viral.skillPoints}
           </p>
         </fieldset>
+        {/* <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" /> */}
+        <button onClick={deleteGame}>Delete Game</button>
       </div>
+      
     </>
   );
 }
