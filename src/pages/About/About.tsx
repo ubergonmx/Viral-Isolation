@@ -4,6 +4,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  ListItem,
+  ListItemIcon,
   Tab,
   Table,
   TableBody,
@@ -17,6 +19,10 @@ import * as React from "react";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
+import event_node from "/about/event-node.png";
+import house from "/about/house.png";
+import regular_node from "/about/regular-node.png";
+import spawn_node from "/about/spawn-node.png";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -382,6 +388,7 @@ function About() {
       <Accordion sx={{ width: "100%" }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>Nodes</AccordionSummary>
         <AccordionDetails>
+          {/*
           <TableContainer>
             <Table>
               <TableBody sx={{ textAlign: "start" }}>
@@ -420,6 +427,124 @@ function About() {
               </TableBody>
             </Table>
           </TableContainer>
+          */}
+          <List>
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• these are the circles where you place character pieces, traps, and obstacles"
+            />
+            <Divider />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• an adjacent node is one that is connected to the player’s current node"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• all circle nodes function similarly aside from their unique property"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• houses in particular have a lot of unique properties as seen below"
+            />
+            <ListItemText
+              disableTypography
+              sx={{ textAlign: "start" }}
+              primary="• note that the black path connected to the exit is elevated and NOT connected to the pathway directly below it aside from the ladder."
+            />
+            <Divider />
+            <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+              <ListItemIcon>
+                <img src={regular_node} style={{ width: "50px", height: "50px" }}></img>
+              </ListItemIcon>
+              <ListItem sx={{ display: "block" }}>
+                <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Regular Node - Nothing happens" />
+              </ListItem>
+            </ListItem>
+            <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+              <ListItemIcon>
+                <img src={event_node} style={{ width: "50px", height: "50px" }}></img>
+              </ListItemIcon>
+              <ListItem sx={{ display: "block" }}>
+                <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Event Node" />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• Triggers a random general event when ending your turn on it and it is not occupied by another player, obstacle, or trap prior to making your last step."
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• Does not trigger upon skipping."
+                />
+              </ListItem>
+            </ListItem>
+            <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+              <ListItemIcon>
+                <img src={spawn_node} style={{ width: "50px", height: "50px" }}></img>
+              </ListItemIcon>
+              <ListItem sx={{ display: "block" }}>
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start" }}
+                  primary="Survivor Spawn Node - Spawn point of a survivor"
+                />
+              </ListItem>
+            </ListItem>
+            <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+              <ListItemIcon>
+                <h1>Viral Spawn Node Here</h1>
+              </ListItemIcon>
+              <ListItem sx={{ display: "block" }}>
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start" }}
+                  primary="Viral Spawn Node - Spawn point of the viral"
+                />
+              </ListItem>
+            </ListItem>
+            <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+              <ListItemIcon>
+                <img src={house} style={{ width: "50px", height: "50px" }}></img>
+              </ListItemIcon>
+              <ListItem sx={{ display: "block" }}>
+                <ListItemText disableTypography sx={{ textAlign: "start" }} primary="House Node" />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• chance to get an item upon entering"
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "32px" }}
+                  primary="• (select it in digital companion to determine whether you draw an item card from the pool or obtain a keycard item)"
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• consumes all remaining steps upon entering"
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• a survivor may not enter the same house twice in the same game"
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "32px" }}
+                  primary="• (this is tracked by the digital companion)"
+                />
+                <ListItemText
+                  disableTypography
+                  sx={{ textAlign: "start", paddingLeft: "16px" }}
+                  primary="• viral cannot enter houses without the Apex skill"
+                />
+              </ListItem>
+            </ListItem>
+          </List>
         </AccordionDetails>
       </Accordion>
       {/* About Page of Shortcuts */}
