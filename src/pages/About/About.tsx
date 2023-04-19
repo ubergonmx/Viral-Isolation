@@ -7,10 +7,6 @@ import {
   ListItem,
   ListItemIcon,
   Tab,
-  Table,
-  TableBody,
-  TableContainer,
-  TableRow,
   Tabs,
   Typography,
 } from "@mui/material";
@@ -19,11 +15,21 @@ import * as React from "react";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
+import acid from "/about/acid.png";
+import bear_trap from "/about/bear-trap.png";
+import boat from "/about/boat.png";
+import boulder from "/about/boulder.png";
 import event_node from "/about/event-node.png";
+import fallen_tree from "/about/fallen-tree.png";
+import gondola_lift from "/about/gondola-lift.png";
 import house from "/about/house.png";
+import ladder from "/about/ladder.png";
+import rat from "/about/rat.png";
 import regular_node from "/about/regular-node.png";
 import spawn_node from "/about/spawn-node.png";
+import tunnel from "/about/tunnel.png";
 import viral_node from "/about/viral-node.png";
+import zipline from "/about/zipline.png";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -947,174 +953,369 @@ function About() {
         </Accordion>
         {/* Items */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Items</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <b>Items</b>
+          </AccordionSummary>
           <AccordionDetails>
             <List>
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• These are found inside houses and can provide various different effects that can help the survivors."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="What makes keycard special?" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• These are not shuffled into the main deck but instead the digital companion will decide if the house you entered contains your specific keycard."
+                primary={
+                  <Typography>
+                    <b>What are items?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• At round 10, the digital companion will announce all the keycard locations only one time so pay very close attention."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Keycard ownership is public information and should not be hidden."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• However, players are still allowed to trade keycards."
+                primary={
+                  <Typography>
+                    • These are found inside houses and can provide various different effects that can help the
+                    survivors.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="What else should I know about items?"
+                primary={
+                  <Typography>
+                    <b>What makes keycard special?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• After using/discarding an item, place it in the discard pile."
+                primary={
+                  <Typography>
+                    • These are not shuffled into the main deck but instead the digital companion will decide if the
+                    house you entered contains your specific keycard.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Most items can only be used at the start of your turn with the exception of the keycard, weapons, and cure items."
+                primary={
+                  <Typography>
+                    • At round 10, the digital companion will announce all the keycard locations only one time so pay
+                    very close attention.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Here is the full list of all item cards: "
+                primary={
+                  <Typography>
+                    • Keycard ownership is public information and <u>should not be hidden</u>.
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={<Typography>• However, players are still allowed to trade keycards.</Typography>}
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="unique - 4" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• keycard - 4"
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>What else should I know about items?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• used to unlock the exit node allow survivors to escape (MUST BE SHOWN AT ALL TIMES)"
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={<Typography>• After using/discarding an item, place it in the discard pile.</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • Most items can only be used at the start of your turn with the exception of the keycard, weapons,
+                    and cure items.
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={<Typography>• Here is the full list of all item cards: </Typography>}
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="movement - 10" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• adrenaline - 5"
-              />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• double your steps from rolls, (must use before rolling)"
+                primary={
+                  <Typography>
+                    <u>
+                      <b>Unique - 4</b>
+                    </u>
+                  </Typography>
+                }
               />
-              <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• food - 5" />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• obtain one additional dice roll, (must use before rolling)"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Keycard</b> - 4
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • used to unlock the exit node allow survivors to escape (MUST BE SHOWN AT ALL TIMES)
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="weapons - 15" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• frying pan - 5"
-              />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• prevents bite infections for the rest of the turn and pushes viral one node away (can use anytime a viral tries to infect you) (you can choose where the viral gets pushed)"
+                primary={
+                  <Typography>
+                    <u>
+                      <b>Movement - 10</b>
+                    </u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• baseball bat - 5"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Adrenaline</b> - 5
+                  </Typography>
+                }
               />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • double your steps from rolls, (must use <b>before rolling</b>)
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Food</b> - 5
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • obtain one additional dice roll, (must use <b>before rolling</b>)
+                  </Typography>
+                }
+              />
+              <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• prevents bite infections for the rest of the turn and pushes viral 3 nodes away (can use anytime a viral tries to infect you)(you can choose where the viral gets pushed). "
+                primary={
+                  <Typography>
+                    <u>
+                      <b>Weapons - 15</b>
+                    </u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• bear trap - 5"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Frying pan</b> - 5
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• place on current node (cannot be a house) (must use before rolling)"
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • prevents bite infections for the rest of the turn and pushes viral one node away (can use anytime
+                    a viral tries to infect you) (you can choose where the viral gets pushed)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• effect: ends viral’s turn early when stepping on it, then the trap gets discarded"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Baseball bat</b> - 5
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • prevents bite infections for the rest of the turn and pushes viral 3 nodes away (can use anytime a
+                    viral tries to infect you)(you can choose where the viral gets pushed).
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Bear trap</b> - 5
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • place on <b>current</b> node (cannot be a house) (must use <b>before rolling</b>)
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • effect: ends viral’s turn early when stepping on it, then the trap gets discarded
+                  </Typography>
+                }
               />
 
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="coop items - 21" />
-              <ListItemText disableTypography sx={{ textAlign: "start", paddingLeft: "16px" }} primary="• cure - 11" />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• used to cure infection of another survivor (anytime during your turn)"
+                primary={
+                  <Typography>
+                    <u>
+                      <b>Coop items - 21</b>
+                    </u>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• after using, end your turn early and get an additional turn right after."
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Cure</b> - 11
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• the cured survivor will remain immune to infection for the rest of the round."
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>• used to cure infection of another survivor (anytime during your turn)</Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>• after using, end your turn early and get an additional turn right after.</Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • the cured survivor will remain immune to infection for the rest of the round.
+                  </Typography>
+                }
               />
 
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Swapper - 5"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Swapper</b> - 5
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• swaps positions with any player of your choice, (must use before rolling/skipping)"
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • swaps positions with <u>any player</u> of your choice, (must use <b>before rolling/skipping</b>)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• cannot swap if either player is inside a house"
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • cannot swap if <u>either player</u> is inside a house
+                  </Typography>
+                }
               />
 
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Summoner - 5"
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>Summoner</b> - 5
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• summons any player of your choice to your position, (must use before rolling/skipping)"
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • summons <u>any player</u> of your choice to your position, (must use{" "}
+                    <b>before rolling/skipping</b>)
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
-                sx={{ textAlign: "start", paddingLeft: "32px" }}
-                primary="• cannot summon if you are inside a house (player summoned can be from a house)"
+                sx={{ textAlign: "start", paddingLeft: "64px" }}
+                primary={
+                  <Typography>
+                    • cannot summon if <u>you</u> are inside a house (player summoned can be from a house)
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "48px" }}
+                primary={
+                  <Typography>
+                    • <b>50 items total</b>
+                  </Typography>
+                }
               />
             </List>
           </AccordionDetails>
@@ -1124,7 +1325,9 @@ function About() {
         Map Guide
         {/* About Page of Nodes */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Nodes</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <b>Nodes</b>
+          </AccordionSummary>
           <AccordionDetails>
             {/*
           <TableContainer>
@@ -1170,28 +1373,47 @@ function About() {
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• these are the circles where you place character pieces, traps, and obstacles"
+                primary={
+                  <Typography>
+                    • these are the circles where you place character pieces, traps, and obstacles
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• an adjacent node is one that is connected to the player’s current node"
+                primary={
+                  <Typography>
+                    • an <u>adjacent</u> node is one that is connected to the player’s current node
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• all circle nodes function similarly aside from their unique property"
+                primary={
+                  <Typography>• all circle nodes function similarly aside from their unique property</Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• houses in particular have a lot of unique properties as seen below"
+                primary={
+                  <Typography>
+                    • <u>houses</u> in particular have a lot of unique properties as seen below
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• note that the black path connected to the exit is elevated and NOT connected to the pathway directly below it aside from the ladder."
+                primary={
+                  <Typography>
+                    • note that the <u>black path connected to the exit</u> is elevated and NOT connected to the pathway
+                    directly below it aside from the ladder.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
@@ -1202,7 +1424,11 @@ function About() {
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start" }}
-                    primary="Regular Node - Nothing happens"
+                    primary={
+                      <Typography>
+                        <b>Regular Node</b> - Nothing happens
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </ListItem>
@@ -1211,16 +1437,32 @@ function About() {
                   <img src={event_node} style={{ width: "50px", height: "50px" }}></img>
                 </ListItemIcon>
                 <ListItem sx={{ display: "block" }}>
-                  <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Event Node" />
                   <ListItemText
                     disableTypography
-                    sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• Triggers a random general event when ending your turn on it and it is not occupied by another player, obstacle, or trap prior to making your last step."
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Event Node</b>
+                      </Typography>
+                    }
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• Does not trigger upon skipping."
+                    primary={
+                      <Typography>
+                        • Triggers a random general event when ending your turn on it and it is{" "}
+                        <u>
+                          <b>not</b> occupied by another player, obstacle, or trap
+                        </u>{" "}
+                        prior to making your last step.
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• Does not trigger upon skipping.</Typography>}
                   />
                 </ListItem>
               </ListItem>
@@ -1232,7 +1474,11 @@ function About() {
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start" }}
-                    primary="Survivor Spawn Node - Spawn point of a survivor"
+                    primary={
+                      <Typography>
+                        <b>Survivor Spawn Node</b> - Spawn point of a survivor
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </ListItem>
@@ -1244,7 +1490,11 @@ function About() {
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start" }}
-                    primary="Viral Spawn Node - Spawn point of the viral"
+                    primary={
+                      <Typography>
+                        <b>Viral Spawn Node</b> - Spawn point of the viral
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </ListItem>
@@ -1253,36 +1503,61 @@ function About() {
                   <img src={house} style={{ width: "50px", height: "50px" }}></img>
                 </ListItemIcon>
                 <ListItem sx={{ display: "block" }}>
-                  <ListItemText disableTypography sx={{ textAlign: "start" }} primary="House Node" />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>House Node</b>
+                      </Typography>
+                    }
+                  />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• chance to get an item upon entering"
+                    primary={<Typography>• chance to get an item upon entering</Typography>}
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "32px" }}
-                    primary="• (select it in digital companion to determine whether you draw an item card from the pool or obtain a keycard item)"
+                    primary={
+                      <Typography>
+                        • (select it in digital companion to determine whether you draw an item card from the pool or
+                        obtain a keycard item)
+                      </Typography>
+                    }
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• consumes all remaining steps upon entering"
+                    primary={
+                      <Typography>
+                        • consumes <u>all remaining steps</u> upon entering
+                      </Typography>
+                    }
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• a survivor may not enter the same house twice in the same game"
+                    primary={<Typography>• a survivor may not enter the same house twice in the same game</Typography>}
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "32px" }}
-                    primary="• (this is tracked by the digital companion)"
+                    primary={<Typography>• (this is tracked by the digital companion)</Typography>}
                   />
                   <ListItemText
                     disableTypography
                     sx={{ textAlign: "start", paddingLeft: "16px" }}
-                    primary="• viral cannot enter houses without the Apex skill"
+                    primary={
+                      <Typography>
+                        • viral{" "}
+                        <u>
+                          <b>cannot</b> enter houses
+                        </u>{" "}
+                        without the Apex skill
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </ListItem>
@@ -1291,8 +1566,11 @@ function About() {
         </Accordion>
         {/* About Page of Shortcuts */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Shortcuts</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <b>Shortcuts</b>
+          </AccordionSummary>
           <AccordionDetails>
+            {/*
             <TableContainer>
               <Table>
                 <TableBody sx={{ textAlign: "start" }}>
@@ -1326,40 +1604,382 @@ function About() {
                 </TableBody>
               </Table>
             </TableContainer>
+            */}
+            <List>
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={<Typography>• these are not nodes but simply pathways that connect nodes</Typography>}
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    • a player <u>cannot stand on them</u> but only cross them
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    • nodes separated by shortcuts are <u>not considered adjacent</u>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    • viral without “Pathfinder” skill <u>cannot use of ANY shortcuts</u>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • once the ability is obtained, viral may use any shortcut as well as use{" "}
+                    <u>blue arrow shortcuts in the opposite direction</u> (Cliff Jumps)
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={ladder} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={zipline} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Ladders/Ziplines</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• consumes all remaining steps to cross.</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • symbolized by <u style={{ color: "red" }}>red arrows</u>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• ziplines are one-way downwards</Typography>}
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={boat} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={gondola_lift} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={boat} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Boat/Gondola lift/Cliff</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • consumes only one step to cross similar to traveling between two regular nodes
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • symbolized by <u style={{ color: "blue" }}>blue arrows</u>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • cliffs are one-way downwards (viral with pathfinder skill is an exception to this)
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={tunnel} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Underground tunnel</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• consumes all remaining steps to cross</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • symbolized by <u style={{ color: "yellow" }}>a yellow arrow</u>
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </ListItem>
+            </List>
           </AccordionDetails>
         </Accordion>
         {/* Game Pieces */}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>Game Pieces</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <b>Game Pieces</b>
+          </AccordionSummary>
           <AccordionDetails>
             <List>
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• these are circle pieces which you place on the map with the exception of the rat piece which functions as a viral item."
+                primary={
+                  <Typography>
+                    • these are circle pieces which you place on the map with the exception of the rat piece which
+                    functions as a viral item.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• all traps/obstacles have the same effect of ending a player’s turn early as well as being removed from the map after its effect."
+                primary={
+                  <Typography>
+                    • all traps/obstacles have the same effect of <u>ending a player’s turn early</u> as well as being{" "}
+                    <u>removed from the map</u> after its effect.
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="• traps cannot be placed on house nodes or through shortcuts."
+                primary={
+                  <Typography>
+                    • traps <u>cannot be placed on house nodes or through shortcuts</u>.
+                  </Typography>
+                }
               />
               <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="Player pieces: Survivors/Viral" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• these represent the players of the game"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• flipping the survivor pieces indicates infection"
-              />
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={spawn_node} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={viral_node} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        Player pieces: <b>Survivors/Viral</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• these represent the players of the game</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• flipping the survivor pieces indicates infection</Typography>}
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={bear_trap} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Bear Traps</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• this is a trap that only affects the viral</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • survivors can set this on their current node before choosing to move/skip
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={acid} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Vomit</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• this is a trap that only affects survivors</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>• the viral can set this on an adjacent node before choosing to move/skip</Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• survivors become infected if not already</Typography>}
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={<Typography>• see Viral Guide to get more in-depth info</Typography>}
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={fallen_tree} style={{ width: "50px", height: "50px" }}></img>
+                  <img src={boulder} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Fallen Trees / Boulders</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>• When landing on an event node, there is a chance that these will spawn</Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • Trees fall in front of you while boulders fall behind you. Direction is based on where you
+                        came from before stepping on the event.
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • When triggered to spawn, they will both overwrite any trap placed and force players to move
+                        toward the event node
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "32px" }}
+                    primary={
+                      <Typography>
+                        • Note: <u>this can force an infection to happen</u>
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              </ListItem>
+              <ListItem sx={{ display: "flex", paddingLeft: "16px" }}>
+                <ListItemIcon sx={{ width: "20%", justifyContent: "space-evenly" }}>
+                  <img src={rat} style={{ width: "50px", height: "50px" }}></img>
+                </ListItemIcon>
+                <ListItem sx={{ display: "block" }}>
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start" }}
+                    primary={
+                      <Typography>
+                        <b>Rat</b>
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    primary={
+                      <Typography>
+                        • not an obstacle but an item for the viral which functions similarly to the food item card. (+1
+                        dice roll, use at the start of turn)
+                      </Typography>
+                    }
+                  />
+                  <ListItemText
+                    disableTypography
+                    sx={{ textAlign: "start", paddingLeft: "16px" }}
+                    //primary="• <u>viral can have a max of 2 rats at a time</u>"
+                    primary={<Typography>• viral can have a max of 2 rats at a time</Typography>}
+                  />
+                </ListItem>
+              </ListItem>
             </List>
           </AccordionDetails>
         </Accordion>
@@ -1369,7 +1989,9 @@ function About() {
         FAQS
         {/* FAQS*/}
         <Accordion sx={{ width: "100%" }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>FAQ Section</AccordionSummary>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <b>FAQ Section</b>
+          </AccordionSummary>
           <AccordionDetails>
             {/*
           <TableContainer>
@@ -1410,57 +2032,106 @@ function About() {
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Can both survivors and Viral be considered winners at the same time?"
+                primary={
+                  <Typography>
+                    <b>Can both survivors and Viral be considered winners at the same time?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Yes, when one survivor escapes while the rest are infected, the Viral and escapee are considered winners."
-              />
-              <Divider />
-              <ListItemText disableTypography sx={{ textAlign: "start" }} primary="When can I use items?" />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Please refer to the individual item descriptions. As a general rule, all items can only be used at the start of your turn except for Cure, Keycard, and Weapons."
-              />
-              <Divider />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start" }}
-                primary="What happens if the viral encounters two players on the same node?"
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• If there are 2 survivors in that node, stop and infect both of them."
-              />
-              <ListItemText
-                disableTypography
-                sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• In this scenario, only 1 of those survivors are required to use an item to prevent infection for both players."
+                primary={
+                  <Typography>
+                    • <b>Yes</b>, when one survivor escapes while the rest are infected, the Viral and escapee are
+                    considered winners.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Is the viral forced to bite players?"
+                primary={
+                  <Typography>
+                    <b>When can I use items?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• Yes, whenever you are in the same node as a survivor an infection attempt is required."
+                primary={
+                  <Typography>
+                    • Please refer to the individual item descriptions. As a general rule, all items can only be used at
+                    the start of your turn except for Cure, Keycard, and Weapons.
+                  </Typography>
+                }
               />
               <Divider />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start" }}
-                primary="Can I use weapons to prevent infection from vomit traps?"
+                primary={
+                  <Typography>
+                    <b>What happens if the viral encounters two players on the same node?</b>
+                  </Typography>
+                }
               />
               <ListItemText
                 disableTypography
                 sx={{ textAlign: "start", paddingLeft: "16px" }}
-                primary="• No, vomit traps are forced infections no matter what."
+                primary={
+                  <Typography>• If there are 2 survivors in that node, stop and infect both of them.</Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • In this scenario, only 1 of those survivors are required to use an item to prevent infection for
+                    both players.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Is the viral forced to bite players?</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • <b>Yes</b>, whenever you are in the same node as a survivor an infection attempt is required.
+                  </Typography>
+                }
+              />
+              <Divider />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start" }}
+                primary={
+                  <Typography>
+                    <b>Can I use weapons to prevent infection from vomit traps?</b>
+                  </Typography>
+                }
+              />
+              <ListItemText
+                disableTypography
+                sx={{ textAlign: "start", paddingLeft: "16px" }}
+                primary={
+                  <Typography>
+                    • <b>No</b>, vomit traps are forced infections no matter what.
+                  </Typography>
+                }
               />
             </List>
           </AccordionDetails>
