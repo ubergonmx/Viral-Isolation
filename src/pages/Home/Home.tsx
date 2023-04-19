@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
+import Result from "../Result/Result";
 
 function generateCode() {
   let code = "";
@@ -73,7 +74,7 @@ function Home() {
               </button>
             ))}
         </div>
-        <div className="grid px-2 gap-2 content-start">
+        <div className="grid content-start gap-2 px-2">
           <h2>Open Games</h2>
           {games.length > 0 &&
             games.map((game: any) => (
@@ -92,6 +93,7 @@ function Home() {
             ))}
         </div>
       </div>
+      <Result></Result>
     </div>
   );
 }

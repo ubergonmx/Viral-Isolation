@@ -1,9 +1,14 @@
+import { useEffect, useReducer } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSocket } from "../../context/SocketContext";
 import { useEffect, useReducer, useState } from "react";
 import { GameConfigActionType, gameConfigReducer } from "../Game/gameConfigReducer";
-import { INITIAL_GAME_CONFIG } from "../Game/gameConfig";
-
+import player1 from "/pieces/player-1.png";
+import player2 from "/pieces/player-2.png";
+import player3 from "/pieces/player-3.png";
+import player4 from "/pieces/player-4.png";
+import viral1 from "/pieces/viral-1.png";
+import viral2 from "/pieces/viral-2.png";
 
 function Result() {
   const { code } = useParams<{ code: string }>();
@@ -26,7 +31,7 @@ function Result() {
     return () => {
       socket.off("error");
       socket.off("results");
-    }
+    };
   }, []);
 
   if(isLoading) return <>Loading results...</>;
@@ -34,30 +39,53 @@ function Result() {
   return (
     <>
       <h1>Results</h1>
-      <fieldset style={{ textAlign: "left", backgroundColor: "yellow" }}>
-        <legend>Game Information:</legend>
-        <p>Game code: {code}</p>
-      </fieldset>
-      <div>
-        {/* {results.survivors && results.survivors.map((survivor, index) => (
+      <div style={{ backgroundColor: "black", padding: 10 }}>
+        <fieldset style={{ textAlign: "left" }}>
+          <legend>Game Information:</legend>
+          <p>Game code: {code}</p>
+        </fieldset>
+      </div>
+      <div style={{ backgroundColor: "black", padding: 10 }}>
+        {results.survivors.map((survivor, index) => (
           <div key={index}>
-            <fieldset style={{ textAlign: "left", backgroundColor: "green" }}>
+            <fieldset style={{ textAlign: "left" }}>
               <legend>{survivor.name}</legend>
-              <p>Has Escaped: {String(survivor.hasEscaped)}</p>
-              <p>Is Dead: {String(survivor.isDead)}</p>
-              <p>Number of cures: {survivor.numOfCures}</p>
-              <p>Houses entered: {survivor.housesEntered}</p>
+              <p>
+                <img src={player1} style={{ height: "20px", width: "20px", display: "inline" }} />
+                Has Escaped: {String(survivor.hasEscaped)}
+              </p>
+              <p>
+                <img src={player2} style={{ height: "20px", width: "20px", display: "inline" }} />
+                Is Dead: {String(survivor.isDead)}
+              </p>
+              <p>
+                <img src={player3} style={{ height: "20px", width: "20px", display: "inline" }} />
+                Number of cures: {survivor.numOfCures}
+              </p>
+              <p>
+                <img src={player4} style={{ height: "20px", width: "20px", display: "inline" }} />
+                Houses entered: {survivor.housesEntered}
+              </p>
             </fieldset>
           </div>
         ))} */}
       </div>
-      <div>
-        {/* <fieldset style={{ textAlign: "left", backgroundColor: "red" }}>
+      <div style={{ backgroundColor: "black", padding: 10 }}>
+        <fieldset style={{ textAlign: "left" }}>
           <legend>{results.viral.name}</legend>
-          <p>Number of Infections: {results.viral.numOfInfections}</p>
-          <p>Number of Killings: {results.viral.numOfKillings}</p>
-          <p>Skill points: {results.viral.skillPoints}</p>
-        </fieldset> */}
+          <p>
+            <img src={viral1} style={{ height: "20px", width: "20px", display: "inline" }} />
+            Number of Infections: {results.viral.numOfInfections}
+          </p>
+          <p>
+            <img src={viral2} style={{ height: "20px", width: "20px", display: "inline" }} />
+            Number of Killings: {results.viral.numOfKillings}
+          </p>
+          <p>
+            <img src={viral1} style={{ height: "20px", width: "20px", display: "inline" }} />
+            Skill points: {results.viral.skillPoints}
+          </p>
+        </fieldset>
       </div>
     </>
   );
