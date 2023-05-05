@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
   socket.on("game-end", (data) => game.gameEnd(socket, data));
 
   // Results events
-  socket.on("get-results", (data) => game.getResults(socket, data));
+  socket.on("get-result", (data) => game.getResult(socket, data));
 
   // obsolete
   socket.on("getItem", (data) => {

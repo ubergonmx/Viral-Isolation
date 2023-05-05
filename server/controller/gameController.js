@@ -251,28 +251,28 @@ const game = {
         console.log(err);
       });
   },
-  getResults: function (socket, data) {
+  getResult: function (socket, data) {
     try{
       const { code } = data;
       Game.findOne({ code: code })
         .then((doc) => {
           if (doc) {
             console.log(`[U-${socket.id}] Results sent`);
-            socket.emit("results", doc);
+            socket.emit("result", doc);
           }
           else{
-            socket.emit("error", { message: "Results not found", action: "goHome" });
+            socket.emit("error", { message: "Result not found", action: "goHome" });
           }
         })
         .catch((err) => {
           rollbar.error(err);
           console.log(err);
-          socket.emit("error", { message: "Results error", action: "goHome" });
+          socket.emit("error", { message: "Result error", action: "goHome" });
         });
     }
     catch(err){
       console.log(err);
-      socket.emit("error", { message: "Results error", action: "goHome" });
+      socket.emit("error", { message: "Result error", action: "goHome" });
     }
   },
 };

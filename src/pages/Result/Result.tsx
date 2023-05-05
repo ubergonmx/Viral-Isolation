@@ -17,21 +17,21 @@ function Result() {
   const socket = useSocket();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [results, dispatch] = useReducer(gameConfigReducer, INITIAL_GAME_CONFIG);
-
+  const [result, dispatch] = useReducer(gameConfigReducer, INITIAL_GAME_CONFIG);
+  
   useEffect(() => {
-    socket.emit("get-results", { code: code });
+    socket.emit("get-result", { code: code });
     socket.on("error", (data) => {
       if (data.action === "goHome") navigate("/", { state: { error: data.message } });
     });
-    socket.on("results", (data) => {
-      // dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
+    socket.on("result", (data) => {
+      dispatch({ type: GameConfigActionType.SET_GAME_CONFIG, payload: data });
       setIsLoading(false);
     });
 
     return () => {
       socket.off("error");
-      socket.off("results");
+      socket.off("result");
     };
   }, []);
 
@@ -48,30 +48,30 @@ function Result() {
       <h1>Results</h1>
       <div style={{ backgroundColor: "black", padding: 10 }}>
         <fieldset style={{ textAlign: "left" }}>
-          <legend>Game Information:</legend>
+          <legend></legend>
           <p>Game code: {code}</p>
         </fieldset>
       </div>
       <div style={{ backgroundColor: "black", padding: 10 }}>
-        {results.survivors.map((survivor, index) => (
+        {result.survivors.map((survivor, index) => (
           <div key={index}>
             <fieldset style={{ textAlign: "left" }}>
-              <legend>{survivor.name}</legend>
+              <legend><img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} /> {survivor.name}</legend>
               <p>
-                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
+                
                 Has Escaped: {String(survivor.hasEscaped)}
               </p>
               <p>
-                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
+                
                 Is Dead: {String(survivor.isDead)}
               </p>
               <p>
-                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
+                
                 Number of cures: {survivor.numOfCures}
               </p>
               <p>
-                <img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} />
-                Houses entered: {survivor.housesEntered}
+                
+                Houses entered: {survivor.housesEntered.join(", ")}
               </p>
             </fieldset>
           </div>
@@ -79,18 +79,18 @@ function Result() {
       </div>
       <div style={{ backgroundColor: "black", padding: 10 }}>
         <fieldset style={{ textAlign: "left" }}>
-          <legend>{results.viral.name}</legend>
+          <legend><img src={result.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />{result.viral.name}</legend>
           <p>
-            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
-            Number of Infections: {results.viral.numOfInfections}
+            
+            Number of Infections: {result.viral.numOfInfections}
           </p>
           <p>
-            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
-            Number of Killings: {results.viral.numOfKillings}
+            
+            Number of Killings: {result.viral.numOfKillings}
           </p>
           <p>
-            <img src={results.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />
-            Skill points: {results.viral.skillPoints}
+            
+            Skill points: {result.viral.skillPoints}
           </p>
         </fieldset>
         {/* <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" /> */}
