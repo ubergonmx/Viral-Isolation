@@ -29,7 +29,7 @@ const gameSchema = new mongoose.Schema({
       apex: { type: Boolean, default: false },
     },
     numOfInfections: { type: Number, default: 0 },
-    numOfKillings: { type: Number, default: 0 },
+    numOfKills: { type: Number, default: 0 },
     numOfEvents: { type: Number, default: 0 },
   },
   survivors: [

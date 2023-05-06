@@ -50,6 +50,8 @@ function Result() {
         <fieldset style={{ textAlign: "left" }}>
           <legend></legend>
           <p>Game code: {code}</p>
+          <p>Round: {result.round}</p>
+          <p>Last turn: {result.turnOrder[result.turn]}</p>
         </fieldset>
       </div>
       <div style={{ backgroundColor: "black", padding: 10 }}>
@@ -57,22 +59,14 @@ function Result() {
           <div key={index}>
             <fieldset style={{ textAlign: "left" }}>
               <legend><img src={survivor.image} style={{ height: "20px", width: "20px", display: "inline" }} /> {survivor.name}</legend>
-              <p>
-                
-                Has Escaped: {String(survivor.hasEscaped)}
-              </p>
-              <p>
-                
-                Is Dead: {String(survivor.isDead)}
-              </p>
-              <p>
-                
-                Number of cures: {survivor.numOfCures}
-              </p>
-              <p>
-                
-                Houses entered: {survivor.housesEntered.join(", ")}
-              </p>
+              <p>Has Escaped: {survivor.hasEscaped ? "✅" : "❌"}</p>
+              <p>Is Dead: {survivor.isDead ? "✅" : "✖️"}</p>
+              <p>Is Infected: {survivor.isInfected ? "✅" : "✖️"}</p>
+              <p>Has keycard: {survivor.housesEntered.find(e => e===survivor.keycardHouse) ? "✅" : "✖️"}</p>
+              <p>Number of cures: {survivor.numOfCures}</p>
+              <p>Number of rounds alive: {survivor.roundsAlive}</p>
+              <p>Number of rounds uninfected: {survivor.numOfRoundsUninfected}</p>
+              <p>Houses entered: {survivor.housesEntered.join(", ") || "none"}</p>
             </fieldset>
           </div>
         ))}
@@ -80,21 +74,13 @@ function Result() {
       <div style={{ backgroundColor: "black", padding: 10 }}>
         <fieldset style={{ textAlign: "left" }}>
           <legend><img src={result.viral.image} style={{ height: "20px", width: "20px", display: "inline" }} />{result.viral.name}</legend>
-          <p>
-            
-            Number of Infections: {result.viral.numOfInfections}
-          </p>
-          <p>
-            
-            Number of Killings: {result.viral.numOfKillings}
-          </p>
-          <p>
-            
-            Skill points: {result.viral.skillPoints}
-          </p>
-        </fieldset>
-        {/* <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" /> */}
-        <button onClick={deleteGame}>Delete Game</button>
+          <p>Number of Infections: {result.viral.numOfInfections}</p>
+          <p>Number of Kills: {result.viral.numOfKills}</p>
+          <p>Skill points: {result.viral.skillPoints}</p>
+          <p>Skills: {Object.keys(Object.fromEntries(Object.entries(result.viral.skill).filter(e => e[1]))).join(", ")}</p>
+        </fieldset> 
+        <LongPressButton text="Delete Game" callback={deleteGame} className="h-7" />
+        {/* <button onClick={deleteGame}>Delete Game</button> */}
       </div>
       
     </>

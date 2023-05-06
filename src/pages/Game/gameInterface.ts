@@ -30,7 +30,7 @@ export interface IViral {
     apex: boolean;
   };
   numOfInfections: number;
-  numOfKillings: number;
+  numOfKills: number;
   numOfEvents: number;
 }
 

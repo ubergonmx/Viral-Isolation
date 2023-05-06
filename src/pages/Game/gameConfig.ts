@@ -44,7 +44,7 @@ export const INITIAL_GAME_CONFIG: IGame = {
       apex: false,
     },
     numOfInfections: 0,
-    numOfKillings: 0,
+    numOfKills: 0,
     numOfEvents: 0,
   },
   survivors: [

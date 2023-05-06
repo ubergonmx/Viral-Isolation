@@ -116,8 +116,8 @@ const game = {
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${survivor.name} is infected`);
-          // update viral skill point
-          Game.findOneAndUpdate({ code: code }, { $inc: { "viral.skillPoints": infectSkillPoint } })
+          // update viral skill point and numOfInfections
+          Game.findOneAndUpdate({ code: code }, { $inc: { "viral.skillPoints": infectSkillPoint, "viral.numOfInfections": 1 } })
             .then((doc2) => {
               if (doc2) {
                 console.log(
@@ -137,14 +137,26 @@ const game = {
       });
   },
   cureSurvivor: function (socket, data) {
-    const { code, survivor } = data;
+    const { code, survivor, survivorCured } = data;
     Game.findOneAndUpdate(
-      { code: code, "survivors.name": survivor.name },
+      { code: code, "survivors.name": survivorCured },
       { $set: { "survivors.$.isInfected": false } },
     )
       .then((doc) => {
         if (doc) {
-          console.log(`[U-${socket.id}] ${survivor.name} is cured`);
+          console.log(`[U-${socket.id}] ${survivorCured} is cured`);
+          // update numOfCures of the survivor
+          Game.findOneAndUpdate({ code: code, "survivors.name": survivor.name }, { $inc: { "survivors.$.numOfCures": 1 } })
+            .then((doc2) => {
+              if (doc2) {
+                console.log(`[U-${socket.id}] ${survivor.name} number of cures +1`);
+              }
+            })
+            .catch((err) => {
+              rollbar.error(err);
+              console.log(err);
+            }
+          );
         }
       })
       .catch((err) => {
@@ -171,6 +183,18 @@ const game = {
       .then((doc) => {
         if (doc) {
           console.log(`[U-${socket.id}] ${doc.viral.name} killed ${survivor.name}`);
+          // update viral numOfKills
+          Game.findOneAndUpdate({ code: code }, { $inc: { "viral.numOfKills": 1 } })
+            .then((doc2) => {
+              if (doc2) {
+                console.log(`[U-${socket.id}] ${doc2.viral.name} killed +1 (total: ${doc2.viral.numOfKills})`);
+              }
+            }
+            )
+            .catch((err) => {
+              rollbar.error(err);
+              console.log(err);
+            });
         }
       })
       .catch((err) => {
@@ -217,6 +241,35 @@ const game = {
                 console.log(err);
               });
           }
+          const i = doc.survivors.findIndex(e => e.name === doc.turnOrder[turn]);
+          if (i > -1){
+            Game.findOneAndUpdate({ code: code, "survivors.name": doc.turnOrder[turn] }, { $inc: { "survivors.$.roundsAlive": 1 } })
+              .then((doc2) => {
+                if (doc2) {
+                  console.log(
+                    `[U-${socket.id}] ${doc2.turnOrder[turn]} survived ${doc2.survivors[i].roundsAlive} rounds`,
+                  )
+                }
+              })
+              .catch((err) => {
+                rollbar.error(err);
+                console.log(err);
+              });
+            if (!doc.survivors[i].isInfected) {
+              Game.findOneAndUpdate({ code: code, "survivors.name": doc.turnOrder[turn] }, { $inc: { "survivors.$.numOfRoundsUninfected": 1 } })
+                .then((doc2) => {
+                  if (doc2) {
+                    console.log(
+                      `[U-${socket.id}] ${doc2.turnOrder[turn]} survived ${doc2.survivors[i].numOfRoundsUninfected} rounds uninfected`,
+                    )
+                  }
+                })
+                .catch((err) => {
+                  rollbar.error(err);
+                  console.log(err);
+                });
+            }
+          }
         }
       })
       .catch((err) => {
@@ -224,7 +277,6 @@ const game = {
         console.log(err);
       });
   },
-  // TODO: add a check if the survivor is already dead
   nextTurn: function (socket, data) {
     const { code, turn, round } = data;
     Game.findOneAndUpdate({ code: code }, { $set: { turn: turn, round: round } })
