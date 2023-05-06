@@ -84,8 +84,6 @@ function Game() {
     }
   }, [gameConfig.round]);
 
-  // TODO: useEffect next-turn or logGameConfig when gameConfig.turn changes
-
   function deleteGame() {
     console.log("delete game");
     socket.emit("delete", { code: code });

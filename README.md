@@ -1,6 +1,6 @@
 # <img src="./public/viral-isolation.svg" alt="html5" width="40" height="40"/> [Viral Isolation](http://viral-isolation.pages.dev)
 
-Viral Isolation web app is a digital companion of the physical board game for GAMEDES. It was developed using MongoDB, Express, React, Node.js, TypeScript, Tailwind, and Socket.io.
+Viral Isolation web app is a digital companion of its physical board game for Game Design (GAMEDES) class. It was developed using MongoDB, Express, React, Node.js, TypeScript, Tailwind, and Socket.io.
 
 ## Run locally
 To run the web app locally, follow these steps:
@@ -15,7 +15,7 @@ To run the web app locally, follow these steps:
 
 ## Description
 
-Viral Isolation is an asymmetrical board game where 2-4 Survivors have to find a key in a house to escape while trying their best to avoid a fast mutating Viral player.
+Viral Isolation is an asymmetrical board game where the Survivors have to find a key in a house to escape while trying their best to avoid a fast mutating Viral player.
 
 This game has two sides to it:
 1. Play as a Survivor alongside your friends as all of you try your best to avoid a common enemy, the Viral, and reach the end goal of escaping the map or die trying.
@@ -25,7 +25,7 @@ There can be only 1 Viral player and 2 up to 4 Survivor players. The Viral playe
 
 [Click here to learn more about the game.](https://viral-isolation.pages.dev/about)
 
-### About the web app
+### About the web app (digital companion)
 
 The web application manages the following:
 -  randomization of:
@@ -33,14 +33,15 @@ The web application manages the following:
    - game events
    - keycard location
    - number of items and item capacity per house
-- infect/cure mechanic
-- skill tree of the Viral player
+- infect/cure Survivors mechanic
+- skill points and skill tree of the Viral
 - the houses Survivors entered
 - the card to draw (either the keycard or an item) when entering a house
+- keycard location announcement at Rounds 4/7/10 (if there are 2/3/4 Survivors)
 
-It features long press buttons to avoid accidental press, and a scoreboard/result system.
+It features long press buttons to avoid accidental button press, sfx for events and announcement, and a scoreboard/result system.
 
-
+It uses sockets (Socket.io) to connect to the server one client/user at a time to avoid multiple requests on the same game.
 
 ## Screenshots
 *Physical board game*

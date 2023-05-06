@@ -218,8 +218,8 @@ const game = {
   },
 
   // TODO:
-  // [ ] increase roundsAlive for survivor
-  // [ ] if survivor is not infected, increment numOfRoundsUninfected
+  // [x] increase roundsAlive for survivor
+  // [x] if survivor is not infected, increment numOfRoundsUninfected
   endTurn: function (socket, data) {
     const { code, turn, round, turnSkillPoint } = data;
     Game.findOneAndUpdate({ code: code }, { $set: { turn: turn, round: round } })
