@@ -1,4 +1,4 @@
-# <img src="./public/viral-isolation.svg" alt="logo" width="40" height="40"/> [Viral Isolation](http://viral-isolation.pages.dev)
+# <div style="display: flex; gap: 5px; align-items: center;"><img src="./public/viral-isolation.svg" alt="logo" width="40" height="40"/> [Viral Isolation](http://viral-isolation.pages.dev)</div>
 
 Viral Isolation web app is a digital companion of its physical board game for Game Design (GAMEDES) class. It was developed using MongoDB, Express, React, Node.js, TypeScript, Tailwind, and Socket.io.
 
