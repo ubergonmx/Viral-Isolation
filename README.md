@@ -2,17 +2,6 @@
 
 Viral Isolation web app is a digital companion of its physical board game for Game Design (GAMEDES) class. It was developed using MongoDB, Express, React, Node.js, TypeScript, Tailwind, and Socket.io.
 
-## Run locally
-To run the web app locally, follow these steps:
-
-1. Make sure MongoDB is installed and running.
-2. Clone the repository.
-3. In `server` folder, duplicate `.env.default` and omit `.default` in its file name.
-4. Open two cmd or terminal within the directory and run the following commands:
-   - (Client) `npm i && npm run dev`
-   - (Server) `cd server && npm i && npm start`
-5. Open `http://127.0.0.1:5173/` (or the link provided by the Client console) in browser.
-
 ## Description
 
 Viral Isolation is an asymmetrical board game where the Survivors have to find a key in a house to escape while trying their best to avoid a fast mutating Viral player.
@@ -52,6 +41,17 @@ It uses Socket.io to connect to the server one client/user at a time to avoid mu
 ![Lobby](./screenshots/lobby.png)
 ![Survivor turn](./screenshots/survivor-turn.png)
 ![Viral turn](./screenshots/viral-turn.png)
+
+## Run locally
+To run the web app locally, follow these steps:
+
+1. Make sure MongoDB is installed and running.
+2. Clone the repository.
+3. In `server` folder, duplicate `.env.default` and omit `.default` in its file name.
+4. Open two cmd or terminal within the directory and run the following commands:
+   - (Client) `npm i && npm run dev`
+   - (Server) `cd server && npm i && npm start`
+5. Open `http://127.0.0.1:5173/` (or the link provided by the Client console) in browser.
 
 ## Credits
 
