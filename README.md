@@ -32,9 +32,10 @@ It features long press buttons to avoid accidental button press, sfx for events 
 
 It uses Socket.io to connect to the server one client/user at a time to avoid multiple requests on the same game.
 
-## Screenshots
-*Physical board game*
+## Images
+*Physical board game, cards, and game pieces*
 ![Physical board](./screenshots/board.png)
+![Viral Isolation Collage](./screenshots/vi-collage.png)
 
 *Web app*
 ![Home](./screenshots/home.png)
